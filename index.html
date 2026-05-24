@@ -1,246 +1,415 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Samuel la page fan officielle !</title>
-    <link rel="icon" href="https://france3-regions.francetvinfo.fr/image/zxrylHW5h7elVwedXPxZyS9viUU/930x620/regions/2020/06/09/5ededfb91686b_samuel_etienne_qpuc.jpg" type="image/png">
-    <style>
-        :root {
-            --bg-color: #ffffff;
-            --text-color: #121212;
-            --accent-color: #fb8c00;
-            --link-color: #1e88e5;
-            --card-bg: #f5f5f5;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission — X76671 3V</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#d9d9d9;font-family:'Roboto',sans-serif;overflow:hidden;}
 
-        [data-theme="dark"] {
-            --bg-color: #121212;
-            --text-color: #e0e0e0;
-            --accent-color: #ffa726;
-            --link-color: #29b6f6;
-            --card-bg: #1e1e1e;
-        }
+#rightPanel{
+  position:fixed;right:0;top:0;width:310px;height:100vh;
+  background:#f2f2f2;border-left:1px solid #b8b8b8;
+  display:flex;flex-direction:column;z-index:20;transition:transform .3s ease;
+}
+#rightPanel.hidden{transform:translateX(310px);}
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            transition: background-color 0.3s, color 0.3s;
-        }
+#topbar{
+  background:#5f5f5f;height:70px;padding:10px;color:white;
+  display:flex;justify-content:space-between;align-items:center;flex-shrink:0;
+}
+#trainInfo{display:flex;gap:10px;align-items:center;font-size:18px;font-weight:500;line-height:1.2;}
+#settings{font-size:22px;cursor:pointer;user-select:none;}
 
-        h1 {
-            text-align: center;
-            color: var(--accent-color);
-            font-size: 3em;
-            margin: 20px;
-        }
+.menuItem{
+  height:56px;border-bottom:1px solid #cfcfcf;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;font-size:17px;color:#222;background:#f7f7f7;
+  cursor:pointer;user-select:none;transition:background .15s;flex-shrink:0;
+}
+.menuItem:hover{background:#eaeaea;}
+.menuItem span{color:#777;}
 
-        .chapters {
-            text-align: center;
-            margin: 20px;
-        }
+#detailPanel{
+  display:none;flex-direction:column;background:#fff;
+  border-bottom:1px solid #cfcfcf;padding:14px 20px;flex-shrink:0;
+}
+#detailPanel.open{display:flex;}
+#detailPanel h3{font-size:12px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;justify-content:space-between;}
+.check-item{
+  display:flex;align-items:center;gap:12px;
+  padding:7px 0;border-bottom:1px solid #f0f0f0;
+  cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;
+}
+.check-item:last-child{border-bottom:none;}
+.check-box{
+  width:22px;height:22px;border-radius:4px;border:2px solid #ccc;background:#fff;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;
+}
+.check-box.checked{background:#27ae60;border-color:#27ae60;}
+.check-box.checked::after{content:'✓';color:#fff;font-size:13px;font-weight:700;}
+.check-label{font-size:15px;color:#222;}
+.check-item.done .check-label{text-decoration:line-through;color:#aaa;}
+.materiel-badge{
+  background:#e89b2d;color:#fff;font-size:11px;font-weight:700;
+  padding:3px 8px;border-radius:3px;display:inline-block;margin-bottom:10px;letter-spacing:.5px;
+}
 
-        .chapters a {
-            color: var(--link-color);
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 1.2em;
-            cursor: pointer;
-        }
+#terminus{background:#3a3a3a;padding:12px 18px;color:white;flex-shrink:0;}
+#terminus .t-label{font-size:10px;opacity:.7;text-transform:uppercase;letter-spacing:1px;}
+#terminus .t-name{font-size:17px;font-weight:700;margin-top:2px;}
+#terminus .t-detail{font-size:12px;opacity:.8;margin-top:4px;}
 
-        .chapters a:hover {
-            text-decoration: underline;
-        }
+#destination{background:#e89b2d;padding:14px 18px;color:white;flex-shrink:0;}
+#destination .d-label{font-size:10px;opacity:.8;text-transform:uppercase;letter-spacing:1px;}
+#destination h2{font-size:17px;font-weight:700;margin-top:2px;}
+#destination p{margin-top:6px;font-size:13px;opacity:.85;}
+#next-delta{
+  display:inline-block;margin-top:6px;padding:2px 9px;border-radius:3px;font-size:12px;font-weight:700;
+}
+#next-delta.ahead{background:#d4edda;color:#155724;}
+#next-delta.late{background:#f8d7da;color:#721c24;}
+#next-delta.ontime{background:#d1ecf1;color:#0c5460;}
 
-        .content {
-            padding: 20px;
-        }
+#clockPanel{background:#f7f7f7;padding:14px 18px;border-top:1px solid #cfcfcf;flex-shrink:0;position:relative;}
+#clock{font-size:46px;font-weight:300;color:#111;letter-spacing:2px;font-variant-numeric:tabular-nums;}
+#avance{margin-top:6px;color:#4da3ff;font-size:15px;}
+#reg{margin-top:4px;text-align:right;color:#444;font-size:13px;}
+.small{font-size:13px;color:#666;margin-bottom:4px;}
+#api-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#c0392b;margin-right:5px;vertical-align:middle;transition:background .4s;}
+#api-dot.ok{background:#27ae60;}
 
-        .card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-            transition: background-color 0.3s;
-        }
+#main{margin-right:310px;height:100vh;overflow-y:auto;overflow-x:hidden;padding-bottom:48px;}
 
-        .card img {
-            max-width: 100%;
-            border-radius: 8px;
-            border: 2px solid var(--accent-color);
-            margin-bottom: 15px;
-            transition: transform 0.2s ease-in-out;
-        }
+table{width:100%;border-collapse:collapse;transform:skewX(-7deg);transform-origin:top;}
+thead{background:#cecece;}
+thead td{padding:14px;font-size:14px;color:#666;transform:skewX(7deg);}
+tbody tr{height:90px;}
+tbody tr:nth-child(odd){background:#ececec;}
+tbody tr:nth-child(even){background:#e2e2e2;}
+td{padding:12px;font-size:18px;color:#222;transform:skewX(7deg);}
 
-        .card:hover img {
-            transform: scale(1.05);
-        }
+.current{background:#dfe8f7 !important;outline:2px solid #4da3ff;}
+.current .station-name{font-weight:700;color:#1a4080;}
+.passed{opacity:.45;}
+.passed .station-name{text-decoration:line-through;}
+.next-up{background:#eef5e8 !important;}
+.next-up .station-name{color:#2e6010;font-weight:600;}
+.sep td{
+  background:#c0c0c0 !important;height:36px !important;
+  text-align:center;font-size:12px;font-weight:600;
+  color:#555;letter-spacing:2px;text-transform:uppercase;
+  border-top:2px solid #aaa;border-bottom:2px solid #aaa;transform:skewX(7deg);
+}
 
-        .card h3 {
-            color: var(--accent-color);
-            margin-bottom: 10px;
-        }
+.col-vl{width:80px;text-align:center;font-weight:700;}
+.col-pk{width:90px;text-align:center;color:#555;}
+.col-vref{width:80px;text-align:center;}
+.col-etab{font-size:22px;font-weight:500;}
+.col-arr{width:130px;text-align:center;font-variant-numeric:tabular-nums;}
+.col-delta{width:90px;text-align:center;}
+.speed{font-size:34px;font-weight:700;}
+.station-name{font-size:22px;font-weight:500;}
+.station small{margin-top:5px;color:#777;font-size:13px;}
+.term-badge{font-size:11px;color:#e89b2d;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-left:8px;}
 
-        .card p {
-            font-size: 1em;
-            line-height: 1.5em;
-            margin-bottom: 15px;
-        }
+.dbadge{display:inline-block;padding:2px 8px;border-radius:3px;font-size:12px;font-weight:700;}
+.dbadge.ahead{background:#d4edda;color:#155724;}
+.dbadge.late{background:#f8d7da;color:#721c24;}
+.dbadge.ontime{background:#d1ecf1;color:#0c5460;}
+.dbadge.done{background:#ddd;color:#888;}
+.dbadge.fut{color:#bbb;font-size:11px;}
 
-        .card a {
-            display: inline-block;
-            padding: 10px 15px;
-            color: var(--bg-color);
-            background-color: var(--accent-color);
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 5px;
-        }
+#bottomBar{
+  position:fixed;bottom:0;left:0;right:310px;height:44px;
+  background:rgba(240,240,240,.95);border-top:1px solid #c5c5c5;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.nav-btn{
+  background:#fff;border:1px solid #bbb;border-radius:4px;
+  padding:6px 16px;font-size:13px;color:#333;cursor:pointer;
+  font-family:'Roboto',sans-serif;font-weight:500;
+  transition:background .15s,transform .1s;
+  -webkit-tap-highlight-color:transparent;user-select:none;
+}
+.nav-btn:hover{background:#e8e8e8;}
+.nav-btn:active{transform:scale(.96);background:#ddd;}
+.nav-btn.primary{background:#4da3ff;color:#fff;border-color:#3a8fe0;}
+.nav-btn.primary:hover{background:#3a8fe0;}
 
-        .card a:hover {
-            background-color: var(--accent-color);
-            opacity: 0.9;
-        }
+#panelToggle{
+  display:none;position:fixed;top:12px;right:12px;
+  background:#e89b2d;color:#fff;border:none;border-radius:6px;
+  padding:8px 14px;font-size:14px;font-weight:700;cursor:pointer;z-index:30;
+}
 
-        #theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            z-index: 1000;
-        }
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-thumb{background:#bcbcbc;}
 
-        #theme-toggle img {
-            width: 30px;
-            height: 30px;
-        }
-
-        .redirect-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            font-size: 1em;
-            background-color: var(--accent-color);
-            color: var(--bg-color);
-            text-decoration: none;
-            border-radius: 5px;
-            text-align: center;
-            transition: opacity 0.3s;
-            cursor: pointer;
-        }
-
-        .redirect-button:hover {
-            opacity: 0.9;
-        }
-
-        #back-to-top {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            padding: 10px;
-            background-color: var(--accent-color);
-            color: var(--bg-color);
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2em;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            z-index: 1100;
-            display: none;
-        }
-
-        footer {
-            text-align: center;
-            padding: 15px;
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            font-size: 0.9em;
-            border-top: 1px solid #333;
-            transition: background-color 0.3s;
-        }
-
-        footer a {
-            color: var(--link-color);
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
+@media(max-width:768px){
+  #rightPanel{width:100%;max-width:360px;transform:translateX(100%);box-shadow:-4px 0 20px rgba(0,0,0,.2);}
+  #rightPanel.open{transform:translateX(0);}
+  #main{margin-right:0 !important;padding-bottom:60px;}
+  #bottomBar{right:0;}
+  #panelToggle{display:block;}
+  table{transform:skewX(-4deg);}
+  thead td{transform:skewX(4deg);}
+  td{transform:skewX(4deg);}
+  .sep td{transform:skewX(4deg);}
+  .col-vl{width:50px;}.col-pk{width:60px;}.col-vref{width:50px;}.col-arr{width:100px;}.col-delta{width:70px;}
+  .speed{font-size:24px;}.station-name{font-size:16px;}tbody tr{height:70px;}
+}
+</style>
 </head>
-<body data-theme="light">
-    <button id="theme-toggle">
-        <img id="theme-icon" src="https://cdn-icons-png.flaticon.com/512/6222/6222248.png" alt="Mode Jour">
-    </button>
+<body>
 
-    <button id="back-to-top">⬆</button>
+<button id="panelToggle" onclick="togglePanel()">☰ Infos</button>
 
-    <h1>Samuel Etienne - La page fan officielle</h1>
-
-    <div class="chapters">
-        <a onclick="scrollToSection('goat')">Le Goat</a>
-        <a onclick="scrollToSection('president')">Bientôt Président</a>
-        <a onclick="scrollToSection('yakuza')">Un Yakuza ?</a>
+<div id="rightPanel">
+  <div id="topbar">
+    <div id="trainInfo">
+      <div>
+        <div>X76671 3V</div>
+        <div style="font-size:13px;color:#ccc;font-weight:400;">76672</div>
+      </div>
     </div>
+    <div id="settings" onclick="togglePanel()">✕</div>
+  </div>
 
-    <div class="content">
-        <div class="card" id="goat">
-            <img src="https://focus.huffingtonpost.fr/2023/05/01/523/0/2781/1854/320/213/60/0/3521745_1682904365096-000-cm1ai.jpg" alt="Samuel Etienne - Le Goat">
-            <h3>Samuel Etienne le Goat</h3>
-        </div>
-        <div class="card" id="president">
-            <img src="https://www.breakflip.com/uploads2/Azilliz/2021/Fevrier/Jeux/samuel-etienne-presidentielle-twitch.png" alt="Samuel président">
-            <h3>Samuel bientôt président</h3>
-        </div>
-        <div class="card" id="yakuza">
-            <img src="https://cdn-www.konbini.com/files/2024/09/etienne-33.jpg?width=1080&quality=75&format=webp" alt="Samuel Yakuza">
-            <h3>Samuel un Yakuza ?</h3>
-        </div>
-    </div>
+  <div class="menuItem" onclick="toggleDetail()">
+    Détail Train <span id="detail-arrow">›</span>
+  </div>
 
-    <button class="redirect-button" id="next-page">Page Suivante</button>
+  <div id="detailPanel">
+    <div class="materiel-badge">AGC 3V</div>
+    <h3>Checklist départ <span id="check-prog">0/6</span></h3>
+    <div id="checklist"></div>
+  </div>
 
-    <footer>
-        Site fait par : <a href="#">isco245 / Le R</a>
-    </footer>
+  <div class="menuItem">RT / Livret de ligne<span>3 ›</span></div>
+  <div class="menuItem">Travaux<span>1 ›</span></div>
+  <div class="menuItem">AGT/ART<span>3 ›</span></div>
+  <div class="menuItem">Info Sécu<span>2 ›</span></div>
+  <div class="menuItem">Mémo<span>2 ›</span></div>
 
-    <script>
-        function scrollToSection(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-        }
+  <div id="terminus">
+    <div class="t-label">Terminus</div>
+    <div class="t-name" id="term-name">Lézan v1</div>
+    <div class="t-detail" id="term-detail">Mission Cévenol · Arr. 15:18:41</div>
+  </div>
 
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
-        const body = document.body;
+  <div id="destination">
+    <div class="d-label">Prochain arrêt</div>
+    <h2 id="ns-name">—</h2>
+    <p id="ns-time">Arr. —:—:— · Dép. —:—:—</p>
+    <div id="next-delta" class="ontime">—</div>
+  </div>
 
-        themeToggle.addEventListener('click', () => {
-            const isLight = body.getAttribute('data-theme') === 'light';
-            body.setAttribute('data-theme', isLight ? 'dark' : 'light');
-            themeIcon.src = isLight
-                ? "https://cdn-icons-png.flaticon.com/512/702/702471.png" // Icône Lune en mode sombre
-                : "https://cdn-icons-png.flaticon.com/512/6222/6222248.png"; // Icône Soleil en mode jour
-        });
+  <div id="clockPanel">
+    <div class="small"><span id="api-dot"></span>Canal 5 &nbsp; GPS</div>
+    <div id="clock">--:--:--</div>
+    <div id="avance">—</div>
+    <div id="reg">Rég T —<br>M Rég —</div>
+  </div>
+</div>
 
-        window.addEventListener('scroll', () => {
-            document.getElementById('back-to-top').style.display = window.scrollY > 300 ? 'block' : 'none';
-        });
+<div id="main">
+<table>
+  <thead>
+    <tr>
+      <td>VL</td><td>PK</td><td>VRef</td>
+      <td>Établissement</td><td>Horaire</td><td>Écart</td>
+    </tr>
+  </thead>
+  <tbody id="tbody"></tbody>
+</table>
+</div>
 
-        document.getElementById('back-to-top').addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+<div id="bottomBar">
+  <button class="nav-btn" onclick="navigate(-1)">◀ Précédent</button>
+  <button class="nav-btn primary" onclick="navigate(1)">Suivant ▶</button>
+  <button class="nav-btn" onclick="resetNav()">↺ Reset</button>
+</div>
 
-        document.getElementById('next-page').addEventListener('click', () => {
-            alert("La nouvelle page n'est pas encore disponible !");
-        });
-    </script>
+<script>
+// Horaires en secondes depuis minuit pour comparaison précise
+// Format d'affichage : HH:MM:SS
+const stations = [
+  {vl:'',pk:0.00,  name:'Lézan v1',          vref:'1',arr:'14:08:00',dep:'14:10:00',retour:false},
+  {vl:'',pk:2.70,  name:'Boussot v1',         vref:'1',arr:'14:13:20',dep:'14:14:20',retour:false},
+  {vl:'',pk:9.74,  name:'La Bambouseraie v1', vref:'1',arr:'14:23:08',dep:'14:24:08',retour:false},
+  {vl:'',pk:11.70, name:'Corbes v1',          vref:'1',arr:'14:27:08',dep:'14:28:08',retour:false},
+  {vl:'',pk:13.17, name:'Thoiras v1',         vref:'1',arr:'14:30:12',dep:'14:31:12',retour:false},
+  {vl:'',pk:20.31, name:'ST Jean du Gard v2', vref:'2',arr:'14:40:21',dep:'14:47:21',retour:false,terminus:true},
+  {vl:'',pk:13.17, name:'Thoiras v1',         vref:'1',arr:'14:56:34',dep:'14:57:34',retour:true},
+  {vl:'',pk:11.70, name:'Corbes v1',          vref:'1',arr:'14:59:35',dep:'15:00:35',retour:true},
+  {vl:'',pk:9.74,  name:'La Bambouseraie v1', vref:'1',arr:'15:03:35',dep:'15:04:35',retour:true},
+  {vl:'',pk:null,  name:'Anduze v1',          vref:'1',arr:'15:07:50',dep:'15:08:50',retour:true},
+  {vl:'',pk:2.70,  name:'Boussot v2',         vref:'2',arr:'15:14:30',dep:'15:15:30',retour:true},
+  {vl:'',pk:0.00,  name:'Lézan v1',           vref:'1',arr:'15:18:41',dep:'15:19:41',retour:true,terminus:true},
+];
+
+const checkItems=['Batterie','Clef','Démarrage moteur','Test BP','Test KVB','Test Radio'];
+const checked=new Set();
+
+const cl=document.getElementById('checklist');
+checkItems.forEach((label,i)=>{
+  const div=document.createElement('div');
+  div.className='check-item';div.id='ci'+i;
+  div.innerHTML=`<div class="check-box" id="cb${i}"></div><span class="check-label">${label}</span>`;
+  div.onclick=()=>toggleCheck(i);cl.appendChild(div);
+});
+function toggleCheck(i){
+  checked.has(i)?checked.delete(i):checked.add(i);
+  document.getElementById('cb'+i).className='check-box'+(checked.has(i)?' checked':'');
+  document.getElementById('ci'+i).className='check-item'+(checked.has(i)?' done':'');
+  document.getElementById('check-prog').textContent=checked.size+'/'+checkItems.length;
+}
+function toggleDetail(){
+  const p=document.getElementById('detailPanel'),a=document.getElementById('detail-arrow');
+  p.classList.toggle('open');a.textContent=p.classList.contains('open')?'∨':'›';
+}
+
+let curIdx=0,gameSec=null;
+const tbody=document.getElementById('tbody');
+let sepDone=false;
+stations.forEach((s,i)=>{
+  if(s.retour&&!sepDone){
+    const sep=document.createElement('tr');sep.className='sep';
+    sep.innerHTML='<td colspan="6">⇄ Changement de cabine</td>';
+    tbody.appendChild(sep);sepDone=true;
+  }
+  const tr=document.createElement('tr');tr.id='r'+i;
+  const pkT=s.pk!==null?s.pk.toFixed(2):'?';
+  const vlH=s.vl?`<div class="speed">${s.vl}</div>`:`<div style="font-size:22px;color:#bbb;">—</div>`;
+  const termH=s.terminus?`<span class="term-badge">Terminus</span>`:'';
+  tr.innerHTML=`
+    <td class="col-vl">${vlH}</td>
+    <td class="col-pk">${pkT}</td>
+    <td class="col-vref">${s.vref}</td>
+    <td class="col-etab"><div class="station">
+      <span class="station-name">${s.name}${termH}</span>
+      ${s.pk!==null?`<small>PK ${pkT}</small>`:''}
+    </div></td>
+    <td class="col-arr">${s.arr}</td>
+    <td class="col-delta" id="d${i}"><span class="dbadge fut">—</span></td>
+  `;
+  tbody.appendChild(tr);
+});
+
+// Convertit HH:MM:SS en secondes
+function toSec(t){
+  if(!t||t==='—')return null;
+  const p=t.split(':');
+  return parseInt(p[0])*3600+parseInt(p[1])*60+(parseInt(p[2])||0);
+}
+function fmtDeltaSec(diffSec){
+  const a=Math.abs(diffSec);
+  let txt;
+  if(a<5) txt='À l\'heure';
+  else if(a<60) txt=`${a}s`;
+  else if(a<3600) txt=`${Math.floor(a/60)}min ${String(a%60).padStart(2,'0')}s`;
+  else txt=`${Math.floor(a/3600)}h${String(Math.floor((a%3600)/60)).padStart(2,'0')}`;
+  if(diffSec>5)  return{text:`+${txt}`,cls:'ahead'};
+  if(diffSec<-5) return{text:`−${txt}`,cls:'late'};
+  return{text:'À l\'heure',cls:'ontime'};
+}
+
+function render(){
+  const gs=gameSec;
+  stations.forEach((s,i)=>{
+    const tr=document.getElementById('r'+i);if(!tr)return;
+    tr.className='';
+    if(i<curIdx)tr.classList.add('passed');
+    else if(i===curIdx)tr.classList.add('current');
+    else if(i===curIdx+1)tr.classList.add('next-up');
+    const dc=document.getElementById('d'+i);
+    if(i<curIdx){dc.innerHTML='<span class="dbadge done">✓</span>';}
+    else if(gs!==null){
+      const as=toSec(s.arr);
+      if(as!==null){const d=fmtDeltaSec(as-gs);dc.innerHTML=`<span class="dbadge ${d.cls}">${d.text}</span>`;}
+      else dc.innerHTML='<span class="dbadge fut">—</span>';
+    }else dc.innerHTML='<span class="dbadge fut">—</span>';
+  });
+
+  const last=stations[stations.length-1];
+  document.getElementById('term-name').textContent=last.name;
+  document.getElementById('term-detail').textContent=`Mission Cévenol · Arr. ${last.arr}`;
+
+  const cur=stations[curIdx];
+  if(cur){
+    document.getElementById('ns-name').textContent=cur.name;
+    document.getElementById('ns-time').textContent=`Arr. ${cur.arr} · Dép. ${cur.dep}`;
+    const nd=document.getElementById('next-delta');
+    if(gs!==null){
+      const as=toSec(cur.arr);
+      if(as!==null){const d=fmtDeltaSec(as-gs);nd.textContent=d.text;nd.className=d.cls;}
+    }else{nd.textContent='—';nd.className='ontime';}
+  }
+
+  if(gs!==null){
+    const firstSec=toSec(stations[0].arr),diff=gs-firstSec,a=Math.abs(diff);
+    let txt;
+    if(a<60)txt=`${a}s`;
+    else if(a<3600)txt=`${Math.floor(a/60)}min ${String(a%60).padStart(2,'0')}s`;
+    else txt=`${Math.floor(a/3600)}h${String(Math.floor((a%3600)/60)).padStart(2,'0')}`;
+    document.getElementById('avance').textContent=diff>=0?`Avance ${txt} +`:`Retard ${txt} −`;
+    document.getElementById('avance').style.color=diff>=0?'#4da3ff':'#e05555';
+  }
+
+  const row=document.getElementById('r'+curIdx);
+  if(row)row.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function navigate(dir){
+  if(dir===1&&curIdx<stations.length-1)curIdx++;
+  else if(dir===-1&&curIdx>0)curIdx--;
+  render();
+}
+function resetNav(){curIdx=0;render();}
+function togglePanel(){
+  const rp=document.getElementById('rightPanel'),btn=document.getElementById('panelToggle');
+  if(window.innerWidth<=768){
+    rp.classList.toggle('open');btn.textContent=rp.classList.contains('open')?'✕ Fermer':'☰ Infos';
+  }else{
+    rp.classList.toggle('hidden');
+    const m=document.getElementById('main'),bb=document.getElementById('bottomBar');
+    if(rp.classList.contains('hidden')){m.style.marginRight='0';bb.style.right='0';}
+    else{m.style.marginRight='310px';bb.style.right='310px';}
+  }
+}
+document.addEventListener('keydown',e=>{
+  if(e.code==='Space'||e.code==='ArrowRight'){e.preventDefault();navigate(1);}
+  else if(e.code==='ArrowLeft')navigate(-1);
+  else if(e.code==='KeyR')resetNav();
+});
+
+async function fetchTSC(){
+  try{
+    const res=await fetch('http://localhost:8080/readlocos',{mode:'cors',signal:AbortSignal.timeout(2000)});
+    const txt=await res.text();
+    const xml=new DOMParser().parseFromString(txt,'text/xml');
+    const el=xml.querySelector('Time')||xml.querySelector('time');
+    if(el){
+      gameSec=parseFloat(el.textContent);
+      const h=Math.floor(gameSec/3600)%24;
+      const m=Math.floor(gameSec/60)%60;
+      const s=Math.floor(gameSec)%60;
+      document.getElementById('clock').textContent=
+        String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+      document.getElementById('api-dot').className='ok';
+      render();return;
+    }
+  }catch(e){}
+  document.getElementById('api-dot').className='';
+  const n=new Date();
+  document.getElementById('clock').textContent=
+    String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0');
+  render();
+}
+render();fetchTSC();setInterval(fetchTSC,1000);
+</script>
 </body>
 </html>

@@ -62,13 +62,20 @@ body{font-family:'Roboto',sans-serif;overflow:hidden;}
 .menu-sirius span{color:#fff;}
 .menu-header{color:#fff;font-size:12px;letter-spacing:4px;text-transform:uppercase;opacity:.4;margin-bottom:20px;font-family:'Rajdhani',sans-serif;}
 .menu-title{color:#fff;font-size:22px;font-weight:500;margin-bottom:26px;letter-spacing:1px;opacity:.8;}
-.lines-grid{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;max-width:1000px;padding:0 20px;}
+
+/* Grille par map */
+.map-group{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px;}
+.map-group-label{color:#888;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-family:'Rajdhani',sans-serif;align-self:flex-start;padding-left:4px;}
+.map-group-row{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;}
+.lines-wrapper{display:flex;flex-direction:column;gap:0;max-width:1000px;padding:0 20px;width:100%;}
+
 .line-btn{position:relative;width:280px;height:165px;border:2px solid #444;border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .2s,transform .15s,box-shadow .2s;background:#111;flex-shrink:0;}
 .line-btn:hover{border-color:#e89b2d;transform:translateY(-4px);box-shadow:0 10px 32px rgba(0,0,0,.8);}
 .line-btn-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:14px 16px;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 65%);}
 .lbl-main{font-size:17px;font-weight:700;color:#fff;line-height:1.2;}
 .lbl-sub{font-size:12px;color:#ccc;margin-top:4px;}
 .line-tag{position:absolute;top:10px;left:10px;background:#e89b2d;color:#000;font-size:11px;font-weight:700;letter-spacing:1px;padding:3px 8px;border-radius:3px;}
+
 #menuClock{margin-top:30px;text-align:center;}
 #menuClockTime{font-size:28px;font-weight:300;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:3px;font-family:'Rajdhani',sans-serif;}
 #menuClockDate{font-size:12px;color:#666;margin-top:4px;letter-spacing:1px;}
@@ -284,6 +291,7 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
   #splash-title{font-size:52px;letter-spacing:6px;}
   #splash-clock{font-size:40px;}
   #splash-loader{width:240px;}
+  .line-btn{width:240px;height:140px;}
 }
 </style>
 </head>
@@ -324,32 +332,47 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
   <div class="menu-sirius">SIRI<span>US</span></div>
   <div class="menu-header">Simulateur de conduite</div>
   <div class="menu-title">Choisissez votre ligne</div>
-  <div class="lines-grid">
-    <div class="line-btn" onclick="enterMission('stjean')">
-      <div style="width:100%;height:100%;background:url('St jean du gard.png') center/cover no-repeat;"></div>
-      <div class="line-tag">X76671 · AGC 3V</div>
-      <div class="line-btn-label">
-        <div class="lbl-main">ST Jean du Gard · Jour</div>
-        <div class="lbl-sub">Lézan → Saint-Jean-du-Gard</div>
+
+  <div class="lines-wrapper">
+    <!-- ══ MAP : Lyon Part-Dieu ══ -->
+    <div class="map-group">
+      <div class="map-group-label">Lyon Part-Dieu</div>
+      <div class="map-group-row">
+        <div class="line-btn" onclick="enterMission('lyon')">
+          <div style="width:100%;height:100%;background:url('lyon%20jour.png') center/cover no-repeat;"></div>
+          <div class="line-tag" style="background:#4da3ff;color:#fff;">82522 · AGC 5V</div>
+          <div class="line-btn-label">
+            <div class="lbl-main">Lyon Part-Dieu · Jour</div>
+            <div class="lbl-sub">Part-Dieu H → Part-Dieu A</div>
+          </div>
+        </div>
+        <div class="line-btn" onclick="enterMission('lyon_nuit')">
+          <div style="width:100%;height:100%;background:url('lyon%20nuits.png') center/cover no-repeat;"></div>
+          <div class="line-tag" style="background:#7c3aed;color:#fff;">82522 · AGC 5V</div>
+          <div class="line-btn-label">
+            <div class="lbl-main">Lyon Part-Dieu · Nuit</div>
+            <div class="lbl-sub">Part-Dieu H → Part-Dieu A</div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="line-btn" onclick="enterMission('lyon')">
-      <div style="width:100%;height:100%;background:url('lyon jour.png') center/cover no-repeat;"></div>
-      <div class="line-tag" style="background:#4da3ff;color:#fff;">82522 · AGC 5V</div>
-      <div class="line-btn-label">
-        <div class="lbl-main">Lyon Part-Dieu · Jour</div>
-        <div class="lbl-sub">Part-Dieu H → Part-Dieu A</div>
-      </div>
-    </div>
-    <div class="line-btn" onclick="enterMission('lyon_nuit')">
-      <div style="width:100%;height:100%;background:url('lyon nuits.png') center/cover no-repeat;"></div>
-      <div class="line-tag" style="background:#7c3aed;color:#fff;">82522 · AGC 5V</div>
-      <div class="line-btn-label">
-        <div class="lbl-main">Lyon Part-Dieu · Nuit</div>
-        <div class="lbl-sub">Part-Dieu H → Part-Dieu A</div>
+
+    <!-- ══ MAP : Saint-Jean-du-Gard ══ -->
+    <div class="map-group">
+      <div class="map-group-label">Saint-Jean-du-Gard</div>
+      <div class="map-group-row">
+        <div class="line-btn" onclick="enterMission('stjean')">
+          <div style="width:100%;height:100%;background:url('St%20jean%20du%20gard.png') center/cover no-repeat;"></div>
+          <div class="line-tag">X76671 · AGC 3V</div>
+          <div class="line-btn-label">
+            <div class="lbl-main">ST Jean du Gard · Jour</div>
+            <div class="lbl-sub">Lézan → Saint-Jean-du-Gard</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
   <div id="menuClock">
     <div id="menuClockTime">--:--:--</div>
     <div id="menuClockDate"></div>
@@ -456,16 +479,24 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
   <button class="fab fab-reset" onclick="resetNav()" title="Réinitialiser [R]">↺</button>
 </div>
 
+<!--
+  AUDIO — FIX TABLETTE/SAFARI :
+  L'élément audio est chargé normalement.
+  La lecture est déverrouillée au premier touchstart via audioUnlocked.
+-->
 <audio id="rappelAudio" preload="auto">
   <source src="[SNCF Simone]Rappe......arrêt.mp3" type="audio/mpeg">
 </audio>
 <div id="rappel-toast">🔔 Rappel d'arrêt — 1 minute</div>
 
 <script>
+'use strict';
+
 let night=false,curIdx=0,timeMode='real',customTimeBase=null,customTimeSetAt=null;
 const recordedDeltas={};
 let aQuaiActive=false,rappelActive=false,rappelFired={};
 
+/* ══ Détection tablette ══ */
 (function(){
   const ua=navigator.userAgent;
   const isTablet=/(iPad|tablet|Tablet)/i.test(ua)||
@@ -474,10 +505,44 @@ let aQuaiActive=false,rappelActive=false,rappelFired={};
   document.body.classList.add(isTablet?'is-tablet':'is-pc');
 })();
 
+/* ══ FIX AUDIO TABLETTE / SAFARI ══
+   Safari et iOS bloquent la lecture audio tant qu'il n'y a pas eu
+   un geste utilisateur direct. On "déverrouille" l'AudioContext au
+   premier touchstart, puis on joue un buffer silencieux sur l'élément
+   <audio> pour le sortir de la politique de blocage.
+*/
+let audioUnlocked=false;
+function unlockAudio(){
+  if(audioUnlocked)return;
+  audioUnlocked=true;
+  const audio=document.getElementById('rappelAudio');
+  /* Tente une lecture silencieuse (volume 0) puis pause immédiate */
+  audio.volume=0;
+  audio.play().then(()=>{
+    audio.pause();
+    audio.currentTime=0;
+    audio.volume=1;
+  }).catch(()=>{audio.volume=1;});
+  /* Déverrouillage AudioContext si dispo (pour Safari) */
+  if(window.AudioContext||window.webkitAudioContext){
+    const ac=new (window.AudioContext||window.webkitAudioContext)();
+    const buf=ac.createBuffer(1,1,22050);
+    const src=ac.createBufferSource();
+    src.buffer=buf;src.connect(ac.destination);
+    src.start(0);
+    setTimeout(()=>ac.close(),500);
+  }
+  document.removeEventListener('touchstart',unlockAudio,{passive:true});
+  document.removeEventListener('click',unlockAudio);
+}
+document.addEventListener('touchstart',unlockAudio,{passive:true});
+document.addEventListener('click',unlockAudio);
+
+/* ══ Utilitaires temps ══ */
 function fmtTime(){const n=new Date();return String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0');}
 function fmtDate(){const n=new Date();const days=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];const months=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];return days[n.getDay()]+' '+n.getDate()+' '+months[n.getMonth()]+' '+n.getFullYear();}
 
-/* Splash */
+/* ══ Splash ══ */
 const SPLASH_DURATION=Math.floor(Math.random()*5001)+5000;
 const splashClkEl=document.getElementById('splash-clock');
 const splashDateEl=document.getElementById('splash-date');
@@ -507,12 +572,11 @@ function closeSplash(){
 }
 setTimeout(closeSplash,SPLASH_DURATION);
 
-/* Horloge menu */
+/* ══ Horloge menu ══ */
 function updateMenuClock(){document.getElementById('menuClockTime').textContent=fmtTime();document.getElementById('menuClockDate').textContent=fmtDate();}
-updateMenuClock();
-setInterval(updateMenuClock,1000);
+updateMenuClock();setInterval(updateMenuClock,1000);
 
-/* Notes */
+/* ══ Notes ══ */
 function saveNotes(){localStorage.setItem('memoNotes',document.getElementById('memoNotes').value);localStorage.setItem('livretNotes',document.getElementById('livretNotes').value);}
 function loadNotes(){const m=localStorage.getItem('memoNotes'),l=localStorage.getItem('livretNotes');if(m)document.getElementById('memoNotes').value=m;if(l)document.getElementById('livretNotes').value=l;}
 document.addEventListener('DOMContentLoaded',()=>{
@@ -521,25 +585,8 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('livretNotes').addEventListener('input',saveNotes);
 });
 
-/* Missions */
+/* ══ Missions ══ */
 const allMissions={
-  stjean:{
-    trainId:'X76671 3V',trainSub:'76672',materiel:'AGC 3V',termLabel:'Mission Cévenol',
-    stations:[
-      {pk:0.00,name:'Lézan v1',vref:'1',arr:'14:08:00',dep:'14:10:00',retour:false},
-      {pk:2.70,name:'Boussot v1',vref:'1',arr:'14:13:20',dep:'14:14:20',retour:false},
-      {pk:9.74,name:'La Bambouseraie v1',vref:'1',arr:'14:23:08',dep:'14:24:08',retour:false},
-      {pk:11.70,name:'Corbes v1',vref:'1',arr:'14:27:08',dep:'14:28:08',retour:false},
-      {pk:13.17,name:'Thoiras v1',vref:'1',arr:'14:30:12',dep:'14:31:12',retour:false},
-      {pk:20.31,name:'ST Jean du Gard v2',vref:'2',arr:'14:40:21',dep:'14:47:21',retour:false,terminus:true},
-      {pk:13.17,name:'Thoiras v1',vref:'1',arr:'14:56:34',dep:'14:57:34',retour:true},
-      {pk:11.70,name:'Corbes v1',vref:'1',arr:'14:59:35',dep:'15:00:35',retour:true},
-      {pk:9.74,name:'La Bambouseraie v1',vref:'1',arr:'15:03:35',dep:'15:04:35',retour:true},
-      {pk:null,name:'Anduze v1',vref:'1',arr:'15:07:50',dep:'15:08:50',retour:true},
-      {pk:2.70,name:'Boussot v2',vref:'2',arr:'15:14:30',dep:'15:15:30',retour:true},
-      {pk:0.00,name:'Lézan v1',vref:'1',arr:'15:18:41',dep:'15:19:41',retour:true,terminus:true},
-    ]
-  },
   lyon:{
     trainId:'Service 1',trainSub:'AGC 5V · 82522',materiel:'AGC 5V',termLabel:'Mission Lyon Part-Dieu',
     stations:[
@@ -565,6 +612,23 @@ const allMissions={
       {pk:9.35,name:'Gare de Vénissieux 2',vref:'—',arr:'21:06:54',dep:'21:07:54',retour:true},
       {pk:0.96,name:'Lyon Part-Dieu A',vref:'—',arr:'21:15:31',dep:'21:17:01',retour:true,terminus:true},
       {pk:0.00,name:'Dépôt',vref:'—',arr:'21:17:01',dep:'21:17:01',retour:true},
+    ]
+  },
+  stjean:{
+    trainId:'X76671 3V',trainSub:'76672',materiel:'AGC 3V',termLabel:'Mission Cévenol',
+    stations:[
+      {pk:0.00,name:'Lézan v1',vref:'1',arr:'14:08:00',dep:'14:10:00',retour:false},
+      {pk:2.70,name:'Boussot v1',vref:'1',arr:'14:13:20',dep:'14:14:20',retour:false},
+      {pk:9.74,name:'La Bambouseraie v1',vref:'1',arr:'14:23:08',dep:'14:24:08',retour:false},
+      {pk:11.70,name:'Corbes v1',vref:'1',arr:'14:27:08',dep:'14:28:08',retour:false},
+      {pk:13.17,name:'Thoiras v1',vref:'1',arr:'14:30:12',dep:'14:31:12',retour:false},
+      {pk:20.31,name:'ST Jean du Gard v2',vref:'2',arr:'14:40:21',dep:'14:47:21',retour:false,terminus:true},
+      {pk:13.17,name:'Thoiras v1',vref:'1',arr:'14:56:34',dep:'14:57:34',retour:true},
+      {pk:11.70,name:'Corbes v1',vref:'1',arr:'14:59:35',dep:'15:00:35',retour:true},
+      {pk:9.74,name:'La Bambouseraie v1',vref:'1',arr:'15:03:35',dep:'15:04:35',retour:true},
+      {pk:null,name:'Anduze v1',vref:'1',arr:'15:07:50',dep:'15:08:50',retour:true},
+      {pk:2.70,name:'Boussot v2',vref:'2',arr:'15:14:30',dep:'15:15:30',retour:true},
+      {pk:0.00,name:'Lézan v1',vref:'1',arr:'15:18:41',dep:'15:19:41',retour:true,terminus:true},
     ]
   }
 };
@@ -659,7 +723,7 @@ function getCurrentGameTime(){
   return null;
 }
 
-/* Checklist */
+/* ══ Checklist ══ */
 const checkItems=['Batterie','Clef','Démarrage moteur','Test BP','Test KVB','Test Radio'];
 const checked=new Set();
 const cl=document.getElementById('checklist');
@@ -675,7 +739,7 @@ checkItems.forEach((label,i)=>{
   cl.appendChild(div);
 });
 
-/* Tableau */
+/* ══ Tableau ══ */
 const tbody=document.getElementById('tbody');
 function buildTable(){
   tbody.innerHTML='';
@@ -820,7 +884,17 @@ function checkRappel(){
 }
 
 function playRappel(stationName){
-  const audio=document.getElementById('rappelAudio');audio.currentTime=0;audio.play().catch(()=>{});
+  const audio=document.getElementById('rappelAudio');
+  /* FIX SAFARI : si l'AudioContext est suspendu, on le reprend avant lecture */
+  audio.currentTime=0;
+  const playPromise=audio.play();
+  if(playPromise!==undefined){
+    playPromise.catch(err=>{
+      /* Dernier recours : on retente après un court délai */
+      console.warn('Audio play bloqué, nouvelle tentative…',err);
+      setTimeout(()=>{audio.currentTime=0;audio.play().catch(()=>{});},200);
+    });
+  }
   showRappelToast(stationName);
 }
 
@@ -841,6 +915,7 @@ function checkAQuai(){
   if(depSec!==null&&currentTime>=depSec)navigate(1);
 }
 
+/* ══ Clavier ══ */
 document.addEventListener('keydown',e=>{
   if(!document.getElementById('mainMenu').classList.contains('hidden'))return;
   if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;

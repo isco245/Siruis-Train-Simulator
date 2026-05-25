@@ -10,7 +10,7 @@
 body{font-family:'Roboto',sans-serif;overflow:hidden;}
 
 /* ══════════════════════════════════════════
-   SPLASH SCREEN — VERSION AMÉLIORÉE
+   SPLASH SCREEN
 ══════════════════════════════════════════ */
 #splash{
   position:fixed;inset:0;z-index:200;background:#060a10;
@@ -19,7 +19,6 @@ body{font-family:'Roboto',sans-serif;overflow:hidden;}
 #splash.fade-out{animation:splashFade .8s ease forwards;}
 @keyframes splashFade{to{opacity:0;pointer-events:none;}}
 
-/* Fond animé — grille + scanlines */
 #splash::before{
   content:'';position:absolute;inset:0;
   background:
@@ -35,7 +34,6 @@ body{font-family:'Roboto',sans-serif;overflow:hidden;}
 }
 @keyframes gridPulse{0%,100%{opacity:.5;}50%{opacity:1;}}
 
-/* Coin décoratif */
 .splash-corner{position:absolute;width:60px;height:60px;opacity:.4;}
 .splash-corner.tl{top:20px;left:20px;border-top:2px solid #4da3ff;border-left:2px solid #4da3ff;}
 .splash-corner.tr{top:20px;right:20px;border-top:2px solid #4da3ff;border-right:2px solid #4da3ff;}
@@ -48,16 +46,13 @@ body{font-family:'Roboto',sans-serif;overflow:hidden;}
   opacity:0;animation:fadeUp .5s ease .3s forwards;
   position:relative;
 }
-#splash-logo::before,#splash-logo::after{
-  content:'—';margin:0 8px;opacity:.4;
-}
+#splash-logo::before,#splash-logo::after{content:'—';margin:0 8px;opacity:.4;}
 
 #splash-title{
   font-family:'Rajdhani',sans-serif;
   font-size:82px;font-weight:700;color:#fff;letter-spacing:10px;
   opacity:0;animation:fadeUp .7s ease .7s forwards;margin-top:8px;
-  text-shadow:0 0 60px rgba(77,163,255,.3);
-  position:relative;
+  text-shadow:0 0 60px rgba(77,163,255,.3);position:relative;
 }
 #splash-title span{color:#4da3ff;text-shadow:0 0 30px rgba(77,163,255,.8);}
 
@@ -87,71 +82,34 @@ body{font-family:'Roboto',sans-serif;overflow:hidden;}
   letter-spacing:2px;font-family:'Rajdhani',sans-serif;
 }
 
-/* ── Bloc chargement ── */
 #splash-loader{
   display:flex;flex-direction:column;align-items:center;gap:14px;
   opacity:0;animation:fadeUp .5s ease 2.2s forwards;margin-top:42px;
   width:300px;
 }
 
-/* Spinner double anneau */
 .splash-spinner-wrap{position:relative;width:54px;height:54px;}
-.splash-ring{
-  position:absolute;inset:0;border-radius:50%;
-  border:3px solid transparent;
-}
-.splash-ring.outer{
-  border-top-color:#4da3ff;border-right-color:rgba(77,163,255,.3);
-  animation:spinCW 1.2s linear infinite;
-}
-.splash-ring.inner{
-  inset:8px;
-  border-bottom-color:#4da3ff;border-left-color:rgba(77,163,255,.3);
-  animation:spinCCW .8s linear infinite;
-}
+.splash-ring{position:absolute;inset:0;border-radius:50%;border:3px solid transparent;}
+.splash-ring.outer{border-top-color:#4da3ff;border-right-color:rgba(77,163,255,.3);animation:spinCW 1.2s linear infinite;}
+.splash-ring.inner{inset:8px;border-bottom-color:#4da3ff;border-left-color:rgba(77,163,255,.3);animation:spinCCW .8s linear infinite;}
 .splash-ring-dot{
-  position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:6px;height:6px;border-radius:50%;
-  background:#4da3ff;box-shadow:0 0 10px #4da3ff;
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:6px;height:6px;border-radius:50%;background:#4da3ff;box-shadow:0 0 10px #4da3ff;
   animation:dotPulse 1.2s ease-in-out infinite;
 }
 @keyframes spinCW{to{transform:rotate(360deg);}}
 @keyframes spinCCW{to{transform:rotate(-360deg);}}
 @keyframes dotPulse{0%,100%{opacity:1;transform:translate(-50%,-50%) scale(1);}50%{opacity:.4;transform:translate(-50%,-50%) scale(.6);}}
 
-/* Barre de progression */
-#splash-progress-wrap{
-  width:100%;height:3px;background:rgba(77,163,255,.12);
-  border-radius:2px;overflow:hidden;position:relative;
-}
+#splash-progress-wrap{width:100%;height:3px;background:rgba(77,163,255,.12);border-radius:2px;overflow:hidden;position:relative;}
 #splash-progress-bar{
-  height:100%;background:linear-gradient(90deg,#4da3ff,#7dd3fc);
-  border-radius:2px;width:0%;
-  animation:progressFill 6.5s cubic-bezier(.4,0,.2,1) 2.2s forwards;
-  box-shadow:0 0 8px rgba(77,163,255,.6);
-}
-@keyframes progressFill{
-  0%{width:0%;}
-  15%{width:18%;}
-  30%{width:35%;}
-  50%{width:55%;}
-  70%{width:72%;}
-  85%{width:86%;}
-  95%{width:93%;}
-  100%{width:100%;}
+  height:100%;background:linear-gradient(90deg,#4da3ff,#7dd3fc);border-radius:2px;width:0%;
+  box-shadow:0 0 8px rgba(77,163,255,.6);transition:width .4s ease;
 }
 
-/* Messages de chargement */
-#splash-status{
-  font-size:10px;color:#2a4a6a;letter-spacing:3px;text-transform:uppercase;
-  font-family:'Rajdhani',sans-serif;min-height:16px;
-}
+#splash-status{font-size:10px;color:#2a4a6a;letter-spacing:3px;text-transform:uppercase;font-family:'Rajdhani',sans-serif;min-height:16px;}
 
-/* Étapes de chargement */
-#splash-steps{
-  display:flex;flex-direction:column;gap:5px;width:100%;
-}
+#splash-steps{display:flex;flex-direction:column;gap:5px;width:100%;}
 .splash-step{
   display:flex;align-items:center;gap:8px;
   font-size:11px;color:#1a3050;font-family:'Rajdhani',sans-serif;
@@ -161,22 +119,11 @@ body{font-family:'Roboto',sans-serif;overflow:hidden;}
 .splash-step.done{color:#4da3ff;opacity:1;}
 .step-ico{width:14px;font-size:11px;text-align:center;flex-shrink:0;}
 .step-bar{flex:1;height:1px;background:rgba(77,163,255,.15);position:relative;overflow:hidden;}
-.step-bar::after{
-  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
-  background:linear-gradient(90deg,transparent,#4da3ff,transparent);
-}
+.step-bar::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,#4da3ff,transparent);}
 .splash-step.done .step-bar::after{animation:stepSweep .5s ease forwards;}
 @keyframes stepSweep{to{left:100%;}}
 
-#splash-hint{
-  position:absolute;bottom:22px;
-  font-size:9px;color:#1a2a3a;letter-spacing:4px;text-transform:uppercase;
-  font-family:'Rajdhani',sans-serif;
-  opacity:0;animation:fadeUp .5s ease 2.8s forwards;
-}
-
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-
 
 /* ── MENU PRINCIPAL ── */
 #mainMenu{position:fixed;inset:0;z-index:100;background:#1c1c1c;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;}
@@ -192,11 +139,6 @@ body{font-family:'Roboto',sans-serif;overflow:hidden;}
 .lbl-main{font-size:15px;font-weight:700;color:#fff;line-height:1.2;}
 .lbl-sub{font-size:11px;color:#bbb;margin-top:3px;}
 .line-tag{position:absolute;top:8px;left:8px;background:#e89b2d;color:#000;font-size:10px;font-weight:700;letter-spacing:1px;padding:2px 7px;border-radius:2px;}
-.line-btn.soon{cursor:default;border-color:#2a2a2a;}
-.line-btn.soon:hover{transform:none;box-shadow:none;border-color:#2a2a2a;}
-.line-btn.soon .lbl-main{color:#444;}
-.line-btn.soon .lbl-sub{color:#333;}
-.soon-tag{position:absolute;top:8px;left:8px;background:#2a2a2a;color:#555;font-size:10px;font-weight:700;letter-spacing:1px;padding:2px 7px;border-radius:2px;}
 #menuClock{margin-top:28px;text-align:center;}
 #menuClockTime{font-size:26px;font-weight:300;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:3px;font-family:'Rajdhani',sans-serif;}
 #menuClockDate{font-size:11px;color:#666;margin-top:4px;letter-spacing:1px;}
@@ -272,11 +214,9 @@ body.night #next-delta.ahead{background:#0d2a0d;color:#86efac;}body.night #next-
 #avance{margin-top:3px;color:#4da3ff;font-size:12px;}
 #reg{margin-top:2px;text-align:right;color:var(--text-muted);font-size:11px;}
 .small{font-size:11px;color:var(--text-muted);margin-bottom:3px;}
-#api-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#c0392b;margin-right:4px;vertical-align:middle;}
-#api-dot.ok{background:#27ae60;}
 
 /* ── Tableau ── */
-#main{margin-right:var(--panel-w);height:100vh;overflow-y:auto;overflow-x:hidden;padding-bottom:42px;}
+#main{margin-right:var(--panel-w);height:100vh;overflow-y:auto;overflow-x:hidden;padding-bottom:80px;}
 #main::-webkit-scrollbar{width:6px;}#main::-webkit-scrollbar-thumb{background:var(--scr);}
 table{width:100%;border-collapse:collapse;transform:skewX(-7deg);transform-origin:top;}
 thead{background:var(--thead-bg);}
@@ -290,7 +230,6 @@ td{padding:8px;font-size:15px;color:var(--text);transform:skewX(7deg);}
 .passed{opacity:.45;}.passed .station-name{text-decoration:line-through;}
 .next-up{background:var(--row-next)!important;}.next-up .station-name{color:var(--row-next-tx);font-weight:600;}
 .sep td{background:var(--sep-bg)!important;height:28px!important;text-align:center;font-size:11px;font-weight:600;color:var(--sep-tx);letter-spacing:2px;text-transform:uppercase;border-top:2px solid var(--sep-bd);border-bottom:2px solid var(--sep-bd);transform:skewX(7deg);}
-.col-vl{width:56px;text-align:center;font-weight:700;}
 .col-pk{width:70px;text-align:center;color:var(--pk);}
 .col-vref{width:50px;text-align:center;}
 .col-etab{font-size:15px;font-weight:500;}
@@ -303,14 +242,39 @@ td{padding:8px;font-size:15px;color:var(--text);transform:skewX(7deg);}
 .dbadge.ahead{background:#d4edda;color:#155724;}.dbadge.late{background:#f8d7da;color:#721c24;}.dbadge.ontime{background:#d1ecf1;color:#0c5460;}.dbadge.done{background:#ddd;color:#888;}.dbadge.fut{color:#bbb;font-size:10px;}
 body.night .dbadge.ahead{background:#0d2a0d;color:#86efac;}body.night .dbadge.late{background:#2a0d0d;color:#fca5a5;}body.night .dbadge.ontime{background:#0d1e2a;color:#7dd3fc;}body.night .dbadge.done{background:#1a2535;color:#4a6080;}
 
-/* ── Barre nav ── */
-#bottomBar{position:fixed;bottom:0;left:0;right:var(--panel-w);height:40px;background:var(--bar-bg);border-top:1px solid var(--bar-bd);display:flex;align-items:center;justify-content:center;gap:8px;transition:background .35s,border-color .35s;}
-.nav-btn{background:var(--btn-bg);border:1px solid var(--btn-bd);border-radius:4px;padding:5px 18px;font-size:13px;color:var(--btn-tx);cursor:pointer;font-family:'Roboto',sans-serif;font-weight:500;transition:background .15s,transform .1s;user-select:none;}
-.nav-btn:hover{background:var(--btn-hv);}.nav-btn:active{transform:scale(.96);}
-.nav-btn.primary{background:#4da3ff;color:#fff;border-color:#3a8fe0;}.nav-btn.primary:hover{background:#3a8fe0;}
-body.night .nav-btn.primary{background:#1e4d80;border-color:#1a3f6a;}
+/* ── Boutons flottants ── */
+#navFloat{position:fixed;bottom:22px;left:22px;z-index:40;display:flex;gap:10px;align-items:center;}
+.fab{display:flex;align-items:center;gap:7px;border:none;border-radius:28px;font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;cursor:pointer;user-select:none;letter-spacing:.5px;transition:all .15s ease;box-shadow:0 4px 18px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);}
+.fab:active{transform:scale(.94);}
+.fab-prev{background:#232323;color:#777;border:1px solid #363636;padding:9px 16px;}
+.fab-prev:hover{background:#2d2d2d;color:#aaa;border-color:#4a4a4a;}
+.fab-next{background:linear-gradient(145deg,#4da3ff 0%,#2d7dd6 100%);color:#fff;padding:9px 22px;box-shadow:0 4px 18px rgba(77,163,255,.35),inset 0 1px 0 rgba(255,255,255,.2);}
+.fab-next:hover{background:linear-gradient(145deg,#62b0ff 0%,#3a8ae0 100%);box-shadow:0 6px 24px rgba(77,163,255,.5);}
+.fab-reset{background:#1a1a1a;color:#555;border:1px solid #2a2a2a;padding:9px 14px;font-size:16px;}
+.fab-reset:hover{color:#e89b2d;border-color:#e89b2d;box-shadow:0 4px 18px rgba(232,155,45,.2);}
 
-/* ── Formulaires ── */
+/* À Quai */
+.fab-aquai{padding:9px 20px;background:linear-gradient(145deg,#1a8f3c 0%,#157032 100%);color:#fff;box-shadow:0 4px 18px rgba(39,174,96,.3),inset 0 1px 0 rgba(255,255,255,.15);}
+.fab-aquai:hover:not(:disabled){background:linear-gradient(145deg,#20a847 0%,#1a8f3c 100%);box-shadow:0 6px 22px rgba(39,174,96,.5);}
+.fab-aquai.active{background:linear-gradient(145deg,#e89b2d 0%,#c0790a 100%);box-shadow:0 4px 18px rgba(232,155,45,.4);animation:aquaiPulse 1.4s ease-in-out infinite;}
+/* Désactivé — heure non définie */
+.fab-aquai:disabled{
+  background:#2a2a2a!important;color:#555!important;
+  box-shadow:none!important;cursor:not-allowed!important;
+  border:1px solid #3a3a3a;animation:none!important;
+}
+.fab-aquai-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.7);flex-shrink:0;}
+.fab-aquai.active .fab-aquai-dot{background:#fff;animation:dotBlink 1.4s ease-in-out infinite;}
+@keyframes aquaiPulse{0%,100%{box-shadow:0 4px 18px rgba(232,155,45,.4);}50%{box-shadow:0 6px 30px rgba(232,155,45,.8),0 0 0 4px rgba(232,155,45,.15);}}
+@keyframes dotBlink{0%,100%{opacity:1;}50%{opacity:.2;}}
+
+body.night .fab-prev{background:#0f1820;border-color:#1a2e44;color:#4a6a8a;}
+body.night .fab-prev:hover{background:#162330;color:#7aaac8;border-color:#2a4a68;}
+body.night .fab-reset{background:#0a1018;border-color:#1a2530;color:#3a5a78;}
+body.night .fab-reset:hover{color:#e89b2d;border-color:#e89b2d;}
+body.night .fab-next{background:linear-gradient(145deg,#1e4d80 0%,#153a62 100%);}
+
+/* Formulaires */
 #panelToggle{display:none;position:fixed;top:8px;right:8px;background:#e89b2d;color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:700;cursor:pointer;z-index:30;}
 .memo-textarea{width:100%;min-height:90px;padding:8px;border:1px solid var(--menu-border);border-radius:4px;font-family:'Roboto',sans-serif;font-size:13px;color:var(--text);background:var(--menu-bg);resize:vertical;transition:border-color .2s;}
 .memo-textarea:focus{outline:none;border-color:#4da3ff;}
@@ -323,7 +287,7 @@ body.night .nav-btn.primary{background:#1e4d80;border-color:#1a3f6a;}
 .time-btn.secondary:hover{background:var(--btn-hv);}
 .time-mode-indicator{font-size:11px;color:var(--text-muted);margin-top:6px;padding:5px;background:var(--menu-bg);border-radius:4px;text-align:center;}
 
-/* ── Tablette ── */
+/* Tablette */
 body.is-tablet{--panel-w:260px;}
 body.is-tablet #rightPanel{width:260px;}
 body.is-tablet #topbar{height:46px;}
@@ -342,26 +306,23 @@ body.is-tablet tbody tr{height:60px;}
 body.is-tablet .station-name{font-size:14px;}
 body.is-tablet td{font-size:13px;padding:6px;}
 body.is-tablet thead td{font-size:11px;padding:8px 6px;}
-body.is-tablet .col-vl{width:44px;}body.is-tablet .col-pk{width:58px;}body.is-tablet .col-vref{width:40px;}body.is-tablet .col-arr{width:86px;}body.is-tablet .col-delta{width:68px;}
-body.is-tablet #bottomBar{height:38px;}
-body.is-tablet .nav-btn{font-size:12px;padding:4px 14px;}
+body.is-tablet .col-pk{width:58px;}body.is-tablet .col-vref{width:40px;}body.is-tablet .col-arr{width:86px;}body.is-tablet .col-delta{width:68px;}
 body.is-tablet #topBtns{top:6px;}
 body.is-tablet .top-btn{font-size:10px;padding:3px 9px;}
 body.is-tablet table{transform:skewX(-5deg);}
 body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX(5deg);}
 
-/* ── Mobile ── */
+/* Mobile */
 @media(max-width:768px){
   :root{--panel-w:100%;}
   #rightPanel{width:100%;max-width:360px;transform:translateX(100%);box-shadow:-4px 0 20px rgba(0,0,0,.2);}
   #rightPanel.open{transform:translateX(0);}
-  #main{margin-right:0!important;padding-bottom:56px;}
-  #bottomBar{right:0!important;}
+  #main{margin-right:0!important;padding-bottom:80px;}
   #panelToggle{display:block;}
   #topBtns{right:12px;top:56px;}
   #showPanelBtn{display:none!important;}
   table{transform:skewX(-4deg);}thead td,td,.sep td{transform:skewX(4deg);}
-  .col-vl{width:44px;}.col-pk{width:54px;}.col-vref{width:40px;}.col-arr{width:88px;}.col-delta{width:66px;}
+  .col-pk{width:54px;}.col-vref{width:40px;}.col-arr{width:88px;}.col-delta{width:66px;}
   .station-name{font-size:14px;}tbody tr{height:64px;}
   #splash-title{font-size:52px;letter-spacing:6px;}
   #splash-clock{font-size:40px;}
@@ -371,9 +332,7 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
 </head>
 <body>
 
-<!-- ══════════════════════════════════
-     SPLASH SCREEN
-══════════════════════════════════ -->
+<!-- SPLASH SCREEN -->
 <div id="splash">
   <div class="splash-corner tl"></div>
   <div class="splash-corner tr"></div>
@@ -383,9 +342,7 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
   <div id="splash-logo">Système d'Information Réseau Unifié</div>
   <div id="splash-title">SIRI<span>US</span></div>
   <div id="splash-sub">TSC · Train Simulation Conduite</div>
-
   <div id="splash-divider"><div id="splash-divider-dot"></div></div>
-
   <div id="splash-clock">--:--:--</div>
   <div id="splash-date"></div>
 
@@ -407,13 +364,9 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
       <div class="splash-step" id="step4"><span class="step-ico">◆</span><span>Prêt</span><div class="step-bar"></div></div>
     </div>
   </div>
-
-  <div id="splash-hint">Appuyez sur une touche pour continuer</div>
 </div>
 
-<!-- ══════════════════════════════════
-     MENU PRINCIPAL
-══════════════════════════════════ -->
+<!-- MENU PRINCIPAL -->
 <div id="mainMenu">
   <div class="menu-sirius">SIRI<span>US</span></div>
   <div class="menu-header">Simulateur de conduite</div>
@@ -450,7 +403,7 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
   </div>
 </div>
 
-<!-- ── BOUTONS HAUT ── -->
+<!-- BOUTONS HAUT -->
 <div id="topBtns">
   <button class="top-btn" onclick="toggleNight()"><span id="nightIco">🌙</span> <span id="nightLbl">Nuit</span></button>
   <button class="top-btn" onclick="toggleFullscreen()" id="fsBtn">⛶ Plein écran</button>
@@ -458,7 +411,7 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
 <button id="showPanelBtn" onclick="openPanel()">☰ Infos</button>
 <button id="panelToggle" onclick="togglePanel()">☰ Infos</button>
 
-<!-- ── PANNEAU DROIT ── -->
+<!-- PANNEAU DROIT -->
 <div id="rightPanel">
   <div id="topbar">
     <div id="trainInfo">
@@ -522,7 +475,7 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
       <div id="next-delta" class="ontime">—</div>
     </div>
     <div id="clockPanel">
-      <div class="small"><span id="api-dot"></span>Canal 5 &nbsp; GPS</div>
+      <div class="small">Heure jeu</div>
       <div id="clock">--:--:--</div>
       <div id="avance">—</div>
       <div id="reg">Rég T —<br>M Rég —</div>
@@ -530,23 +483,29 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
   </div>
 </div>
 
-<!-- ── TABLEAU PRINCIPAL ── -->
+<!-- TABLEAU PRINCIPAL -->
 <div id="main">
   <table>
     <thead><tr><td>PK</td><td>VRef</td><td>Établissement</td><td>Horaire</td><td>Écart</td></tr></thead>
     <tbody id="tbody"></tbody>
   </table>
 </div>
-<div id="bottomBar">
-  <button class="nav-btn" onclick="navigate(-1)">◀ Précédent</button>
-  <button class="nav-btn primary" onclick="navigate(1)">Suivant ▶</button>
-  <button class="nav-btn" onclick="resetNav()">↺ Reset</button>
+
+<!-- BOUTONS FLOTTANTS -->
+<div id="navFloat">
+  <button class="fab fab-prev" onclick="navigate(-1)" title="Précédent [←]">◀ Préc.</button>
+  <button class="fab fab-aquai" id="aQuaiBtn" onclick="toggleAQuai()" title="À Quai — auto-départ" disabled>
+    <span class="fab-aquai-dot"></span><span id="aQuaiLbl">À Quai</span>
+  </button>
+  <button class="fab fab-next" onclick="navigate(1)" title="Suivant [→]">Suivant ▶</button>
+  <button class="fab fab-reset" onclick="resetNav()" title="Réinitialiser [R]">↺</button>
 </div>
 
 <script>
 // ── Variables globales ──
-let night=false, curIdx=0, gameSec=null, timeMode='real', customTimeBase=null, customTimeSetAt=null;
+let night=false, curIdx=0, timeMode='real', customTimeBase=null, customTimeSetAt=null;
 const recordedDeltas={};
+let aQuaiActive=false;
 
 // ── Détection device ──
 (function(){
@@ -569,14 +528,16 @@ function fmtDate(){
   return days[n.getDay()]+' '+n.getDate()+' '+months[n.getMonth()]+' '+n.getFullYear();
 }
 
-// ── Splash ──
+// ── Splash — durée aléatoire entre 5 et 10 secondes, aucun bypass ──
+const SPLASH_DURATION = Math.floor(Math.random() * 5001) + 5000; // 5000–10000 ms
+
 const splashClkEl=document.getElementById('splash-clock');
 const splashDateEl=document.getElementById('splash-date');
 splashClkEl.textContent=fmtTime();
 splashDateEl.textContent=fmtDate();
 const splashInterval=setInterval(()=>{splashClkEl.textContent=fmtTime();},1000);
 
-// Séquence étapes de chargement
+// Étapes proportionnelles à la durée totale
 const stepMessages=[
   'Chargement du noyau système…',
   'Chargement des données horaires…',
@@ -584,41 +545,48 @@ const stepMessages=[
   'Connexion au canal 5…',
   'Système prêt.'
 ];
-const stepTimings=[2300,3200,4200,5400,6800]; // ms depuis le début
-stepTimings.forEach((t,i)=>{
+
+// Jalons en % de la durée : 22%, 38%, 55%, 72%, 90%
+const stepPercents=[0.22, 0.38, 0.55, 0.72, 0.90];
+
+// Progression de la barre interpolée toutes les 100ms
+const progressBar=document.getElementById('splash-progress-bar');
+let progressStart=Date.now();
+const progressInterval=setInterval(()=>{
+  const elapsed=Date.now()-progressStart;
+  const pct=Math.min(elapsed/SPLASH_DURATION*100, 99);
+  progressBar.style.width=pct+'%';
+},100);
+
+// Déclenchement des étapes
+stepPercents.forEach((pct,i)=>{
   setTimeout(()=>{
     const el=document.getElementById('step'+i);
     if(!el)return;
-    // Marquer précédent comme done
     if(i>0){
       const prev=document.getElementById('step'+(i-1));
       if(prev){prev.classList.remove('active');prev.classList.add('done');prev.querySelector('.step-ico').textContent='✔';}
     }
     el.classList.add('active');
     document.getElementById('splash-status').textContent=stepMessages[i];
-  },t);
+  }, SPLASH_DURATION*pct);
 });
 
-// Fermeture splash — 8.5s
-const SPLASH_DURATION=8500;
+// Fermeture splash — uniquement par timer, aucun bypass
 let splashDone=false;
 function closeSplash(){
   if(splashDone)return;
   splashDone=true;
-  // Marquer dernier step done
+  clearInterval(progressInterval);
+  clearInterval(splashInterval);
+  progressBar.style.width='100%';
   const last=document.getElementById('step4');
   if(last){last.classList.remove('active');last.classList.add('done');last.querySelector('.step-ico').textContent='✔';}
   const s=document.getElementById('splash');
   s.classList.add('fade-out');
-  clearInterval(splashInterval);
   setTimeout(()=>{s.style.display='none';},800);
 }
-setTimeout(closeSplash,SPLASH_DURATION);
-// Aussi sur touche / clic après 3s
-setTimeout(()=>{
-  document.addEventListener('keydown',closeSplash,{once:true});
-  document.addEventListener('click',closeSplash,{once:true});
-},3000);
+setTimeout(closeSplash, SPLASH_DURATION);
 
 // ── Horloge menu ──
 function updateMenuClock(){
@@ -710,6 +678,7 @@ function enterMission(id){
   document.querySelector('.materiel-badge').textContent=m.materiel;
   buildTable();
   document.getElementById('mainMenu').classList.add('hidden');
+  if(aQuaiActive){aQuaiActive=false;updateAQuaiBtn();}
   render();
 }
 
@@ -741,7 +710,6 @@ function hidePanel(){
   if(window.innerWidth<=768){togglePanel();return;}
   document.getElementById('rightPanel').classList.add('hidden');
   document.getElementById('main').style.marginRight='0';
-  document.getElementById('bottomBar').style.right='0';
   document.getElementById('topBtns').style.right='8px';
   document.getElementById('showPanelBtn').classList.add('visible');
 }
@@ -749,7 +717,6 @@ function openPanel(){
   document.getElementById('rightPanel').classList.remove('hidden');
   const w=getPanelW()+'px';
   document.getElementById('main').style.marginRight=w;
-  document.getElementById('bottomBar').style.right=w;
   document.getElementById('topBtns').style.right='calc('+w+' + 8px)';
   document.getElementById('showPanelBtn').classList.remove('visible');
 }
@@ -766,25 +733,38 @@ function toggleMemo(){const p=document.getElementById('memoPanel'),a=document.ge
 function toggleLivret(){const p=document.getElementById('livretPanel'),a=document.getElementById('livret-arrow');p.classList.toggle('open');a.textContent=p.classList.contains('open')?'∨':'›';}
 function toggleTime(){const p=document.getElementById('timePanel'),a=document.getElementById('time-arrow');p.classList.toggle('open');a.textContent=p.classList.contains('open')?'∨':'›';}
 
+// ── Gestion heure ──
 function setCustomTime(){
   const input=document.getElementById('timeInput').value.trim();
   const match=input.match(/^(\d{1,2}):(\d{2}):(\d{2})$/);
   if(!match){alert('Format invalide. Utilisez HH:MM:SS');return;}
   const h=parseInt(match[1]),m=parseInt(match[2]),s=parseInt(match[3]);
   if(h>23||m>59||s>59){alert('Heure invalide.');return;}
-  customTimeBase=h*3600+m*60+s;customTimeSetAt=Date.now();timeMode='custom';updateTimeModeIndicator();
-  alert('Heure définie: '+input);
+  customTimeBase=h*3600+m*60+s;
+  customTimeSetAt=Date.now();
+  timeMode='custom';
+  updateTimeModeIndicator();
+  updateAQuaiBtn(); // réactiver le bouton si heure définie
+  alert('Heure définie : '+input);
 }
+
 function switchTimeMode(mode){
   if(mode==='custom'&&customTimeBase===null){alert('Veuillez d\'abord définir une heure.');return;}
-  timeMode=mode;updateTimeModeIndicator();
+  timeMode=mode;
+  updateTimeModeIndicator();
+  updateAQuaiBtn();
 }
+
 function updateTimeModeIndicator(){
   document.getElementById('timeModeIndicator').textContent=timeMode==='real'?'Mode: Heure réelle':'Mode: Heure définie';
 }
+
+// Retourne les secondes de jeu, ou null si heure non définie manuellement
 function getCurrentGameTime(){
-  if(timeMode==='custom'&&customTimeBase!==null)return customTimeBase+(Date.now()-customTimeSetAt)/1000;
-  return gameSec;
+  if(timeMode==='custom'&&customTimeBase!==null){
+    return customTimeBase+(Date.now()-customTimeSetAt)/1000;
+  }
+  return null; // pas d'heure définie
 }
 
 // ── Checklist ──
@@ -834,17 +814,31 @@ function toSec(t){
 }
 
 function fmtD(d){
-  const a=Math.round(Math.abs(d)*100)/100;
-  let t;
+  const a=Math.abs(d);
   if(a<5)return{text:"À l'heure",cls:'ontime'};
-  else if(a<60)t=a.toFixed(2)+'s';
-  else if(a<3600){const mins=Math.floor(a/60);const secs=(a%60).toFixed(2);t=mins+'min '+String(secs).padStart(5,'0')+'s';}
+  let t;
+  if(a<60)t=Math.round(a)+'s';
+  else if(a<3600){const mins=Math.floor(a/60);const secs=Math.round(a%60);t=mins+'min'+String(secs).padStart(2,'0')+'s';}
   else{t=Math.floor(a/3600)+'h'+String(Math.floor((a%3600)/60)).padStart(2,'0');}
-  return d>5?{text:'+'+t,cls:'ahead'}:{text:'−'+t,cls:'late'};
+  if(d>5)return{text:'+'+t,cls:'late'};
+  if(a<60)return{text:'−'+t,cls:'ahead'};
+  return{text:'−'+t,cls:'late'};
 }
 
 function render(){
   const currentTime=getCurrentGameTime();
+
+  // Mise à jour horloge
+  if(currentTime!==null){
+    const h=Math.floor(currentTime/3600)%24,m=Math.floor(currentTime/60)%60,s=Math.floor(currentTime)%60;
+    document.getElementById('clock').textContent=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  } else {
+    // Afficher heure réelle quand pas de custom
+    const n=new Date();
+    document.getElementById('clock').textContent=
+      String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0');
+  }
+
   stations.forEach((s,i)=>{
     const tr=document.getElementById('r'+i);if(!tr)return;
     tr.className='';
@@ -860,27 +854,39 @@ function render(){
       dc.innerHTML='<span class="dbadge fut">—</span>';
     }
   });
+
   const last=stations[stations.length-1];
   document.getElementById('term-name').textContent=last.name;
   document.getElementById('term-detail').textContent=allMissions[currentMissionId].termLabel+' · Arr. '+last.arr;
+
   const cur=stations[curIdx];
   if(cur){
     document.getElementById('ns-name').textContent=cur.name;
     document.getElementById('ns-time').textContent='Arr. '+cur.arr+' · Dép. '+cur.dep;
     const nd=document.getElementById('next-delta');
     if(currentTime!==null){
-      const as=toSec(cur.arr);
-      if(as!==null){const d=fmtD(as-currentTime);nd.textContent=d.text;nd.className=d.cls;}
+      const ds=toSec(cur.dep);
+      if(ds!==null){const d=fmtD(currentTime-ds);nd.textContent=d.text;nd.className=d.cls;}
     } else {nd.textContent='—';nd.className='ontime';}
   }
-  if(currentTime!==null){
-    const diff=currentTime-toSec(stations[0].arr);const a=Math.abs(diff);let t;
-    if(a<60)t=a.toFixed(2)+'s';
-    else if(a<3600){const mins=Math.floor(a/60);const secs=(a%60).toFixed(2);t=mins+'min '+String(secs).padStart(5,'0')+'s';}
-    else t=Math.floor(a/3600)+'h'+String(Math.floor((a%3600)/60)).padStart(2,'0');
-    document.getElementById('avance').textContent=diff>=0?'Avance '+t+' +':'Retard '+t+' −';
-    document.getElementById('avance').style.color=diff>=0?'#4da3ff':'#e05555';
+
+  if(currentTime!==null&&cur){
+    const depRef=toSec(cur.dep);
+    if(depRef!==null){
+      const diff=currentTime-depRef;const a=Math.abs(diff);let t;
+      if(a<60)t=Math.round(a)+'s';
+      else if(a<3600){const mins=Math.floor(a/60);const secs=Math.round(a%60);t=mins+'min'+String(secs).padStart(2,'0')+'s';}
+      else t=Math.floor(a/3600)+'h'+String(Math.floor((a%3600)/60)).padStart(2,'0');
+      if(a<5){document.getElementById('avance').textContent="À l'heure";document.getElementById('avance').style.color='#27ae60';}
+      else if(diff>0){document.getElementById('avance').textContent='Retard +'+t;document.getElementById('avance').style.color='#e05555';}
+      else if(a<60){document.getElementById('avance').textContent='Avance −'+t;document.getElementById('avance').style.color='#27ae60';}
+      else{document.getElementById('avance').textContent='Avance −'+t;document.getElementById('avance').style.color='#e05555';}
+    }
+  } else {
+    document.getElementById('avance').textContent='Heure non définie';
+    document.getElementById('avance').style.color='#6080a0';
   }
+
   const row=document.getElementById('r'+curIdx);
   if(row)row.scrollIntoView({behavior:'smooth',block:'center'});
 }
@@ -888,15 +894,60 @@ function render(){
 function navigate(dir){
   const currentTime=getCurrentGameTime();
   if(dir===1&&curIdx<stations.length-1){
-    if(currentTime!==null){const s=stations[curIdx];const as=toSec(s.arr);if(as!==null)recordedDeltas[curIdx]=fmtD(as-currentTime);}
+    if(currentTime!==null){const s=stations[curIdx];const ds=toSec(s.dep);if(ds!==null)recordedDeltas[curIdx]=fmtD(currentTime-ds);}
     curIdx++;
+    if(aQuaiActive){aQuaiActive=false;updateAQuaiBtn();}
   } else if(dir===-1&&curIdx>0){
     delete recordedDeltas[curIdx];curIdx--;delete recordedDeltas[curIdx];
+    if(aQuaiActive){aQuaiActive=false;updateAQuaiBtn();}
   }
   render();
 }
 
-function resetNav(){curIdx=0;for(const k in recordedDeltas)delete recordedDeltas[k];render();}
+function resetNav(){
+  curIdx=0;for(const k in recordedDeltas)delete recordedDeltas[k];
+  if(aQuaiActive){aQuaiActive=false;updateAQuaiBtn();}
+  render();
+}
+
+// ── À Quai — uniquement si heure définie manuellement ──
+function toggleAQuai(){
+  const btn=document.getElementById('aQuaiBtn');
+  if(btn.disabled)return;
+  aQuaiActive=!aQuaiActive;
+  updateAQuaiBtn();
+}
+
+function updateAQuaiBtn(){
+  const btn=document.getElementById('aQuaiBtn');
+  const lbl=document.getElementById('aQuaiLbl');
+  const heureDefinie=(timeMode==='custom'&&customTimeBase!==null);
+
+  // Activer/désactiver selon si heure est définie
+  btn.disabled=!heureDefinie;
+
+  if(!heureDefinie){
+    // Si heure non définie, forcer désactivation de l'état actif aussi
+    aQuaiActive=false;
+    btn.classList.remove('active');
+    lbl.textContent='À Quai';
+    btn.title='Définissez une heure manuellement pour activer cette fonction';
+    return;
+  }
+
+  btn.title='À Quai — auto-départ [Q]';
+  if(aQuaiActive){btn.classList.add('active');lbl.textContent='En gare…';}
+  else{btn.classList.remove('active');lbl.textContent='À Quai';}
+}
+
+function checkAQuai(){
+  if(!aQuaiActive)return;
+  const currentTime=getCurrentGameTime();
+  if(currentTime===null)return;
+  const cur=stations[curIdx];if(!cur)return;
+  const depSec=toSec(cur.dep);
+  if(depSec!==null&&currentTime>=depSec){navigate(1);}
+}
 
 document.addEventListener('keydown',e=>{
   if(!document.getElementById('mainMenu').classList.contains('hidden'))return;
@@ -904,40 +955,19 @@ document.addEventListener('keydown',e=>{
   if(e.code==='Space'||e.code==='ArrowRight'){e.preventDefault();navigate(1);}
   else if(e.code==='ArrowLeft')navigate(-1);
   else if(e.code==='KeyR')resetNav();
+  else if(e.code==='KeyQ')toggleAQuai();
   else if(e.code==='KeyN')toggleNight();
   else if(e.code==='KeyF')toggleFullscreen();
 });
 
-async function fetchTSC(){
-  const inApp=document.getElementById('mainMenu').classList.contains('hidden');
-  if(inApp&&timeMode==='real'){
-    try{
-      const res=await fetch('http://localhost:8080/readlocos',{mode:'cors',signal:AbortSignal.timeout(2000)});
-      const txt=await res.text();
-      const xml=new DOMParser().parseFromString(txt,'text/xml');
-      const el=xml.querySelector('Time')||xml.querySelector('time');
-      if(el){
-        gameSec=parseFloat(el.textContent);
-        const h=Math.floor(gameSec/3600)%24,m=Math.floor(gameSec/60)%60,s=Math.floor(gameSec)%60;
-        document.getElementById('clock').textContent=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
-        document.getElementById('api-dot').className='ok';render();return;
-      }
-    }catch(e){}
-    document.getElementById('api-dot').className='';
-  }
-  let displayTime;
-  if(timeMode==='custom'&&customTimeBase!==null){
-    const t=getCurrentGameTime();
-    const h=Math.floor(t/3600)%24,m=Math.floor(t/60)%60,s=Math.floor(t)%60;
-    displayTime=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
-  } else {
-    const n=new Date();
-    displayTime=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0');
-  }
-  document.getElementById('clock').textContent=displayTime;
-  if(inApp)render();
+// ── Boucle principale ──
+function tick(){
+  checkAQuai();
+  render();
 }
-render();fetchTSC();setInterval(fetchTSC,1000);
+
+render();
+setInterval(tick, 1000);
 </script>
 </body>
 </html>

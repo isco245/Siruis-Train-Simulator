@@ -28,8 +28,16 @@ body{font-family:'Roboto',sans-serif;overflow:hidden;}
 .soon-tag{position:absolute;top:8px;left:8px;background:#2a2a2a;color:#555;font-size:10px;font-weight:700;letter-spacing:1px;padding:2px 7px;border-radius:2px;}
 :root{--bg:#d9d9d9;--panel-bg:#f2f2f2;--panel-border:#b8b8b8;--topbar-bg:#5f5f5f;--menu-bg:#f7f7f7;--menu-hover:#eaeaea;--menu-border:#cfcfcf;--text:#222;--text-muted:#777;--clock-bg:#f7f7f7;--clock-border:#cfcfcf;--clock-color:#111;--row-odd:#ececec;--row-even:#e2e2e2;--row-cur:#dfe8f7;--row-cur-bd:#4da3ff;--row-cur-tx:#1a4080;--row-next:#eef5e8;--row-next-tx:#2e6010;--sep-bg:#c0c0c0;--sep-bd:#aaa;--sep-tx:#555;--thead-bg:#cecece;--thead-tx:#666;--pk:#555;--st-sm:#777;--bar-bg:rgba(240,240,240,.95);--bar-bd:#c5c5c5;--btn-bg:#fff;--btn-bd:#bbb;--btn-tx:#333;--btn-hv:#e8e8e8;--det-bg:#fff;--scr:#bcbcbc;}
 body.night{--bg:#111827;--panel-bg:#1e2a3a;--panel-border:#243550;--topbar-bg:#0f2030;--menu-bg:#1a2535;--menu-hover:#1e2f44;--menu-border:#243550;--text:#d0dde8;--text-muted:#6080a0;--clock-bg:#111827;--clock-border:#243550;--clock-color:#7dd3fc;--row-odd:#182030;--row-even:#141c28;--row-cur:#1a3a5e;--row-cur-bd:#3b82f6;--row-cur-tx:#93c5fd;--row-next:#162816;--row-next-tx:#86efac;--sep-bg:#0d1520;--sep-bd:#1a3050;--sep-tx:#3b82f6;--thead-bg:#0d1520;--thead-tx:#5080a0;--pk:#6080a0;--st-sm:#6080a0;--bar-bg:rgba(13,21,32,.95);--bar-bd:#1a3050;--btn-bg:#1a2535;--btn-bd:#2a3f58;--btn-tx:#90aac0;--btn-hv:#1e2f44;--det-bg:#111827;--scr:#243550;}
-#nightBtn{position:fixed;top:12px;right:328px;z-index:40;background:var(--btn-bg);border:1px solid var(--btn-bd);color:var(--btn-tx);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Roboto',sans-serif;transition:background .2s,color .2s,border-color .2s;display:flex;align-items:center;gap:5px;}
-#nightBtn:hover{background:var(--btn-hv);}
+
+/* Boutons haut droite */
+#topBtns{position:fixed;top:12px;right:328px;z-index:40;display:flex;gap:6px;align-items:center;}
+.top-btn{background:var(--btn-bg);border:1px solid var(--btn-bd);color:var(--btn-tx);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Roboto',sans-serif;transition:background .2s,color .2s,border-color .2s;display:flex;align-items:center;gap:5px;}
+.top-btn:hover{background:var(--btn-hv);}
+
+/* Bouton rouvrir panneau (visible seulement quand panneau masqué sur desktop) */
+#showPanelBtn{display:none;position:fixed;top:12px;right:12px;z-index:40;background:#e89b2d;color:#fff;border:none;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Roboto',sans-serif;}
+#showPanelBtn.visible{display:flex;align-items:center;gap:5px;}
+
 body{background:var(--bg);transition:background .35s;}
 #rightPanel{position:fixed;right:0;top:0;width:310px;height:100vh;background:var(--panel-bg);border-left:1px solid var(--panel-border);display:flex;flex-direction:column;z-index:20;transition:transform .3s,background .35s,border-color .35s;}
 #rightPanel.hidden{transform:translateX(310px);}
@@ -111,7 +119,8 @@ body.night .nav-btn.primary{background:#1e4d80;border-color:#1a3f6a;}
   #main{margin-right:0!important;padding-bottom:60px;}
   #bottomBar{right:0!important;}
   #panelToggle{display:block;}
-  #nightBtn{right:12px;top:60px;}
+  #topBtns{right:12px;top:60px;}
+  #showPanelBtn{display:none!important;}
   table{transform:skewX(-4deg);}thead td,td,.sep td{transform:skewX(4deg);}
   .col-vl{width:50px;}.col-pk{width:60px;}.col-vref{width:50px;}.col-arr{width:100px;}.col-delta{width:70px;}
   .speed{font-size:24px;}.station-name{font-size:16px;}tbody tr{height:70px;}
@@ -145,13 +154,21 @@ body.night .nav-btn.primary{background:#1e4d80;border-color:#1a3f6a;}
   </div>
 </div>
 
-<button id="nightBtn" onclick="toggleNight()"><span id="nightIco">🌙</span> <span id="nightLbl">Nuit</span></button>
+<!-- Boutons haut droite -->
+<div id="topBtns">
+  <button class="top-btn" onclick="toggleNight()"><span id="nightIco">🌙</span> <span id="nightLbl">Nuit</span></button>
+  <button class="top-btn" onclick="toggleFullscreen()" id="fsBtn">⛶ Plein écran</button>
+</div>
+
+<!-- Bouton rouvrir panneau (desktop uniquement) -->
+<button id="showPanelBtn" onclick="openPanel()">☰ Infos</button>
+
 <button id="panelToggle" onclick="togglePanel()">☰ Infos</button>
 
 <div id="rightPanel">
   <div id="topbar">
     <div id="trainInfo"><div><div>X76671 3V</div><div style="font-size:13px;color:#ccc;font-weight:400;">76672</div></div></div>
-    <div id="settings" onclick="togglePanel()">✕</div>
+    <div id="settings" onclick="hidePanel()">✕</div>
   </div>
   <div class="menuItem" onclick="showMenu()" style="color:#e89b2d;">← Lignes <span>Menu</span></div>
   
@@ -222,15 +239,17 @@ body.night .nav-btn.primary{background:#1e4d80;border-color:#1a3f6a;}
 </div>
 
 <script>
-// État global
 let night = false;
 let curIdx = 0;
 let gameSec = null;
-let timeMode = 'real'; // 'real' ou 'custom'
-let customTimeBase = null; // Heure définie par l'utilisateur
-let customTimeSetAt = null; // Moment où l'heure custom a été définie
+let timeMode = 'real';
+let customTimeBase = null;
+let customTimeSetAt = null;
 
-// Sauvegarde des notes dans localStorage
+// Stockage des écarts enregistrés au moment du passage à chaque gare
+// clé = index gare, valeur = {text, cls} au moment du navigate
+const recordedDeltas = {};
+
 function saveNotes() {
   localStorage.setItem('memoNotes', document.getElementById('memoNotes').value);
   localStorage.setItem('livretNotes', document.getElementById('livretNotes').value);
@@ -243,7 +262,6 @@ function loadNotes() {
   if (livretNotes) document.getElementById('livretNotes').value = livretNotes;
 }
 
-// Écouteurs pour sauvegarder automatiquement
 document.addEventListener('DOMContentLoaded', () => {
   loadNotes();
   document.getElementById('memoNotes').addEventListener('input', saveNotes);
@@ -263,6 +281,56 @@ function toggleNight() {
   document.body.classList.toggle('night', night);
   document.getElementById('nightIco').textContent = night ? '☀️' : '🌙';
   document.getElementById('nightLbl').textContent = night ? 'Jour' : 'Nuit';
+}
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(() => {});
+    document.getElementById('fsBtn').textContent = '⛶ Quitter plein écran';
+  } else {
+    document.exitFullscreen().catch(() => {});
+    document.getElementById('fsBtn').textContent = '⛶ Plein écran';
+  }
+}
+
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement) {
+    document.getElementById('fsBtn').textContent = '⛶ Plein écran';
+  }
+});
+
+// Masquer le panneau (bouton ✕ dans la topbar, desktop uniquement)
+function hidePanel() {
+  if (window.innerWidth <= 768) {
+    togglePanel();
+    return;
+  }
+  const rp = document.getElementById('rightPanel');
+  rp.classList.add('hidden');
+  document.getElementById('main').style.marginRight = '0';
+  document.getElementById('bottomBar').style.right = '0';
+  document.getElementById('topBtns').style.right = '12px';
+  document.getElementById('showPanelBtn').classList.add('visible');
+}
+
+// Rouvrir le panneau (bouton "☰ Infos" desktop)
+function openPanel() {
+  const rp = document.getElementById('rightPanel');
+  rp.classList.remove('hidden');
+  document.getElementById('main').style.marginRight = '310px';
+  document.getElementById('bottomBar').style.right = '310px';
+  document.getElementById('topBtns').style.right = '328px';
+  document.getElementById('showPanelBtn').classList.remove('visible');
+}
+
+// Toggle mobile
+function togglePanel() {
+  const rp = document.getElementById('rightPanel');
+  const btn = document.getElementById('panelToggle');
+  if (window.innerWidth <= 768) {
+    rp.classList.toggle('open');
+    btn.textContent = rp.classList.contains('open') ? '✕ Fermer' : '☰ Infos';
+  }
 }
 
 function toggleDetail() {
@@ -296,21 +364,9 @@ function toggleTime() {
 function setCustomTime() {
   const input = document.getElementById('timeInput').value.trim();
   const match = input.match(/^(\d{1,2}):(\d{2}):(\d{2})$/);
-  
-  if (!match) {
-    alert('Format invalide. Utilisez HH:MM:SS (ex: 14:30:00)');
-    return;
-  }
-  
-  const h = parseInt(match[1]);
-  const m = parseInt(match[2]);
-  const s = parseInt(match[3]);
-  
-  if (h > 23 || m > 59 || s > 59) {
-    alert('Heure invalide. Vérifiez les valeurs.');
-    return;
-  }
-  
+  if (!match) { alert('Format invalide. Utilisez HH:MM:SS (ex: 14:30:00)'); return; }
+  const h = parseInt(match[1]), m = parseInt(match[2]), s = parseInt(match[3]);
+  if (h > 23 || m > 59 || s > 59) { alert('Heure invalide.'); return; }
   customTimeBase = h * 3600 + m * 60 + s;
   customTimeSetAt = Date.now();
   timeMode = 'custom';
@@ -319,27 +375,19 @@ function setCustomTime() {
 }
 
 function switchTimeMode(mode) {
-  if (mode === 'custom' && customTimeBase === null) {
-    alert('Veuillez d\'abord définir une heure personnalisée.');
-    return;
-  }
+  if (mode === 'custom' && customTimeBase === null) { alert('Veuillez d\'abord définir une heure personnalisée.'); return; }
   timeMode = mode;
   updateTimeModeIndicator();
 }
 
 function updateTimeModeIndicator() {
-  const indicator = document.getElementById('timeModeIndicator');
-  if (timeMode === 'real') {
-    indicator.textContent = 'Mode: Heure réelle';
-  } else {
-    indicator.textContent = 'Mode: Heure définie (personnalisée)';
-  }
+  document.getElementById('timeModeIndicator').textContent =
+    timeMode === 'real' ? 'Mode: Heure réelle' : 'Mode: Heure définie (personnalisée)';
 }
 
 function getCurrentGameTime() {
   if (timeMode === 'custom' && customTimeBase !== null) {
-    const elapsed = (Date.now() - customTimeSetAt) / 1000;
-    return customTimeBase + elapsed;
+    return customTimeBase + (Date.now() - customTimeSetAt) / 1000;
   }
   return gameSec;
 }
@@ -388,12 +436,9 @@ stations.forEach((s, i) => {
     tbody.appendChild(sep);
     sepDone = true;
   }
-  
   const tr = document.createElement('tr');
   tr.id = 'r' + i;
   const pkT = s.pk !== null ? s.pk.toFixed(2) : '?';
-  
-  // Suppression du PK dans la colonne établissement
   tr.innerHTML = '<td class="col-vl"><div style="font-size:22px;color:#bbb;">—</div></td>' +
     '<td class="col-pk">' + pkT + '</td>' +
     '<td class="col-vref">' + s.vref + '</td>' +
@@ -402,7 +447,6 @@ stations.forEach((s, i) => {
     '</div></td>' +
     '<td class="col-arr">' + s.arr + '</td>' +
     '<td class="col-delta" id="d' + i + '"><span class="dbadge fut">—</span></td>';
-  
   tbody.appendChild(tr);
 });
 
@@ -412,54 +456,65 @@ function toSec(t) {
   return parseInt(p[0]) * 3600 + parseInt(p[1]) * 60 + (parseInt(p[2]) || 0);
 }
 
+// Arrondi à 0.01s près
 function fmtD(d) {
-  const a = Math.abs(d);
+  const a = Math.round(Math.abs(d) * 100) / 100;
   let t;
   if (a < 5) return {text: "À l'heure", cls: 'ontime'};
-  else if (a < 60) t = a + 's';
-  else if (a < 3600) t = Math.floor(a / 60) + 'min ' + String(a % 60).padStart(2, '0') + 's';
-  else t = Math.floor(a / 3600) + 'h' + String(Math.floor((a % 3600) / 60)).padStart(2, '0');
+  else if (a < 60) t = a.toFixed(2) + 's';
+  else if (a < 3600) {
+    const mins = Math.floor(a / 60);
+    const secs = (a % 60).toFixed(2);
+    t = mins + 'min ' + String(secs).padStart(5, '0') + 's';
+  } else {
+    const hrs = Math.floor(a / 3600);
+    const mins = String(Math.floor((a % 3600) / 60)).padStart(2, '0');
+    t = hrs + 'h' + mins;
+  }
   return d > 5 ? {text: '+' + t, cls: 'ahead'} : {text: '−' + t, cls: 'late'};
 }
 
 function render() {
   const currentTime = getCurrentGameTime();
-  
+
   stations.forEach((s, i) => {
     const tr = document.getElementById('r' + i);
     if (!tr) return;
-    
     tr.className = '';
     if (i < curIdx) tr.classList.add('passed');
     else if (i === curIdx) tr.classList.add('current');
     else if (i === curIdx + 1) tr.classList.add('next-up');
-    
+
     const dc = document.getElementById('d' + i);
     if (i < curIdx) {
-      dc.innerHTML = '<span class="dbadge done">✓</span>';
-    } else if (currentTime !== null) {
-      const as = toSec(s.arr);
-      if (as !== null) {
-        const d = fmtD(as - currentTime);
-        dc.innerHTML = '<span class="dbadge ' + d.cls + '">' + d.text + '</span>';
+      // Gare passée : afficher l'écart enregistré au moment du passage
+      if (recordedDeltas[i]) {
+        dc.innerHTML = '<span class="dbadge ' + recordedDeltas[i].cls + '">' + recordedDeltas[i].text + '</span>';
+      } else {
+        dc.innerHTML = '<span class="dbadge done">✓</span>';
+      }
+    } else if (i === curIdx) {
+      // Gare courante : afficher le delta enregistré (si on vient d'avancer) ou neutre
+      if (recordedDeltas[i]) {
+        dc.innerHTML = '<span class="dbadge ' + recordedDeltas[i].cls + '">' + recordedDeltas[i].text + '</span>';
       } else {
         dc.innerHTML = '<span class="dbadge fut">—</span>';
       }
     } else {
+      // Gares futures : pas d'écart affiché
       dc.innerHTML = '<span class="dbadge fut">—</span>';
     }
   });
-  
+
   const last = stations[stations.length - 1];
   document.getElementById('term-name').textContent = last.name;
   document.getElementById('term-detail').textContent = 'Mission Cévenol · Arr. ' + last.arr;
-  
+
   const cur = stations[curIdx];
   if (cur) {
     document.getElementById('ns-name').textContent = cur.name;
     document.getElementById('ns-time').textContent = 'Arr. ' + cur.arr + ' · Dép. ' + cur.dep;
     const nd = document.getElementById('next-delta');
-    
     if (currentTime !== null) {
       const as = toSec(cur.arr);
       if (as !== null) {
@@ -472,115 +527,105 @@ function render() {
       nd.className = 'ontime';
     }
   }
-  
+
   if (currentTime !== null) {
     const diff = currentTime - toSec(stations[0].arr);
     const a = Math.abs(diff);
     let t;
-    if (a < 60) t = a + 's';
-    else if (a < 3600) t = Math.floor(a / 60) + 'min ' + String(a % 60).padStart(2, '0') + 's';
-    else t = Math.floor(a / 3600) + 'h' + String(Math.floor((a % 3600) / 60)).padStart(2, '0');
-    
+    if (a < 60) t = a.toFixed(2) + 's';
+    else if (a < 3600) {
+      const mins = Math.floor(a / 60);
+      const secs = (a % 60).toFixed(2);
+      t = mins + 'min ' + String(secs).padStart(5, '0') + 's';
+    } else {
+      t = Math.floor(a / 3600) + 'h' + String(Math.floor((a % 3600) / 60)).padStart(2, '0');
+    }
     document.getElementById('avance').textContent = diff >= 0 ? 'Avance ' + t + ' +' : 'Retard ' + t + ' −';
     document.getElementById('avance').style.color = diff >= 0 ? '#4da3ff' : '#e05555';
   }
-  
+
   const row = document.getElementById('r' + curIdx);
   if (row) row.scrollIntoView({behavior: 'smooth', block: 'center'});
 }
 
 function navigate(dir) {
-  if (dir === 1 && curIdx < stations.length - 1) curIdx++;
-  else if (dir === -1 && curIdx > 0) curIdx--;
+  const currentTime = getCurrentGameTime();
+
+  if (dir === 1 && curIdx < stations.length - 1) {
+    // Enregistrer l'écart de la gare courante au moment où on passe à la suivante
+    if (currentTime !== null) {
+      const s = stations[curIdx];
+      const as = toSec(s.arr);
+      if (as !== null) {
+        recordedDeltas[curIdx] = fmtD(as - currentTime);
+      }
+    }
+    curIdx++;
+  } else if (dir === -1 && curIdx > 0) {
+    // En revenant en arrière, effacer l'écart enregistré pour la gare qu'on quitte
+    delete recordedDeltas[curIdx];
+    curIdx--;
+    // Effacer aussi l'écart de la nouvelle gare courante pour pouvoir le ré-enregistrer
+    delete recordedDeltas[curIdx];
+  }
   render();
 }
 
 function resetNav() {
   curIdx = 0;
+  for (const k in recordedDeltas) delete recordedDeltas[k];
   render();
-}
-
-function togglePanel() {
-  const rp = document.getElementById('rightPanel');
-  const btn = document.getElementById('panelToggle');
-  
-  if (window.innerWidth <= 768) {
-    rp.classList.toggle('open');
-    btn.textContent = rp.classList.contains('open') ? '✕ Fermer' : '☰ Infos';
-  } else {
-    rp.classList.toggle('hidden');
-    const h = rp.classList.contains('hidden');
-    document.getElementById('main').style.marginRight = h ? '0' : '310px';
-    document.getElementById('bottomBar').style.right = h ? '0' : '310px';
-    document.getElementById('nightBtn').style.right = h ? '12px' : '328px';
-  }
 }
 
 document.addEventListener('keydown', e => {
   if (!document.getElementById('mainMenu').classList.contains('hidden')) return;
-  
-  // Ignorer si on est dans un input/textarea
   if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-  
-  if (e.code === 'Space' || e.code === 'ArrowRight') {
-    e.preventDefault();
-    navigate(1);
-  } else if (e.code === 'ArrowLeft') {
-    navigate(-1);
-  } else if (e.code === 'KeyR') {
-    resetNav();
-  } else if (e.code === 'KeyN') {
-    toggleNight();
-  }
+  if (e.code === 'Space' || e.code === 'ArrowRight') { e.preventDefault(); navigate(1); }
+  else if (e.code === 'ArrowLeft') { navigate(-1); }
+  else if (e.code === 'KeyR') { resetNav(); }
+  else if (e.code === 'KeyN') { toggleNight(); }
+  else if (e.code === 'KeyF') { toggleFullscreen(); }
 });
 
 async function fetchTSC() {
   const inApp = document.getElementById('mainMenu').classList.contains('hidden');
-  
+
   if (inApp && timeMode === 'real') {
     try {
       const res = await fetch('http://localhost:8080/readlocos', {
-        mode: 'cors',
-        signal: AbortSignal.timeout(2000)
+        mode: 'cors', signal: AbortSignal.timeout(2000)
       });
       const txt = await res.text();
       const xml = new DOMParser().parseFromString(txt, 'text/xml');
       const el = xml.querySelector('Time') || xml.querySelector('time');
-      
       if (el) {
         gameSec = parseFloat(el.textContent);
         const h = Math.floor(gameSec / 3600) % 24;
         const m = Math.floor(gameSec / 60) % 60;
         const s = Math.floor(gameSec) % 60;
-        document.getElementById('clock').textContent = 
-          String(h).padStart(2, '0') + ':' + 
-          String(m).padStart(2, '0') + ':' + 
-          String(s).padStart(2, '0');
+        document.getElementById('clock').textContent =
+          String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
         document.getElementById('api-dot').className = 'ok';
         render();
         return;
       }
-    } catch (e) {}
+    } catch(e) {}
     document.getElementById('api-dot').className = '';
   }
-  
-  // Affichage de l'heure
+
   let displayTime;
   if (timeMode === 'custom' && customTimeBase !== null) {
-    const currentTime = getCurrentGameTime();
-    const h = Math.floor(currentTime / 3600) % 24;
-    const m = Math.floor(currentTime / 60) % 60;
-    const s = Math.floor(currentTime) % 60;
-    displayTime = String(h).padStart(2, '0') + ':' + 
-                  String(m).padStart(2, '0') + ':' + 
-                  String(s).padStart(2, '0');
+    const t = getCurrentGameTime();
+    const h = Math.floor(t / 3600) % 24;
+    const m = Math.floor(t / 60) % 60;
+    const s = Math.floor(t) % 60;
+    displayTime = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
   } else {
     const n = new Date();
-    displayTime = String(n.getHours()).padStart(2, '0') + ':' + 
-                  String(n.getMinutes()).padStart(2, '0') + ':' + 
-                  String(n.getSeconds()).padStart(2, '0');
+    displayTime = String(n.getHours()).padStart(2,'0') + ':' +
+                  String(n.getMinutes()).padStart(2,'0') + ':' +
+                  String(n.getSeconds()).padStart(2,'0');
   }
-  
   document.getElementById('clock').textContent = displayTime;
   if (inApp) render();
 }

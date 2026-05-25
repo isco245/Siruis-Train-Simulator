@@ -3,31 +3,225 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mission — X76671 3V</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<title>SIRIUS TSC</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Roboto',sans-serif;overflow:hidden;}
+
+/* ══════════════════════════════════════════
+   SPLASH SCREEN — VERSION AMÉLIORÉE
+══════════════════════════════════════════ */
+#splash{
+  position:fixed;inset:0;z-index:200;background:#060a10;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;
+}
+#splash.fade-out{animation:splashFade .8s ease forwards;}
+@keyframes splashFade{to{opacity:0;pointer-events:none;}}
+
+/* Fond animé — grille + scanlines */
+#splash::before{
+  content:'';position:absolute;inset:0;
+  background:
+    linear-gradient(rgba(77,163,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(77,163,255,.04) 1px, transparent 1px);
+  background-size:40px 40px;
+  animation:gridPulse 4s ease-in-out infinite;
+}
+#splash::after{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.08) 2px,rgba(0,0,0,.08) 4px);
+  pointer-events:none;
+}
+@keyframes gridPulse{0%,100%{opacity:.5;}50%{opacity:1;}}
+
+/* Coin décoratif */
+.splash-corner{position:absolute;width:60px;height:60px;opacity:.4;}
+.splash-corner.tl{top:20px;left:20px;border-top:2px solid #4da3ff;border-left:2px solid #4da3ff;}
+.splash-corner.tr{top:20px;right:20px;border-top:2px solid #4da3ff;border-right:2px solid #4da3ff;}
+.splash-corner.bl{bottom:20px;left:20px;border-bottom:2px solid #4da3ff;border-left:2px solid #4da3ff;}
+.splash-corner.br{bottom:20px;right:20px;border-bottom:2px solid #4da3ff;border-right:2px solid #4da3ff;}
+
+#splash-logo{
+  font-family:'Rajdhani',sans-serif;
+  font-size:11px;letter-spacing:8px;color:#4da3ff;text-transform:uppercase;
+  opacity:0;animation:fadeUp .5s ease .3s forwards;
+  position:relative;
+}
+#splash-logo::before,#splash-logo::after{
+  content:'—';margin:0 8px;opacity:.4;
+}
+
+#splash-title{
+  font-family:'Rajdhani',sans-serif;
+  font-size:82px;font-weight:700;color:#fff;letter-spacing:10px;
+  opacity:0;animation:fadeUp .7s ease .7s forwards;margin-top:8px;
+  text-shadow:0 0 60px rgba(77,163,255,.3);
+  position:relative;
+}
+#splash-title span{color:#4da3ff;text-shadow:0 0 30px rgba(77,163,255,.8);}
+
+#splash-sub{
+  font-size:11px;color:#3a5a80;letter-spacing:5px;text-transform:uppercase;
+  opacity:0;animation:fadeUp .5s ease 1.1s forwards;margin-top:10px;
+  font-family:'Rajdhani',sans-serif;
+}
+
+#splash-divider{
+  display:flex;align-items:center;gap:10px;
+  width:280px;opacity:0;animation:fadeUp .4s ease 1.4s forwards;margin-top:28px;
+}
+#splash-divider::before,#splash-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,#4da3ff,transparent);}
+#splash-divider-dot{width:5px;height:5px;border-radius:50%;background:#4da3ff;box-shadow:0 0 8px #4da3ff;}
+
+#splash-clock{
+  font-family:'Rajdhani',sans-serif;
+  font-size:58px;font-weight:300;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:6px;
+  opacity:0;animation:fadeUp .6s ease 1.6s forwards;margin-top:22px;
+  text-shadow:0 0 40px rgba(255,255,255,.15);
+}
+
+#splash-date{
+  font-size:12px;color:#4da3ff;opacity:0;
+  animation:fadeUp .5s ease 1.9s forwards;margin-top:6px;
+  letter-spacing:2px;font-family:'Rajdhani',sans-serif;
+}
+
+/* ── Bloc chargement ── */
+#splash-loader{
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  opacity:0;animation:fadeUp .5s ease 2.2s forwards;margin-top:42px;
+  width:300px;
+}
+
+/* Spinner double anneau */
+.splash-spinner-wrap{position:relative;width:54px;height:54px;}
+.splash-ring{
+  position:absolute;inset:0;border-radius:50%;
+  border:3px solid transparent;
+}
+.splash-ring.outer{
+  border-top-color:#4da3ff;border-right-color:rgba(77,163,255,.3);
+  animation:spinCW 1.2s linear infinite;
+}
+.splash-ring.inner{
+  inset:8px;
+  border-bottom-color:#4da3ff;border-left-color:rgba(77,163,255,.3);
+  animation:spinCCW .8s linear infinite;
+}
+.splash-ring-dot{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:6px;height:6px;border-radius:50%;
+  background:#4da3ff;box-shadow:0 0 10px #4da3ff;
+  animation:dotPulse 1.2s ease-in-out infinite;
+}
+@keyframes spinCW{to{transform:rotate(360deg);}}
+@keyframes spinCCW{to{transform:rotate(-360deg);}}
+@keyframes dotPulse{0%,100%{opacity:1;transform:translate(-50%,-50%) scale(1);}50%{opacity:.4;transform:translate(-50%,-50%) scale(.6);}}
+
+/* Barre de progression */
+#splash-progress-wrap{
+  width:100%;height:3px;background:rgba(77,163,255,.12);
+  border-radius:2px;overflow:hidden;position:relative;
+}
+#splash-progress-bar{
+  height:100%;background:linear-gradient(90deg,#4da3ff,#7dd3fc);
+  border-radius:2px;width:0%;
+  animation:progressFill 6.5s cubic-bezier(.4,0,.2,1) 2.2s forwards;
+  box-shadow:0 0 8px rgba(77,163,255,.6);
+}
+@keyframes progressFill{
+  0%{width:0%;}
+  15%{width:18%;}
+  30%{width:35%;}
+  50%{width:55%;}
+  70%{width:72%;}
+  85%{width:86%;}
+  95%{width:93%;}
+  100%{width:100%;}
+}
+
+/* Messages de chargement */
+#splash-status{
+  font-size:10px;color:#2a4a6a;letter-spacing:3px;text-transform:uppercase;
+  font-family:'Rajdhani',sans-serif;min-height:16px;
+}
+
+/* Étapes de chargement */
+#splash-steps{
+  display:flex;flex-direction:column;gap:5px;width:100%;
+}
+.splash-step{
+  display:flex;align-items:center;gap:8px;
+  font-size:11px;color:#1a3050;font-family:'Rajdhani',sans-serif;
+  letter-spacing:1px;opacity:0;transition:opacity .4s;
+}
+.splash-step.active{color:#3a7aa0;opacity:1;}
+.splash-step.done{color:#4da3ff;opacity:1;}
+.step-ico{width:14px;font-size:11px;text-align:center;flex-shrink:0;}
+.step-bar{flex:1;height:1px;background:rgba(77,163,255,.15);position:relative;overflow:hidden;}
+.step-bar::after{
+  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,#4da3ff,transparent);
+}
+.splash-step.done .step-bar::after{animation:stepSweep .5s ease forwards;}
+@keyframes stepSweep{to{left:100%;}}
+
+#splash-hint{
+  position:absolute;bottom:22px;
+  font-size:9px;color:#1a2a3a;letter-spacing:4px;text-transform:uppercase;
+  font-family:'Rajdhani',sans-serif;
+  opacity:0;animation:fadeUp .5s ease 2.8s forwards;
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+
+/* ── MENU PRINCIPAL ── */
 #mainMenu{position:fixed;inset:0;z-index:100;background:#1c1c1c;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;}
 #mainMenu.hidden{display:none;}
-.menu-header{color:#fff;font-size:12px;letter-spacing:4px;text-transform:uppercase;opacity:.5;margin-bottom:10px;}
-.menu-title{color:#fff;font-size:26px;font-weight:700;margin-bottom:28px;letter-spacing:1px;}
-.lines-grid{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;max-width:860px;padding:0 20px;}
-.line-btn{position:relative;width:260px;height:150px;border:2px solid #444;border-radius:6px;overflow:hidden;cursor:pointer;transition:border-color .2s,transform .15s,box-shadow .2s;background:#111;flex-shrink:0;}
+.menu-sirius{color:#4da3ff;font-size:32px;font-weight:700;letter-spacing:4px;margin-bottom:4px;font-family:'Rajdhani',sans-serif;}
+.menu-sirius span{color:#fff;}
+.menu-header{color:#fff;font-size:11px;letter-spacing:4px;text-transform:uppercase;opacity:.4;margin-bottom:18px;font-family:'Rajdhani',sans-serif;}
+.menu-title{color:#fff;font-size:20px;font-weight:500;margin-bottom:22px;letter-spacing:1px;opacity:.8;}
+.lines-grid{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;max-width:900px;padding:0 20px;}
+.line-btn{position:relative;width:240px;height:140px;border:2px solid #444;border-radius:6px;overflow:hidden;cursor:pointer;transition:border-color .2s,transform .15s,box-shadow .2s;background:#111;flex-shrink:0;}
 .line-btn:hover{border-color:#e89b2d;transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.7);}
-.line-btn-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:12px 14px;background:linear-gradient(to top,rgba(0,0,0,.78) 0%,transparent 65%);}
-.lbl-main{font-size:16px;font-weight:700;color:#fff;line-height:1.2;}
+.line-btn-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:12px 14px;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,transparent 65%);}
+.lbl-main{font-size:15px;font-weight:700;color:#fff;line-height:1.2;}
 .lbl-sub{font-size:11px;color:#bbb;margin-top:3px;}
 .line-tag{position:absolute;top:8px;left:8px;background:#e89b2d;color:#000;font-size:10px;font-weight:700;letter-spacing:1px;padding:2px 7px;border-radius:2px;}
 .line-btn.soon{cursor:default;border-color:#2a2a2a;}
 .line-btn.soon:hover{transform:none;box-shadow:none;border-color:#2a2a2a;}
-.line-btn.soon .lbl-main{color:#555;}
-.line-btn.soon .lbl-sub{color:#3a3a3a;}
+.line-btn.soon .lbl-main{color:#444;}
+.line-btn.soon .lbl-sub{color:#333;}
 .soon-tag{position:absolute;top:8px;left:8px;background:#2a2a2a;color:#555;font-size:10px;font-weight:700;letter-spacing:1px;padding:2px 7px;border-radius:2px;}
+#menuClock{margin-top:28px;text-align:center;}
+#menuClockTime{font-size:26px;font-weight:300;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:3px;font-family:'Rajdhani',sans-serif;}
+#menuClockDate{font-size:11px;color:#666;margin-top:4px;letter-spacing:1px;}
 
-:root{--bg:#d9d9d9;--panel-bg:#f2f2f2;--panel-border:#b8b8b8;--topbar-bg:#5f5f5f;--menu-bg:#f7f7f7;--menu-hover:#eaeaea;--menu-border:#cfcfcf;--text:#222;--text-muted:#777;--clock-bg:#f7f7f7;--clock-border:#cfcfcf;--clock-color:#111;--row-odd:#ececec;--row-even:#e2e2e2;--row-cur:#dfe8f7;--row-cur-bd:#4da3ff;--row-cur-tx:#1a4080;--row-next:#eef5e8;--row-next-tx:#2e6010;--sep-bg:#c0c0c0;--sep-bd:#aaa;--sep-tx:#555;--thead-bg:#cecece;--thead-tx:#666;--pk:#555;--st-sm:#777;--bar-bg:rgba(240,240,240,.95);--bar-bd:#c5c5c5;--btn-bg:#fff;--btn-bd:#bbb;--btn-tx:#333;--btn-hv:#e8e8e8;--det-bg:#fff;--scr:#bcbcbc;--panel-w:310px;}
-body.night{--bg:#111827;--panel-bg:#1e2a3a;--panel-border:#243550;--topbar-bg:#0f2030;--menu-bg:#1a2535;--menu-hover:#1e2f44;--menu-border:#243550;--text:#d0dde8;--text-muted:#6080a0;--clock-bg:#111827;--clock-border:#243550;--clock-color:#7dd3fc;--row-odd:#182030;--row-even:#141c28;--row-cur:#1a3a5e;--row-cur-bd:#3b82f6;--row-cur-tx:#93c5fd;--row-next:#162816;--row-next-tx:#86efac;--sep-bg:#0d1520;--sep-bd:#1a3050;--sep-tx:#3b82f6;--thead-bg:#0d1520;--thead-tx:#5080a0;--pk:#6080a0;--st-sm:#6080a0;--bar-bg:rgba(13,21,32,.95);--bar-bd:#1a3050;--btn-bg:#1a2535;--btn-bd:#2a3f58;--btn-tx:#90aac0;--btn-hv:#1e2f44;--det-bg:#111827;--scr:#243550;}
-
+/* ── CSS VARS ── */
+:root{
+  --bg:#d9d9d9;--panel-bg:#f2f2f2;--panel-border:#b8b8b8;
+  --topbar-bg:#5f5f5f;--menu-bg:#f7f7f7;--menu-hover:#eaeaea;--menu-border:#cfcfcf;
+  --text:#222;--text-muted:#777;--clock-bg:#f7f7f7;--clock-border:#cfcfcf;--clock-color:#111;
+  --row-odd:#ececec;--row-even:#e2e2e2;--row-cur:#dfe8f7;--row-cur-bd:#4da3ff;--row-cur-tx:#1a4080;
+  --row-next:#eef5e8;--row-next-tx:#2e6010;--sep-bg:#c0c0c0;--sep-bd:#aaa;--sep-tx:#555;
+  --thead-bg:#cecece;--thead-tx:#666;--pk:#555;--st-sm:#777;
+  --bar-bg:rgba(240,240,240,.95);--bar-bd:#c5c5c5;--btn-bg:#fff;--btn-bd:#bbb;
+  --btn-tx:#333;--btn-hv:#e8e8e8;--det-bg:#fff;--scr:#bcbcbc;--panel-w:310px;
+}
+body.night{
+  --bg:#111827;--panel-bg:#1e2a3a;--panel-border:#243550;--topbar-bg:#0f2030;
+  --menu-bg:#1a2535;--menu-hover:#1e2f44;--menu-border:#243550;--text:#d0dde8;--text-muted:#6080a0;
+  --clock-bg:#111827;--clock-border:#243550;--clock-color:#7dd3fc;
+  --row-odd:#182030;--row-even:#141c28;--row-cur:#1a3a5e;--row-cur-bd:#3b82f6;--row-cur-tx:#93c5fd;
+  --row-next:#162816;--row-next-tx:#86efac;--sep-bg:#0d1520;--sep-bd:#1a3050;--sep-tx:#3b82f6;
+  --thead-bg:#0d1520;--thead-tx:#5080a0;--pk:#6080a0;--st-sm:#6080a0;
+  --bar-bg:rgba(13,21,32,.95);--bar-bd:#1a3050;--btn-bg:#1a2535;--btn-bd:#2a3f58;
+  --btn-tx:#90aac0;--btn-hv:#1e2f44;--det-bg:#111827;--scr:#243550;
+}
 body{background:var(--bg);transition:background .35s;}
 
 /* ── Boutons haut ── */
@@ -43,11 +237,8 @@ body{background:var(--bg);transition:background .35s;}
 #topbar{background:var(--topbar-bg);height:54px;padding:8px 12px;color:white;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;transition:background .35s;}
 #trainInfo{font-size:15px;font-weight:500;line-height:1.2;}
 #settings{font-size:20px;cursor:pointer;user-select:none;}
-
-/* Zone scrollable du panneau */
 #panelScroll{flex:1;overflow-y:auto;overflow-x:hidden;}
 #panelScroll::-webkit-scrollbar{width:4px;}#panelScroll::-webkit-scrollbar-thumb{background:var(--scr);}
-
 .menuItem{height:44px;border-bottom:1px solid var(--menu-border);display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:14px;color:var(--text);background:var(--menu-bg);cursor:pointer;user-select:none;transition:background .15s;flex-shrink:0;}
 .menuItem:hover{background:var(--menu-hover);}
 .menuItem span{color:var(--text-muted);font-size:13px;}
@@ -62,8 +253,6 @@ body{background:var(--bg);transition:background .35s;}
 .check-label{font-size:13px;color:var(--text);}
 .check-item.done .check-label{text-decoration:line-through;color:#aaa;}
 .materiel-badge{background:#e89b2d;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;display:inline-block;margin-bottom:8px;letter-spacing:.5px;}
-
-/* Partie basse panneau fixe */
 #panelBottom{flex-shrink:0;}
 #terminus{background:#3a3a3a;padding:8px 14px;color:white;transition:background .35s;}
 body.night #terminus{background:#0d1520;}
@@ -79,14 +268,14 @@ body.night #destination{background:#a06010;}
 #next-delta.ahead{background:#d4edda;color:#155724;}#next-delta.late{background:#f8d7da;color:#721c24;}#next-delta.ontime{background:#d1ecf1;color:#0c5460;}
 body.night #next-delta.ahead{background:#0d2a0d;color:#86efac;}body.night #next-delta.late{background:#2a0d0d;color:#fca5a5;}body.night #next-delta.ontime{background:#0d1e2a;color:#7dd3fc;}
 #clockPanel{background:var(--clock-bg);padding:8px 14px;border-top:1px solid var(--clock-border);transition:background .35s,border-color .35s;}
-#clock{font-size:36px;font-weight:300;color:var(--clock-color);letter-spacing:2px;font-variant-numeric:tabular-nums;transition:color .35s;}
+#clock{font-size:36px;font-weight:300;color:var(--clock-color);letter-spacing:2px;font-variant-numeric:tabular-nums;transition:color .35s;font-family:'Rajdhani',sans-serif;}
 #avance{margin-top:3px;color:#4da3ff;font-size:12px;}
 #reg{margin-top:2px;text-align:right;color:var(--text-muted);font-size:11px;}
 .small{font-size:11px;color:var(--text-muted);margin-bottom:3px;}
 #api-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#c0392b;margin-right:4px;vertical-align:middle;}
 #api-dot.ok{background:#27ae60;}
 
-/* ── Tableau principal ── */
+/* ── Tableau ── */
 #main{margin-right:var(--panel-w);height:100vh;overflow-y:auto;overflow-x:hidden;padding-bottom:42px;}
 #main::-webkit-scrollbar{width:6px;}#main::-webkit-scrollbar-thumb{background:var(--scr);}
 table{width:100%;border-collapse:collapse;transform:skewX(-7deg);transform-origin:top;}
@@ -114,7 +303,7 @@ td{padding:8px;font-size:15px;color:var(--text);transform:skewX(7deg);}
 .dbadge.ahead{background:#d4edda;color:#155724;}.dbadge.late{background:#f8d7da;color:#721c24;}.dbadge.ontime{background:#d1ecf1;color:#0c5460;}.dbadge.done{background:#ddd;color:#888;}.dbadge.fut{color:#bbb;font-size:10px;}
 body.night .dbadge.ahead{background:#0d2a0d;color:#86efac;}body.night .dbadge.late{background:#2a0d0d;color:#fca5a5;}body.night .dbadge.ontime{background:#0d1e2a;color:#7dd3fc;}body.night .dbadge.done{background:#1a2535;color:#4a6080;}
 
-/* ── Barre nav bas ── */
+/* ── Barre nav ── */
 #bottomBar{position:fixed;bottom:0;left:0;right:var(--panel-w);height:40px;background:var(--bar-bg);border-top:1px solid var(--bar-bd);display:flex;align-items:center;justify-content:center;gap:8px;transition:background .35s,border-color .35s;}
 .nav-btn{background:var(--btn-bg);border:1px solid var(--btn-bd);border-radius:4px;padding:5px 18px;font-size:13px;color:var(--btn-tx);cursor:pointer;font-family:'Roboto',sans-serif;font-weight:500;transition:background .15s,transform .1s;user-select:none;}
 .nav-btn:hover{background:var(--btn-hv);}.nav-btn:active{transform:scale(.96);}
@@ -134,35 +323,34 @@ body.night .nav-btn.primary{background:#1e4d80;border-color:#1a3f6a;}
 .time-btn.secondary:hover{background:var(--btn-hv);}
 .time-mode-indicator{font-size:11px;color:var(--text-muted);margin-top:6px;padding:5px;background:var(--menu-bg);border-radius:4px;text-align:center;}
 
-/* ── MODE TABLETTE (769px – 1180px) ── */
-@media(min-width:769px) and (max-width:1180px){
-  :root{--panel-w:260px;}
-  #rightPanel{width:260px;}
-  #topbar{height:46px;}
-  #trainInfo{font-size:13px;}
-  .menuItem{height:38px;font-size:13px;padding:0 12px;}
-  #clock{font-size:28px;}
-  #avance{font-size:11px;}
-  #clockPanel{padding:6px 12px;}
-  #destination{padding:8px 12px;}
-  #destination h2{font-size:13px;}
-  #destination p{font-size:10px;}
-  #terminus{padding:6px 12px;}
-  #terminus .t-name{font-size:12px;}
-  #terminus .t-detail{font-size:10px;}
-  tbody tr{height:60px;}
-  .station-name{font-size:14px;}
-  td{font-size:13px;padding:6px;}
-  thead td{font-size:11px;padding:8px 6px;}
-  .col-vl{width:44px;}.col-pk{width:58px;}.col-vref{width:40px;}.col-arr{width:86px;}.col-delta{width:68px;}
-  #bottomBar{height:38px;}
-  .nav-btn{font-size:12px;padding:4px 14px;}
-  #topBtns{top:6px;}
-  .top-btn{font-size:10px;padding:3px 9px;}
-  table{transform:skewX(-5deg);}thead td,td,.sep td{transform:skewX(5deg);}
-}
+/* ── Tablette ── */
+body.is-tablet{--panel-w:260px;}
+body.is-tablet #rightPanel{width:260px;}
+body.is-tablet #topbar{height:46px;}
+body.is-tablet #trainInfo{font-size:13px;}
+body.is-tablet .menuItem{height:38px;font-size:13px;padding:0 12px;}
+body.is-tablet #clock{font-size:28px;}
+body.is-tablet #avance{font-size:11px;}
+body.is-tablet #clockPanel{padding:6px 12px;}
+body.is-tablet #destination{padding:8px 12px;}
+body.is-tablet #destination h2{font-size:13px;}
+body.is-tablet #destination p{font-size:10px;}
+body.is-tablet #terminus{padding:6px 12px;}
+body.is-tablet #terminus .t-name{font-size:12px;}
+body.is-tablet #terminus .t-detail{font-size:10px;}
+body.is-tablet tbody tr{height:60px;}
+body.is-tablet .station-name{font-size:14px;}
+body.is-tablet td{font-size:13px;padding:6px;}
+body.is-tablet thead td{font-size:11px;padding:8px 6px;}
+body.is-tablet .col-vl{width:44px;}body.is-tablet .col-pk{width:58px;}body.is-tablet .col-vref{width:40px;}body.is-tablet .col-arr{width:86px;}body.is-tablet .col-delta{width:68px;}
+body.is-tablet #bottomBar{height:38px;}
+body.is-tablet .nav-btn{font-size:12px;padding:4px 14px;}
+body.is-tablet #topBtns{top:6px;}
+body.is-tablet .top-btn{font-size:10px;padding:3px 9px;}
+body.is-tablet table{transform:skewX(-5deg);}
+body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX(5deg);}
 
-/* ── MOBILE (≤768px) ── */
+/* ── Mobile ── */
 @media(max-width:768px){
   :root{--panel-w:100%;}
   #rightPanel{width:100%;max-width:360px;transform:translateX(100%);box-shadow:-4px 0 20px rgba(0,0,0,.2);}
@@ -175,35 +363,94 @@ body.night .nav-btn.primary{background:#1e4d80;border-color:#1a3f6a;}
   table{transform:skewX(-4deg);}thead td,td,.sep td{transform:skewX(4deg);}
   .col-vl{width:44px;}.col-pk{width:54px;}.col-vref{width:40px;}.col-arr{width:88px;}.col-delta{width:66px;}
   .station-name{font-size:14px;}tbody tr{height:64px;}
+  #splash-title{font-size:52px;letter-spacing:6px;}
+  #splash-clock{font-size:40px;}
+  #splash-loader{width:240px;}
 }
 </style>
 </head>
 <body>
+
+<!-- ══════════════════════════════════
+     SPLASH SCREEN
+══════════════════════════════════ -->
+<div id="splash">
+  <div class="splash-corner tl"></div>
+  <div class="splash-corner tr"></div>
+  <div class="splash-corner bl"></div>
+  <div class="splash-corner br"></div>
+
+  <div id="splash-logo">Système d'Information Réseau Unifié</div>
+  <div id="splash-title">SIRI<span>US</span></div>
+  <div id="splash-sub">TSC · Train Simulation Conduite</div>
+
+  <div id="splash-divider"><div id="splash-divider-dot"></div></div>
+
+  <div id="splash-clock">--:--:--</div>
+  <div id="splash-date"></div>
+
+  <div id="splash-loader">
+    <div class="splash-spinner-wrap">
+      <div class="splash-ring outer"></div>
+      <div class="splash-ring inner"></div>
+      <div class="splash-ring-dot"></div>
+    </div>
+    <div id="splash-progress-wrap">
+      <div id="splash-progress-bar"></div>
+    </div>
+    <div id="splash-status">Initialisation…</div>
+    <div id="splash-steps">
+      <div class="splash-step" id="step0"><span class="step-ico">◆</span><span>Chargement du noyau système</span><div class="step-bar"></div></div>
+      <div class="splash-step" id="step1"><span class="step-ico">◆</span><span>Chargement des données horaires</span><div class="step-bar"></div></div>
+      <div class="splash-step" id="step2"><span class="step-ico">◆</span><span>Initialisation des modules GPS</span><div class="step-bar"></div></div>
+      <div class="splash-step" id="step3"><span class="step-ico">◆</span><span>Connexion au canal 5</span><div class="step-bar"></div></div>
+      <div class="splash-step" id="step4"><span class="step-ico">◆</span><span>Prêt</span><div class="step-bar"></div></div>
+    </div>
+  </div>
+
+  <div id="splash-hint">Appuyez sur une touche pour continuer</div>
+</div>
+
+<!-- ══════════════════════════════════
+     MENU PRINCIPAL
+══════════════════════════════════ -->
 <div id="mainMenu">
+  <div class="menu-sirius">SIRI<span>US</span></div>
   <div class="menu-header">Simulateur de conduite</div>
   <div class="menu-title">Choisissez votre ligne</div>
   <div class="lines-grid">
-    <div class="line-btn" onclick="enterMission()">
-      <div style="width:100%;height:100%;background:#222;"></div>
+    <div class="line-btn" onclick="enterMission('stjean')">
+      <div style="width:100%;height:100%;background:url('St jean du gard.png') center/cover no-repeat;"></div>
       <div class="line-tag">X76671 · AGC 3V</div>
       <div class="line-btn-label">
         <div class="lbl-main">ST Jean du Gard · Jour</div>
         <div class="lbl-sub">Lézan → Saint-Jean-du-Gard</div>
       </div>
     </div>
-    <div class="line-btn soon">
-      <div style="width:100%;height:100%;background:#111;"></div>
-      <div class="soon-tag">Bientôt</div>
-      <div class="line-btn-label"><div class="lbl-main">Nîmes — Alès</div><div class="lbl-sub">Ligne des Cévennes</div></div>
+    <div class="line-btn" onclick="enterMission('lyon')">
+      <div style="width:100%;height:100%;background:url('lyon jour.png') center/cover no-repeat;"></div>
+      <div class="line-tag" style="background:#4da3ff;color:#fff;">82522 · AGC 5V</div>
+      <div class="line-btn-label">
+        <div class="lbl-main">Lyon Part-Dieu · Jour</div>
+        <div class="lbl-sub">Part-Dieu H → Part-Dieu A</div>
+      </div>
     </div>
-    <div class="line-btn soon">
-      <div style="width:100%;height:100%;background:#111;"></div>
-      <div class="soon-tag">Bientôt</div>
-      <div class="line-btn-label"><div class="lbl-main">Florac — Mende</div><div class="lbl-sub">Ligne de la Lozère</div></div>
+    <div class="line-btn" onclick="enterMission('lyon_nuit')">
+      <div style="width:100%;height:100%;background:url('lyon nuits.png') center/cover no-repeat;"></div>
+      <div class="line-tag" style="background:#7c3aed;color:#fff;">82522 · AGC 5V</div>
+      <div class="line-btn-label">
+        <div class="lbl-main">Lyon Part-Dieu · Nuit</div>
+        <div class="lbl-sub">Part-Dieu H → Part-Dieu A</div>
+      </div>
     </div>
+  </div>
+  <div id="menuClock">
+    <div id="menuClockTime">--:--:--</div>
+    <div id="menuClockDate"></div>
   </div>
 </div>
 
+<!-- ── BOUTONS HAUT ── -->
 <div id="topBtns">
   <button class="top-btn" onclick="toggleNight()"><span id="nightIco">🌙</span> <span id="nightLbl">Nuit</span></button>
   <button class="top-btn" onclick="toggleFullscreen()" id="fsBtn">⛶ Plein écran</button>
@@ -211,13 +458,16 @@ body.night .nav-btn.primary{background:#1e4d80;border-color:#1a3f6a;}
 <button id="showPanelBtn" onclick="openPanel()">☰ Infos</button>
 <button id="panelToggle" onclick="togglePanel()">☰ Infos</button>
 
+<!-- ── PANNEAU DROIT ── -->
 <div id="rightPanel">
   <div id="topbar">
-    <div id="trainInfo"><div>X76671 3V</div><div style="font-size:11px;color:#ccc;font-weight:400;">76672</div></div>
+    <div id="trainInfo">
+      <div>X76671 3V</div>
+      <div style="font-size:11px;color:#ccc;font-weight:400;">76672</div>
+    </div>
     <div id="settings" onclick="hidePanel()">✕</div>
   </div>
 
-  <!-- Zone scrollable : menu items -->
   <div id="panelScroll">
     <div class="menuItem" onclick="showMenu()" style="color:#e89b2d;">← Lignes <span>Menu</span></div>
 
@@ -228,23 +478,23 @@ body.night .nav-btn.primary{background:#1e4d80;border-color:#1a3f6a;}
       <div id="checklist"></div>
     </div>
 
-    <div class="menuItem" onclick="toggleLivret()">Livret de ligne<span id="livret-arrow">›</span></div>
+    <div class="menuItem" onclick="toggleLivret()">Livret de ligne <span id="livret-arrow">›</span></div>
     <div id="livretPanel">
       <h3>Notes de ligne</h3>
       <textarea class="memo-textarea" id="livretNotes" placeholder="Ajoutez vos notes sur la ligne ici..."></textarea>
     </div>
 
-    <div class="menuItem">Travaux<span>1 ›</span></div>
-    <div class="menuItem">AGT/ART<span>3 ›</span></div>
-    <div class="menuItem">Info Sécu<span>2 ›</span></div>
+    <div class="menuItem">Travaux <span>1 ›</span></div>
+    <div class="menuItem">AGT/ART <span>3 ›</span></div>
+    <div class="menuItem">Info Sécu <span>2 ›</span></div>
 
-    <div class="menuItem" onclick="toggleMemo()">Mémo<span id="memo-arrow">›</span></div>
+    <div class="menuItem" onclick="toggleMemo()">Mémo <span id="memo-arrow">›</span></div>
     <div id="memoPanel">
       <h3>Notes personnelles</h3>
       <textarea class="memo-textarea" id="memoNotes" placeholder="Ajoutez vos notes ici..."></textarea>
     </div>
 
-    <div class="menuItem" onclick="toggleTime()">Réglage heure<span id="time-arrow">›</span></div>
+    <div class="menuItem" onclick="toggleTime()">Réglage heure <span id="time-arrow">›</span></div>
     <div id="timePanel">
       <h3>Heure du jeu</h3>
       <div class="time-input-group">
@@ -259,12 +509,11 @@ body.night .nav-btn.primary{background:#1e4d80;border-color:#1a3f6a;}
     </div>
   </div>
 
-  <!-- Partie basse fixe -->
   <div id="panelBottom">
     <div id="terminus">
       <div class="t-label">Terminus</div>
-      <div class="t-name" id="term-name">Lézan v1</div>
-      <div class="t-detail" id="term-detail">Mission Cévenol · Arr. 15:18:41</div>
+      <div class="t-name" id="term-name">—</div>
+      <div class="t-detail" id="term-detail">—</div>
     </div>
     <div id="destination">
       <div class="d-label">Prochain arrêt</div>
@@ -281,9 +530,12 @@ body.night .nav-btn.primary{background:#1e4d80;border-color:#1a3f6a;}
   </div>
 </div>
 
+<!-- ── TABLEAU PRINCIPAL ── -->
 <div id="main">
-  <table><thead><tr><td>VL</td><td>PK</td><td>VRef</td><td>Établissement</td><td>Horaire</td><td>Écart</td></tr></thead>
-  <tbody id="tbody"></tbody></table>
+  <table>
+    <thead><tr><td>PK</td><td>VRef</td><td>Établissement</td><td>Horaire</td><td>Écart</td></tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
 </div>
 <div id="bottomBar">
   <button class="nav-btn" onclick="navigate(-1)">◀ Précédent</button>
@@ -292,29 +544,202 @@ body.night .nav-btn.primary{background:#1e4d80;border-color:#1a3f6a;}
 </div>
 
 <script>
-let night=false,curIdx=0,gameSec=null,timeMode='real',customTimeBase=null,customTimeSetAt=null;
+// ── Variables globales ──
+let night=false, curIdx=0, gameSec=null, timeMode='real', customTimeBase=null, customTimeSetAt=null;
 const recordedDeltas={};
 
-function saveNotes(){localStorage.setItem('memoNotes',document.getElementById('memoNotes').value);localStorage.setItem('livretNotes',document.getElementById('livretNotes').value);}
-function loadNotes(){const m=localStorage.getItem('memoNotes'),l=localStorage.getItem('livretNotes');if(m)document.getElementById('memoNotes').value=m;if(l)document.getElementById('livretNotes').value=l;}
-document.addEventListener('DOMContentLoaded',()=>{loadNotes();document.getElementById('memoNotes').addEventListener('input',saveNotes);document.getElementById('livretNotes').addEventListener('input',saveNotes);});
+// ── Détection device ──
+(function(){
+  const ua=navigator.userAgent;
+  const isTablet=/(iPad|tablet|Tablet)/i.test(ua)||
+    (/Macintosh/i.test(ua)&&navigator.maxTouchPoints>1)||
+    (window.innerWidth>=600&&window.innerWidth<=1366&&'ontouchstart' in window);
+  document.body.classList.add(isTablet?'is-tablet':'is-pc');
+})();
 
-function enterMission(){document.getElementById('mainMenu').classList.add('hidden');}
+// ── Utilitaires date/heure ──
+function fmtTime(){
+  const n=new Date();
+  return String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0');
+}
+function fmtDate(){
+  const n=new Date();
+  const days=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+  const months=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  return days[n.getDay()]+' '+n.getDate()+' '+months[n.getMonth()]+' '+n.getFullYear();
+}
+
+// ── Splash ──
+const splashClkEl=document.getElementById('splash-clock');
+const splashDateEl=document.getElementById('splash-date');
+splashClkEl.textContent=fmtTime();
+splashDateEl.textContent=fmtDate();
+const splashInterval=setInterval(()=>{splashClkEl.textContent=fmtTime();},1000);
+
+// Séquence étapes de chargement
+const stepMessages=[
+  'Chargement du noyau système…',
+  'Chargement des données horaires…',
+  'Initialisation des modules GPS…',
+  'Connexion au canal 5…',
+  'Système prêt.'
+];
+const stepTimings=[2300,3200,4200,5400,6800]; // ms depuis le début
+stepTimings.forEach((t,i)=>{
+  setTimeout(()=>{
+    const el=document.getElementById('step'+i);
+    if(!el)return;
+    // Marquer précédent comme done
+    if(i>0){
+      const prev=document.getElementById('step'+(i-1));
+      if(prev){prev.classList.remove('active');prev.classList.add('done');prev.querySelector('.step-ico').textContent='✔';}
+    }
+    el.classList.add('active');
+    document.getElementById('splash-status').textContent=stepMessages[i];
+  },t);
+});
+
+// Fermeture splash — 8.5s
+const SPLASH_DURATION=8500;
+let splashDone=false;
+function closeSplash(){
+  if(splashDone)return;
+  splashDone=true;
+  // Marquer dernier step done
+  const last=document.getElementById('step4');
+  if(last){last.classList.remove('active');last.classList.add('done');last.querySelector('.step-ico').textContent='✔';}
+  const s=document.getElementById('splash');
+  s.classList.add('fade-out');
+  clearInterval(splashInterval);
+  setTimeout(()=>{s.style.display='none';},800);
+}
+setTimeout(closeSplash,SPLASH_DURATION);
+// Aussi sur touche / clic après 3s
+setTimeout(()=>{
+  document.addEventListener('keydown',closeSplash,{once:true});
+  document.addEventListener('click',closeSplash,{once:true});
+},3000);
+
+// ── Horloge menu ──
+function updateMenuClock(){
+  document.getElementById('menuClockTime').textContent=fmtTime();
+  document.getElementById('menuClockDate').textContent=fmtDate();
+}
+updateMenuClock();
+setInterval(updateMenuClock,1000);
+
+// ── Notes (localStorage) ──
+function saveNotes(){
+  localStorage.setItem('memoNotes',document.getElementById('memoNotes').value);
+  localStorage.setItem('livretNotes',document.getElementById('livretNotes').value);
+}
+function loadNotes(){
+  const m=localStorage.getItem('memoNotes'),l=localStorage.getItem('livretNotes');
+  if(m)document.getElementById('memoNotes').value=m;
+  if(l)document.getElementById('livretNotes').value=l;
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  loadNotes();
+  document.getElementById('memoNotes').addEventListener('input',saveNotes);
+  document.getElementById('livretNotes').addEventListener('input',saveNotes);
+});
+
+// ── Missions ──
+const allMissions={
+  stjean:{
+    trainId:'X76671 3V', trainSub:'76672', materiel:'AGC 3V',
+    termLabel:'Mission Cévenol',
+    stations:[
+      {pk:0.00,  name:'Lézan v1',          vref:'1',arr:'14:08:00',dep:'14:10:00',retour:false},
+      {pk:2.70,  name:'Boussot v1',         vref:'1',arr:'14:13:20',dep:'14:14:20',retour:false},
+      {pk:9.74,  name:'La Bambouseraie v1', vref:'1',arr:'14:23:08',dep:'14:24:08',retour:false},
+      {pk:11.70, name:'Corbes v1',          vref:'1',arr:'14:27:08',dep:'14:28:08',retour:false},
+      {pk:13.17, name:'Thoiras v1',         vref:'1',arr:'14:30:12',dep:'14:31:12',retour:false},
+      {pk:20.31, name:'ST Jean du Gard v2', vref:'2',arr:'14:40:21',dep:'14:47:21',retour:false,terminus:true},
+      {pk:13.17, name:'Thoiras v1',         vref:'1',arr:'14:56:34',dep:'14:57:34',retour:true},
+      {pk:11.70, name:'Corbes v1',          vref:'1',arr:'14:59:35',dep:'15:00:35',retour:true},
+      {pk:9.74,  name:'La Bambouseraie v1', vref:'1',arr:'15:03:35',dep:'15:04:35',retour:true},
+      {pk:null,  name:'Anduze v1',          vref:'1',arr:'15:07:50',dep:'15:08:50',retour:true},
+      {pk:2.70,  name:'Boussot v2',         vref:'2',arr:'15:14:30',dep:'15:15:30',retour:true},
+      {pk:0.00,  name:'Lézan v1',           vref:'1',arr:'15:18:41',dep:'15:19:41',retour:true,terminus:true},
+    ]
+  },
+  lyon:{
+    trainId:'Service 1', trainSub:'AGC 5V · 82522', materiel:'AGC 5V',
+    termLabel:'Mission Lyon Part-Dieu',
+    stations:[
+      {pk:0.00,  name:'Dépôt',                          vref:'—',arr:'12:10:00',dep:'12:10:00',retour:false},
+      {pk:0.96,  name:'Lyon Part-Dieu H',               vref:'—',arr:'12:10:00',dep:'12:13:00',retour:false},
+      {pk:9.35,  name:'Gare de Vénissieux 1',            vref:'—',arr:'12:19:32',dep:'12:20:32',retour:false},
+      {pk:13.40, name:'Gare de Saint-Priest 1',          vref:'—',arr:'12:23:17',dep:'12:24:17',retour:false,terminus:true},
+      {pk:18.80, name:'Gare de Saint-Priest boucle sec', vref:'—',arr:'12:25:05',dep:'12:31:35',retour:false},
+      {pk:13.40, name:'Gare de Saint-Priest 2',          vref:'—',arr:'12:32:25',dep:'12:34:00',retour:true},
+      {pk:9.35,  name:'Gare de Vénissieux 2',            vref:'—',arr:'12:36:48',dep:'12:37:48',retour:true},
+      {pk:0.96,  name:'Lyon Part-Dieu A',                vref:'—',arr:'12:45:01',dep:'12:46:31',retour:true,terminus:true},
+    ]
+  },
+  lyon_nuit:{
+    trainId:'Service 1 · Nuit', trainSub:'AGC 5V · 82522', materiel:'AGC 5V',
+    termLabel:'Mission Lyon Part-Dieu — Nuit',
+    stations:[
+      {pk:0.00,  name:'Dépôt',                               vref:'—',arr:'20:37:00',dep:'20:37:00',retour:false},
+      {pk:0.96,  name:'Lyon Part-Dieu H',                    vref:'—',arr:'20:40:00',dep:'20:43:00',retour:false},
+      {pk:9.35,  name:'Gare de Vénissieux 1',                vref:'—',arr:'20:50:15',dep:'20:51:15',retour:false},
+      {pk:13.40, name:'Gare de Saint-Priest 1',              vref:'—',arr:'20:53:52',dep:'20:54:52',retour:false,terminus:true},
+      {pk:18.80, name:'Gare de Saint-Priest boucle secondaire',vref:'—',arr:'20:55:40',dep:'21:01:40',retour:false},
+      {pk:13.40, name:'Gare de Saint-Priest 2',              vref:'—',arr:'21:02:31',dep:'21:04:06',retour:true},
+      {pk:9.35,  name:'Gare de Vénissieux 2',                vref:'—',arr:'21:06:54',dep:'21:07:54',retour:true},
+      {pk:0.96,  name:'Lyon Part-Dieu A',                    vref:'—',arr:'21:15:31',dep:'21:17:01',retour:true,terminus:true},
+      {pk:0.00,  name:'Dépôt',                               vref:'—',arr:'21:17:01',dep:'21:17:01',retour:true},
+    ]
+  }
+};
+
+let currentMissionId='stjean';
+let stations=allMissions.stjean.stations;
+
+// ── Entrer dans une mission ──
+function enterMission(id){
+  currentMissionId=id||'stjean';
+  const m=allMissions[currentMissionId];
+  stations=m.stations;
+  curIdx=0;
+  for(const k in recordedDeltas)delete recordedDeltas[k];
+  document.getElementById('trainInfo').innerHTML=
+    '<div>'+m.trainId+'</div><div style="font-size:11px;color:#ccc;font-weight:400;">'+m.trainSub+'</div>';
+  document.querySelector('.materiel-badge').textContent=m.materiel;
+  buildTable();
+  document.getElementById('mainMenu').classList.add('hidden');
+  render();
+}
+
 function showMenu(){document.getElementById('mainMenu').classList.remove('hidden');}
-function toggleNight(){night=!night;document.body.classList.toggle('night',night);document.getElementById('nightIco').textContent=night?'☀️':'🌙';document.getElementById('nightLbl').textContent=night?'Jour':'Nuit';}
+
+function toggleNight(){
+  night=!night;
+  document.body.classList.toggle('night',night);
+  document.getElementById('nightIco').textContent=night?'☀️':'🌙';
+  document.getElementById('nightLbl').textContent=night?'Jour':'Nuit';
+}
 
 function toggleFullscreen(){
-  if(!document.fullscreenElement){document.documentElement.requestFullscreen().catch(()=>{});document.getElementById('fsBtn').textContent='⛶ Quitter plein écran';}
-  else{document.exitFullscreen().catch(()=>{});document.getElementById('fsBtn').textContent='⛶ Plein écran';}
+  if(!document.fullscreenElement){
+    document.documentElement.requestFullscreen().catch(()=>{});
+    document.getElementById('fsBtn').textContent='⛶ Quitter plein écran';
+  } else {
+    document.exitFullscreen().catch(()=>{});
+    document.getElementById('fsBtn').textContent='⛶ Plein écran';
+  }
 }
-document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement)document.getElementById('fsBtn').textContent='⛶ Plein écran';});
+document.addEventListener('fullscreenchange',()=>{
+  if(!document.fullscreenElement)document.getElementById('fsBtn').textContent='⛶ Plein écran';
+});
 
-function getPanelW(){return window.innerWidth>768?parseInt(getComputedStyle(document.documentElement).getPropertyValue('--panel-w'))||260:0;}
+function getPanelW(){return window.innerWidth>768?parseInt(getComputedStyle(document.documentElement).getPropertyValue('--panel-w'))||310:0;}
 
 function hidePanel(){
   if(window.innerWidth<=768){togglePanel();return;}
   document.getElementById('rightPanel').classList.add('hidden');
-  const w=getPanelW();
   document.getElementById('main').style.marginRight='0';
   document.getElementById('bottomBar').style.right='0';
   document.getElementById('topBtns').style.right='8px';
@@ -330,7 +755,10 @@ function openPanel(){
 }
 function togglePanel(){
   const rp=document.getElementById('rightPanel'),btn=document.getElementById('panelToggle');
-  if(window.innerWidth<=768){rp.classList.toggle('open');btn.textContent=rp.classList.contains('open')?'✕ Fermer':'☰ Infos';}
+  if(window.innerWidth<=768){
+    rp.classList.toggle('open');
+    btn.textContent=rp.classList.contains('open')?'✕ Fermer':'☰ Infos';
+  }
 }
 
 function toggleDetail(){const p=document.getElementById('detailPanel'),a=document.getElementById('detail-arrow');p.classList.toggle('open');a.textContent=p.classList.contains('open')?'∨':'›';}
@@ -344,52 +772,66 @@ function setCustomTime(){
   if(!match){alert('Format invalide. Utilisez HH:MM:SS');return;}
   const h=parseInt(match[1]),m=parseInt(match[2]),s=parseInt(match[3]);
   if(h>23||m>59||s>59){alert('Heure invalide.');return;}
-  customTimeBase=h*3600+m*60+s;customTimeSetAt=Date.now();timeMode='custom';updateTimeModeIndicator();alert('Heure définie: '+input);
+  customTimeBase=h*3600+m*60+s;customTimeSetAt=Date.now();timeMode='custom';updateTimeModeIndicator();
+  alert('Heure définie: '+input);
 }
-function switchTimeMode(mode){if(mode==='custom'&&customTimeBase===null){alert('Veuillez d\'abord définir une heure.');return;}timeMode=mode;updateTimeModeIndicator();}
-function updateTimeModeIndicator(){document.getElementById('timeModeIndicator').textContent=timeMode==='real'?'Mode: Heure réelle':'Mode: Heure définie';}
-function getCurrentGameTime(){if(timeMode==='custom'&&customTimeBase!==null)return customTimeBase+(Date.now()-customTimeSetAt)/1000;return gameSec;}
+function switchTimeMode(mode){
+  if(mode==='custom'&&customTimeBase===null){alert('Veuillez d\'abord définir une heure.');return;}
+  timeMode=mode;updateTimeModeIndicator();
+}
+function updateTimeModeIndicator(){
+  document.getElementById('timeModeIndicator').textContent=timeMode==='real'?'Mode: Heure réelle':'Mode: Heure définie';
+}
+function getCurrentGameTime(){
+  if(timeMode==='custom'&&customTimeBase!==null)return customTimeBase+(Date.now()-customTimeSetAt)/1000;
+  return gameSec;
+}
 
-const stations=[
-  {pk:0.00,  name:'Lézan v1',          vref:'1',arr:'14:08:00',dep:'14:10:00',retour:false},
-  {pk:2.70,  name:'Boussot v1',         vref:'1',arr:'14:13:20',dep:'14:14:20',retour:false},
-  {pk:9.74,  name:'La Bambouseraie v1', vref:'1',arr:'14:23:08',dep:'14:24:08',retour:false},
-  {pk:11.70, name:'Corbes v1',          vref:'1',arr:'14:27:08',dep:'14:28:08',retour:false},
-  {pk:13.17, name:'Thoiras v1',         vref:'1',arr:'14:30:12',dep:'14:31:12',retour:false},
-  {pk:20.31, name:'ST Jean du Gard v2', vref:'2',arr:'14:40:21',dep:'14:47:21',retour:false,terminus:true},
-  {pk:13.17, name:'Thoiras v1',         vref:'1',arr:'14:56:34',dep:'14:57:34',retour:true},
-  {pk:11.70, name:'Corbes v1',          vref:'1',arr:'14:59:35',dep:'15:00:35',retour:true},
-  {pk:9.74,  name:'La Bambouseraie v1', vref:'1',arr:'15:03:35',dep:'15:04:35',retour:true},
-  {pk:null,  name:'Anduze v1',          vref:'1',arr:'15:07:50',dep:'15:08:50',retour:true},
-  {pk:2.70,  name:'Boussot v2',         vref:'2',arr:'15:14:30',dep:'15:15:30',retour:true},
-  {pk:0.00,  name:'Lézan v1',           vref:'1',arr:'15:18:41',dep:'15:19:41',retour:true,terminus:true},
-];
-
+// ── Checklist ──
 const checkItems=['Batterie','Clef','Démarrage moteur','Test BP','Test KVB','Test Radio'];
 const checked=new Set();
 const cl=document.getElementById('checklist');
 checkItems.forEach((label,i)=>{
   const div=document.createElement('div');div.className='check-item';div.id='ci'+i;
   div.innerHTML='<div class="check-box" id="cb'+i+'"></div><span class="check-label">'+label+'</span>';
-  div.onclick=()=>{checked.has(i)?checked.delete(i):checked.add(i);document.getElementById('cb'+i).className='check-box'+(checked.has(i)?' checked':'');document.getElementById('ci'+i).className='check-item'+(checked.has(i)?' done':'');document.getElementById('check-prog').textContent=checked.size+'/'+checkItems.length;};
+  div.onclick=()=>{
+    checked.has(i)?checked.delete(i):checked.add(i);
+    document.getElementById('cb'+i).className='check-box'+(checked.has(i)?' checked':'');
+    document.getElementById('ci'+i).className='check-item'+(checked.has(i)?' done':'');
+    document.getElementById('check-prog').textContent=checked.size+'/'+checkItems.length;
+  };
   cl.appendChild(div);
 });
 
-const tbody=document.getElementById('tbody');let sepDone=false;
-stations.forEach((s,i)=>{
-  if(s.retour&&!sepDone){const sep=document.createElement('tr');sep.className='sep';sep.innerHTML='<td colspan="6">⇄ Changement de cabine</td>';tbody.appendChild(sep);sepDone=true;}
-  const tr=document.createElement('tr');tr.id='r'+i;
-  const pkT=s.pk!==null?s.pk.toFixed(2):'?';
-  tr.innerHTML='<td class="col-vl"><div style="font-size:18px;color:#bbb;">—</div></td>'+
-    '<td class="col-pk">'+pkT+'</td>'+
-    '<td class="col-vref">'+s.vref+'</td>'+
-    '<td class="col-etab"><div class="station"><span class="station-name">'+s.name+(s.terminus?'<span class="term-badge">Terminus</span>':'')+'</span></div></td>'+
-    '<td class="col-arr">'+s.arr+'</td>'+
-    '<td class="col-delta" id="d'+i+'"><span class="dbadge fut">—</span></td>';
-  tbody.appendChild(tr);
-});
+// ── Tableau ──
+const tbody=document.getElementById('tbody');
+function buildTable(){
+  tbody.innerHTML='';
+  let sepDone=false;
+  stations.forEach((s,i)=>{
+    if(s.retour&&!sepDone){
+      const sep=document.createElement('tr');sep.className='sep';
+      sep.innerHTML='<td colspan="5">⇄ Changement de cabine</td>';
+      tbody.appendChild(sep);sepDone=true;
+    }
+    const tr=document.createElement('tr');tr.id='r'+i;
+    const pkT=s.pk!==null?s.pk.toFixed(2):'—';
+    tr.innerHTML='<td class="col-pk">'+pkT+'</td>'+
+      '<td class="col-vref">'+s.vref+'</td>'+
+      '<td class="col-etab"><div class="station"><span class="station-name">'+s.name+
+      (s.terminus?'<span class="term-badge">Terminus</span>':'')+'</span></div></td>'+
+      '<td class="col-arr">'+s.arr+'</td>'+
+      '<td class="col-delta" id="d'+i+'"><span class="dbadge fut">—</span></td>';
+    tbody.appendChild(tr);
+  });
+}
+buildTable();
 
-function toSec(t){if(!t)return null;const p=t.split(':');return parseInt(p[0])*3600+parseInt(p[1])*60+(parseInt(p[2])||0);}
+function toSec(t){
+  if(!t)return null;
+  const p=t.split(':');
+  return parseInt(p[0])*3600+parseInt(p[1])*60+(parseInt(p[2])||0);
+}
 
 function fmtD(d){
   const a=Math.round(Math.abs(d)*100)/100;
@@ -397,7 +839,7 @@ function fmtD(d){
   if(a<5)return{text:"À l'heure",cls:'ontime'};
   else if(a<60)t=a.toFixed(2)+'s';
   else if(a<3600){const mins=Math.floor(a/60);const secs=(a%60).toFixed(2);t=mins+'min '+String(secs).padStart(5,'0')+'s';}
-  else{const hrs=Math.floor(a/3600);const mins=String(Math.floor((a%3600)/60)).padStart(2,'0');t=hrs+'h'+mins;}
+  else{t=Math.floor(a/3600)+'h'+String(Math.floor((a%3600)/60)).padStart(2,'0');}
   return d>5?{text:'+'+t,cls:'ahead'}:{text:'−'+t,cls:'late'};
 }
 
@@ -420,14 +862,16 @@ function render(){
   });
   const last=stations[stations.length-1];
   document.getElementById('term-name').textContent=last.name;
-  document.getElementById('term-detail').textContent='Mission Cévenol · Arr. '+last.arr;
+  document.getElementById('term-detail').textContent=allMissions[currentMissionId].termLabel+' · Arr. '+last.arr;
   const cur=stations[curIdx];
   if(cur){
     document.getElementById('ns-name').textContent=cur.name;
     document.getElementById('ns-time').textContent='Arr. '+cur.arr+' · Dép. '+cur.dep;
     const nd=document.getElementById('next-delta');
-    if(currentTime!==null){const as=toSec(cur.arr);if(as!==null){const d=fmtD(as-currentTime);nd.textContent=d.text;nd.className=d.cls;}}
-    else{nd.textContent='—';nd.className='ontime';}
+    if(currentTime!==null){
+      const as=toSec(cur.arr);
+      if(as!==null){const d=fmtD(as-currentTime);nd.textContent=d.text;nd.className=d.cls;}
+    } else {nd.textContent='—';nd.className='ontime';}
   }
   if(currentTime!==null){
     const diff=currentTime-toSec(stations[0].arr);const a=Math.abs(diff);let t;
@@ -451,6 +895,7 @@ function navigate(dir){
   }
   render();
 }
+
 function resetNav(){curIdx=0;for(const k in recordedDeltas)delete recordedDeltas[k];render();}
 
 document.addEventListener('keydown',e=>{
@@ -468,7 +913,8 @@ async function fetchTSC(){
   if(inApp&&timeMode==='real'){
     try{
       const res=await fetch('http://localhost:8080/readlocos',{mode:'cors',signal:AbortSignal.timeout(2000)});
-      const txt=await res.text();const xml=new DOMParser().parseFromString(txt,'text/xml');
+      const txt=await res.text();
+      const xml=new DOMParser().parseFromString(txt,'text/xml');
       const el=xml.querySelector('Time')||xml.querySelector('time');
       if(el){
         gameSec=parseFloat(el.textContent);
@@ -481,10 +927,12 @@ async function fetchTSC(){
   }
   let displayTime;
   if(timeMode==='custom'&&customTimeBase!==null){
-    const t=getCurrentGameTime();const h=Math.floor(t/3600)%24,m=Math.floor(t/60)%60,s=Math.floor(t)%60;
+    const t=getCurrentGameTime();
+    const h=Math.floor(t/3600)%24,m=Math.floor(t/60)%60,s=Math.floor(t)%60;
     displayTime=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
   } else {
-    const n=new Date();displayTime=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0');
+    const n=new Date();
+    displayTime=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0');
   }
   document.getElementById('clock').textContent=displayTime;
   if(inApp)render();

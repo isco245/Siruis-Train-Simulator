@@ -193,7 +193,10 @@ td{padding:8px;font-size:15px;color:var(--text);transform:skewX(7deg);}
 .next-up{background:var(--row-next)!important;}
 .next-up .station-name{color:var(--row-next-tx);font-weight:600;}
 .sep td{background:var(--sep-bg)!important;height:28px!important;text-align:center;font-size:11px;font-weight:600;color:var(--sep-tx);letter-spacing:2px;text-transform:uppercase;border-top:2px solid var(--sep-bd);border-bottom:2px solid var(--sep-bd);transform:skewX(7deg);}
-.col-pk{width:78px;text-align:center;color:var(--pk);font-weight:700;font-size:15px;}
+.col-pk{width:82px;text-align:center;color:var(--pk);font-weight:800;font-size:16px;letter-spacing:.5px;}
+:root{--pk-bg:rgba(77,163,255,.10);}
+body.night{--pk-bg:rgba(77,163,255,.18);}
+tbody tr td.col-pk{background:var(--pk-bg);border-right:2px solid rgba(77,163,255,.25);}
 .col-vref{width:50px;text-align:center;}
 .col-etab{font-size:15px;font-weight:500;}
 .col-arr{width:100px;text-align:center;font-variant-numeric:tabular-nums;}
@@ -368,6 +371,35 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
             <div class="line-btn-label">
               <div class="lbl-main">ST Jean du Gard · Jour</div>
               <div class="lbl-sub">Lézan → Saint-Jean-du-Gard</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="map-group">
+        <div class="map-group-label">Béziers · Narbonne · Port-la-Nouvelle</div>
+        <div class="map-group-row">
+          <div class="line-btn" onclick="enterMission('beziers_long')">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#0d1a2e 0%,#1a3050 50%,#0a2a1a 100%);"></div>
+            <div class="line-tag" style="background:#27ae60;color:#fff;">AGC · Long</div>
+            <div class="line-btn-label">
+              <div class="lbl-main">Service AGC Long · Jour</div>
+              <div class="lbl-sub">Port-la-Nouvelle → Narbonne C</div>
+            </div>
+          </div>
+          <div class="line-btn" onclick="enterMission('beziers_court')">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a1a0d 0%,#2a2a10 50%,#1a2a0d 100%);"></div>
+            <div class="line-tag" style="background:#e89b2d;color:#000;">AGC · Court</div>
+            <div class="line-btn-label">
+              <div class="lbl-main">Service AGC Court · Jour</div>
+              <div class="lbl-sub">Port-la-Nouvelle → Béziers A</div>
+            </div>
+          </div>
+          <div class="line-btn" onclick="enterMission('beziers_long_nuit')">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#060a10 0%,#0d1a30 50%,#060d18 100%);"></div>
+            <div class="line-tag" style="background:#7c3aed;color:#fff;">AGC · Long · Nuit</div>
+            <div class="line-btn-label">
+              <div class="lbl-main">Service AGC Long · Nuit</div>
+              <div class="lbl-sub">Port-la-Nouvelle → Narbonne C</div>
             </div>
           </div>
         </div>
@@ -603,6 +635,35 @@ const allMissions={
       {pk:null,name:'Anduze v1',vref:'1',arr:'15:07:50',dep:'15:08:50',retour:true},
       {pk:2.70,name:'Boussot v2',vref:'2',arr:'15:14:30',dep:'15:15:30',retour:true},
       {pk:0.00,name:'Lézan v1',vref:'1',arr:'15:18:41',dep:'15:19:41',retour:true,terminus:true},
+    ]
+  },
+  beziers_long:{
+    trainId:'Service AGC Long',trainSub:'AGC · Jour',materiel:'AGC',termLabel:'Béziers — Narbonne — Port-la-Nouvelle',
+    stations:[
+      {pk:null,name:'Port-la-Nouvelle Quai B',vref:'B',arr:'13:55:00',dep:'14:00:00',retour:false},
+      {pk:null,name:'Narbonne Quai D',vref:'D',arr:'14:12:15',dep:'14:13:15',retour:false},
+      {pk:null,name:'Coursan Quai A',vref:'A',arr:'14:17:02',dep:'14:18:02',retour:false},
+      {pk:null,name:'Colombiers Quai A',vref:'A',arr:'14:25:11',dep:'14:26:11',retour:false},
+      {pk:null,name:'Béziers Quai B',vref:'B',arr:'14:34:06',dep:'14:40:06',retour:false,terminus:true},
+      {pk:null,name:'Narbonne Quai C',vref:'C',arr:'14:54:41',dep:'14:55:41',retour:true,terminus:true},
+    ]
+  },
+  beziers_court:{
+    trainId:'Service AGC Court',trainSub:'AGC · Jour',materiel:'AGC',termLabel:'Port-la-Nouvelle — Béziers',
+    stations:[
+      {pk:null,name:'Port-la-Nouvelle Quai B',vref:'B',arr:'13:50:09',dep:'13:55:09',retour:false},
+      {pk:null,name:'Narbonne Quai D',vref:'D',arr:'14:06:39',dep:'14:07:39',retour:false},
+      {pk:null,name:'Coursan Quai A',vref:'A',arr:'14:13:37',dep:'14:14:37',retour:false},
+      {pk:null,name:'Béziers Quai A',vref:'A',arr:'14:34:05',dep:'14:40:05',retour:false,terminus:true},
+    ]
+  },
+  beziers_long_nuit:{
+    trainId:'Service AGC Long Nuit',trainSub:'AGC · Nuit',materiel:'AGC',termLabel:'Béziers — Narbonne — Port-la-Nouvelle · Nuit',
+    stations:[
+      {pk:null,name:'Port-la-Nouvelle Quai B',vref:'B',arr:'20:55:00',dep:'21:00:00',retour:false},
+      {pk:null,name:'Narbonne Quai D',vref:'D',arr:'21:11:29',dep:'21:12:29',retour:false},
+      {pk:null,name:'Béziers Quai B',vref:'B',arr:'21:25:38',dep:'21:31:38',retour:false,terminus:true},
+      {pk:null,name:'Narbonne Quai C',vref:'C',arr:'21:45:15',dep:'21:46:15',retour:true,terminus:true},
     ]
   }
 };

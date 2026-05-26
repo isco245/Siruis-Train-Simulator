@@ -55,31 +55,99 @@ body{font-family:'Roboto',sans-serif;overflow:hidden;}
 @keyframes stepSweep{to{left:100%;}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
 
-/* ══ MENU PRINCIPAL ══ */
-#mainMenu{position:fixed;inset:0;z-index:100;background:#1c1c1c;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+/* ══ MENU PRINCIPAL — fond identique au splash ══ */
+#mainMenu{
+  position:fixed;inset:0;z-index:100;
+  background:#060a10;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  overflow-y:auto;
+}
+#mainMenu::before{
+  content:'';position:fixed;inset:0;
+  background:linear-gradient(rgba(77,163,255,.04) 1px,transparent 1px),
+             linear-gradient(90deg,rgba(77,163,255,.04) 1px,transparent 1px);
+  background-size:40px 40px;
+  animation:gridPulse 4s ease-in-out infinite;
+  pointer-events:none;z-index:0;
+}
+#mainMenu::after{
+  content:'';position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.08) 2px,rgba(0,0,0,.08) 4px);
+  pointer-events:none;z-index:0;
+}
+.menu-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;padding:30px 20px;}
 #mainMenu.hidden{display:none;}
-.menu-sirius{color:#4da3ff;font-size:36px;font-weight:700;letter-spacing:4px;margin-bottom:4px;font-family:'Rajdhani',sans-serif;}
+
+/* Coins menu */
+.menu-corner{position:fixed;width:60px;height:60px;opacity:.3;z-index:1;}
+.menu-corner.tl{top:20px;left:20px;border-top:2px solid #4da3ff;border-left:2px solid #4da3ff;}
+.menu-corner.tr{top:20px;right:20px;border-top:2px solid #4da3ff;border-right:2px solid #4da3ff;}
+.menu-corner.bl{bottom:20px;left:20px;border-bottom:2px solid #4da3ff;border-left:2px solid #4da3ff;}
+.menu-corner.br{bottom:20px;right:20px;border-bottom:2px solid #4da3ff;border-right:2px solid #4da3ff;}
+
+/* Animation d'entrée du menu */
+#mainMenu.menu-enter .menu-inner{animation:menuReveal .7s ease forwards;}
+@keyframes menuReveal{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+
+.menu-sirius{color:#4da3ff;font-size:42px;font-weight:700;letter-spacing:6px;margin-bottom:4px;font-family:'Rajdhani',sans-serif;text-shadow:0 0 40px rgba(77,163,255,.4);}
 .menu-sirius span{color:#fff;}
-.menu-header{color:#fff;font-size:12px;letter-spacing:4px;text-transform:uppercase;opacity:.4;margin-bottom:20px;font-family:'Rajdhani',sans-serif;}
-.menu-title{color:#fff;font-size:22px;font-weight:500;margin-bottom:26px;letter-spacing:1px;opacity:.8;}
+.menu-header{color:#3a5a80;font-size:11px;letter-spacing:5px;text-transform:uppercase;margin-bottom:6px;font-family:'Rajdhani',sans-serif;}
+.menu-divider{display:flex;align-items:center;gap:10px;width:300px;margin-bottom:22px;}
+.menu-divider::before,.menu-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,#4da3ff,transparent);}
+.menu-divider-dot{width:5px;height:5px;border-radius:50%;background:#4da3ff;box-shadow:0 0 8px #4da3ff;}
+.menu-title{color:#6080a0;font-size:12px;letter-spacing:4px;text-transform:uppercase;margin-bottom:28px;font-family:'Rajdhani',sans-serif;}
 
 /* Grille par map */
-.map-group{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px;}
-.map-group-label{color:#888;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-family:'Rajdhani',sans-serif;align-self:flex-start;padding-left:4px;}
-.map-group-row{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;}
-.lines-wrapper{display:flex;flex-direction:column;gap:0;max-width:1000px;padding:0 20px;width:100%;}
+.map-group{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:24px;width:100%;}
+.map-group-label{
+  color:#4da3ff;font-size:11px;letter-spacing:4px;text-transform:uppercase;
+  font-family:'Rajdhani',sans-serif;
+  display:flex;align-items:center;gap:10px;width:100%;max-width:680px;
+}
+.map-group-label::before,.map-group-label::after{content:'';flex:1;height:1px;background:rgba(77,163,255,.2);}
+.map-group-row{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;}
+.lines-wrapper{display:flex;flex-direction:column;gap:0;max-width:1000px;padding:0 20px;width:100%;align-items:center;}
 
-.line-btn{position:relative;width:280px;height:165px;border:2px solid #444;border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .2s,transform .15s,box-shadow .2s;background:#111;flex-shrink:0;}
-.line-btn:hover{border-color:#e89b2d;transform:translateY(-4px);box-shadow:0 10px 32px rgba(0,0,0,.8);}
-.line-btn-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:14px 16px;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 65%);}
-.lbl-main{font-size:17px;font-weight:700;color:#fff;line-height:1.2;}
-.lbl-sub{font-size:12px;color:#ccc;margin-top:4px;}
-.line-tag{position:absolute;top:10px;left:10px;background:#e89b2d;color:#000;font-size:11px;font-weight:700;letter-spacing:1px;padding:3px 8px;border-radius:3px;}
+/* Boutons de lignes — agrandis et centrés */
+.line-btn{
+  position:relative;width:320px;height:190px;
+  border:1px solid rgba(77,163,255,.2);border-radius:10px;
+  overflow:hidden;cursor:pointer;
+  transition:border-color .25s,transform .2s,box-shadow .25s;
+  background:#060a10;flex-shrink:0;
+}
+.line-btn:hover{
+  border-color:#4da3ff;
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:0 16px 48px rgba(0,0,0,.9),0 0 0 1px rgba(77,163,255,.3);
+}
+.line-btn-label{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  padding:18px 16px;
+  background:linear-gradient(to top,rgba(6,10,16,.95) 0%,rgba(6,10,16,.5) 50%,transparent 100%);
+  text-align:center;
+}
+/* Nouvelle taille des noms de ligne */
+.lbl-main{font-size:20px;font-weight:700;color:#fff;line-height:1.2;letter-spacing:.5px;text-shadow:0 2px 8px rgba(0,0,0,.8);}
+.lbl-sub{font-size:13px;color:#7dd3fc;margin-top:5px;letter-spacing:.5px;}
+.line-tag{
+  position:absolute;top:12px;left:12px;
+  background:#e89b2d;color:#000;
+  font-size:11px;font-weight:700;letter-spacing:1px;
+  padding:3px 10px;border-radius:4px;
+  font-family:'Rajdhani',sans-serif;
+}
 
-#menuClock{margin-top:30px;text-align:center;}
-#menuClockTime{font-size:28px;font-weight:300;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:3px;font-family:'Rajdhani',sans-serif;}
-#menuClockDate{font-size:12px;color:#666;margin-top:4px;letter-spacing:1px;}
-#menu-disclaimer{margin-top:16px;font-size:10px;color:#444;letter-spacing:1px;text-align:center;font-family:'Rajdhani',sans-serif;text-transform:uppercase;}
+#menuClock{margin-top:10px;text-align:center;}
+#menuClockTime{
+  font-size:52px;font-weight:300;color:#fff;
+  font-variant-numeric:tabular-nums;letter-spacing:6px;
+  font-family:'Rajdhani',sans-serif;
+  text-shadow:0 0 40px rgba(255,255,255,.15);
+}
+#menuClockDate{font-size:12px;color:#4da3ff;margin-top:4px;letter-spacing:2px;font-family:'Rajdhani',sans-serif;}
+#menu-disclaimer{margin-top:16px;font-size:10px;color:#1a3050;letter-spacing:1px;text-align:center;font-family:'Rajdhani',sans-serif;text-transform:uppercase;}
 
 /* ══ CSS VARS ══ */
 :root{
@@ -88,7 +156,7 @@ body{font-family:'Roboto',sans-serif;overflow:hidden;}
   --text:#222;--text-muted:#777;--clock-bg:#f7f7f7;--clock-border:#cfcfcf;--clock-color:#111;
   --row-odd:#ececec;--row-even:#e2e2e2;--row-cur:#dfe8f7;--row-cur-bd:#4da3ff;--row-cur-tx:#1a4080;
   --row-next:#eef5e8;--row-next-tx:#2e6010;--sep-bg:#c0c0c0;--sep-bd:#aaa;--sep-tx:#555;
-  --thead-bg:#cecece;--thead-tx:#666;--pk:#555;--st-sm:#777;
+  --thead-bg:#cecece;--thead-tx:#666;--pk:#111;--st-sm:#777;
   --bar-bg:rgba(240,240,240,.95);--bar-bd:#c5c5c5;--btn-bg:#fff;--btn-bd:#bbb;
   --btn-tx:#333;--btn-hv:#e8e8e8;--det-bg:#fff;--scr:#bcbcbc;--panel-w:310px;
 }
@@ -98,7 +166,7 @@ body.night{
   --clock-bg:#111827;--clock-border:#243550;--clock-color:#7dd3fc;
   --row-odd:#182030;--row-even:#141c28;--row-cur:#1a3a5e;--row-cur-bd:#3b82f6;--row-cur-tx:#93c5fd;
   --row-next:#162816;--row-next-tx:#86efac;--sep-bg:#0d1520;--sep-bd:#1a3050;--sep-tx:#3b82f6;
-  --thead-bg:#0d1520;--thead-tx:#5080a0;--pk:#6080a0;--st-sm:#6080a0;
+  --thead-bg:#0d1520;--thead-tx:#5080a0;--pk:#7dd3fc;--st-sm:#6080a0;
   --bar-bg:rgba(13,21,32,.95);--bar-bd:#1a3050;--btn-bg:#1a2535;--btn-bd:#2a3f58;
   --btn-tx:#90aac0;--btn-hv:#1e2f44;--det-bg:#111827;--scr:#243550;
 }
@@ -147,9 +215,10 @@ body.night #terminus{background:#0d1520;}
 #destination{background:#e89b2d;padding:10px 14px;color:white;transition:background .35s;}
 body.night #destination{background:#a06010;}
 #destination .d-label{font-size:9px;opacity:.8;text-transform:uppercase;letter-spacing:1px;}
-#destination h2{font-size:15px;font-weight:700;margin-top:1px;}
-#destination p{margin-top:4px;font-size:11px;opacity:.85;}
-#next-delta{display:inline-block;margin-top:4px;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700;}
+/* Prochain arrêt — texte agrandi */
+#destination h2{font-size:20px;font-weight:700;margin-top:1px;}
+#destination p{margin-top:4px;font-size:13px;opacity:.9;}
+#next-delta{display:inline-block;margin-top:4px;padding:2px 7px;border-radius:3px;font-size:12px;font-weight:700;}
 #next-delta.ahead{background:#d4edda;color:#155724;}
 #next-delta.late{background:#f8d7da;color:#721c24;}
 #next-delta.ontime{background:#d1ecf1;color:#0c5460;}
@@ -157,7 +226,8 @@ body.night #next-delta.ahead{background:#0d2a0d;color:#86efac;}
 body.night #next-delta.late{background:#2a0d0d;color:#fca5a5;}
 body.night #next-delta.ontime{background:#0d1e2a;color:#7dd3fc;}
 #clockPanel{background:var(--clock-bg);padding:8px 14px;border-top:1px solid var(--clock-border);transition:background .35s,border-color .35s;}
-#clock{font-size:36px;font-weight:300;color:var(--clock-color);letter-spacing:2px;font-variant-numeric:tabular-nums;transition:color .35s;font-family:'Rajdhani',sans-serif;}
+/* Heure en gras */
+#clock{font-size:36px;font-weight:700;color:var(--clock-color);letter-spacing:2px;font-variant-numeric:tabular-nums;transition:color .35s;font-family:'Rajdhani',sans-serif;}
 #avance{margin-top:3px;color:#4da3ff;font-size:12px;}
 #reg{margin-top:2px;text-align:right;color:var(--text-muted);font-size:11px;}
 .small{font-size:11px;color:var(--text-muted);margin-bottom:3px;}
@@ -180,7 +250,8 @@ td{padding:8px;font-size:15px;color:var(--text);transform:skewX(7deg);}
 .next-up{background:var(--row-next)!important;}
 .next-up .station-name{color:var(--row-next-tx);font-weight:600;}
 .sep td{background:var(--sep-bg)!important;height:28px!important;text-align:center;font-size:11px;font-weight:600;color:var(--sep-tx);letter-spacing:2px;text-transform:uppercase;border-top:2px solid var(--sep-bd);border-bottom:2px solid var(--sep-bd);transform:skewX(7deg);}
-.col-pk{width:70px;text-align:center;color:var(--pk);}
+/* PK plus visible */
+.col-pk{width:78px;text-align:center;color:var(--pk);font-weight:700;font-size:15px;}
 .col-vref{width:50px;text-align:center;}
 .col-etab{font-size:15px;font-weight:500;}
 .col-arr{width:100px;text-align:center;font-variant-numeric:tabular-nums;}
@@ -198,6 +269,10 @@ body.night .dbadge.ahead{background:#0d2a0d;color:#86efac;}
 body.night .dbadge.late{background:#2a0d0d;color:#fca5a5;}
 body.night .dbadge.ontime{background:#0d1e2a;color:#7dd3fc;}
 body.night .dbadge.done{background:#1a2535;color:#4a6080;}
+
+/* En-tête PK plus visible */
+thead td.col-pk{color:#333;font-weight:700;}
+body.night thead td.col-pk{color:#7dd3fc;}
 
 /* ══ Boutons flottants ══ */
 #navFloat{position:fixed;bottom:22px;left:22px;z-index:40;display:flex;gap:10px;align-items:center;}
@@ -256,8 +331,8 @@ body.is-tablet .menuItem{height:38px;font-size:13px;padding:0 12px;}
 body.is-tablet #clock{font-size:28px;}
 body.is-tablet #clockPanel{padding:6px 12px;}
 body.is-tablet #destination{padding:8px 12px;}
-body.is-tablet #destination h2{font-size:13px;}
-body.is-tablet #destination p{font-size:10px;}
+body.is-tablet #destination h2{font-size:17px;}
+body.is-tablet #destination p{font-size:11px;}
 body.is-tablet #terminus{padding:6px 12px;}
 body.is-tablet #terminus .t-name{font-size:12px;}
 body.is-tablet tbody tr{height:60px;}
@@ -291,7 +366,8 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
   #splash-title{font-size:52px;letter-spacing:6px;}
   #splash-clock{font-size:40px;}
   #splash-loader{width:240px;}
-  .line-btn{width:240px;height:140px;}
+  .line-btn{width:280px;height:170px;}
+  .lbl-main{font-size:17px;}
 }
 </style>
 </head>
@@ -328,56 +404,63 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
 </div>
 
 <!-- MENU PRINCIPAL -->
-<div id="mainMenu">
-  <div class="menu-sirius">SIRI<span>US</span></div>
-  <div class="menu-header">Simulateur de conduite</div>
-  <div class="menu-title">Choisissez votre ligne</div>
+<div id="mainMenu" class="hidden">
+  <div class="menu-corner tl"></div>
+  <div class="menu-corner tr"></div>
+  <div class="menu-corner bl"></div>
+  <div class="menu-corner br"></div>
+  <div class="menu-inner">
+    <div class="menu-sirius">SIRI<span>US</span></div>
+    <div class="menu-header">Simulateur de conduite · TSC</div>
+    <div class="menu-divider"><div class="menu-divider-dot"></div></div>
+    <div class="menu-title">Choisissez votre ligne</div>
 
-  <div class="lines-wrapper">
-    <!-- ══ MAP : Lyon Part-Dieu ══ -->
-    <div class="map-group">
-      <div class="map-group-label">Lyon Part-Dieu</div>
-      <div class="map-group-row">
-        <div class="line-btn" onclick="enterMission('lyon')">
-          <div style="width:100%;height:100%;background:url('lyon%20jour.png') center/cover no-repeat;"></div>
-          <div class="line-tag" style="background:#4da3ff;color:#fff;">82522 · AGC 5V</div>
-          <div class="line-btn-label">
-            <div class="lbl-main">Lyon Part-Dieu · Jour</div>
-            <div class="lbl-sub">Part-Dieu H → Part-Dieu A</div>
+    <div class="lines-wrapper">
+      <!-- ══ MAP : Lyon Part-Dieu ══ -->
+      <div class="map-group">
+        <div class="map-group-label">Lyon Part-Dieu</div>
+        <div class="map-group-row">
+          <div class="line-btn" onclick="enterMission('lyon')">
+            <div style="width:100%;height:100%;background:url('lyon%20jour.png') center/cover no-repeat;"></div>
+            <div class="line-tag" style="background:#4da3ff;color:#fff;">82522 · AGC 5V</div>
+            <div class="line-btn-label">
+              <div class="lbl-main">Lyon Part-Dieu · Jour</div>
+              <div class="lbl-sub">Part-Dieu H → Part-Dieu A</div>
+            </div>
+          </div>
+          <div class="line-btn" onclick="enterMission('lyon_nuit')">
+            <div style="width:100%;height:100%;background:url('lyon%20nuits.png') center/cover no-repeat;"></div>
+            <div class="line-tag" style="background:#7c3aed;color:#fff;">82522 · AGC 5V</div>
+            <div class="line-btn-label">
+              <div class="lbl-main">Lyon Part-Dieu · Nuit</div>
+              <div class="lbl-sub">Part-Dieu H → Part-Dieu A</div>
+            </div>
           </div>
         </div>
-        <div class="line-btn" onclick="enterMission('lyon_nuit')">
-          <div style="width:100%;height:100%;background:url('lyon%20nuits.png') center/cover no-repeat;"></div>
-          <div class="line-tag" style="background:#7c3aed;color:#fff;">82522 · AGC 5V</div>
-          <div class="line-btn-label">
-            <div class="lbl-main">Lyon Part-Dieu · Nuit</div>
-            <div class="lbl-sub">Part-Dieu H → Part-Dieu A</div>
+      </div>
+
+      <!-- ══ MAP : Saint-Jean-du-Gard ══ -->
+      <div class="map-group">
+        <div class="map-group-label">Saint-Jean-du-Gard</div>
+        <div class="map-group-row">
+          <div class="line-btn" onclick="enterMission('stjean')">
+            <div style="width:100%;height:100%;background:url('St%20jean%20du%20gard.png') center/cover no-repeat;"></div>
+            <div class="line-tag">X76671 · AGC 3V</div>
+            <div class="line-btn-label">
+              <div class="lbl-main">ST Jean du Gard · Jour</div>
+              <div class="lbl-sub">Lézan → Saint-Jean-du-Gard</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ══ MAP : Saint-Jean-du-Gard ══ -->
-    <div class="map-group">
-      <div class="map-group-label">Saint-Jean-du-Gard</div>
-      <div class="map-group-row">
-        <div class="line-btn" onclick="enterMission('stjean')">
-          <div style="width:100%;height:100%;background:url('St%20jean%20du%20gard.png') center/cover no-repeat;"></div>
-          <div class="line-tag">X76671 · AGC 3V</div>
-          <div class="line-btn-label">
-            <div class="lbl-main">ST Jean du Gard · Jour</div>
-            <div class="lbl-sub">Lézan → Saint-Jean-du-Gard</div>
-          </div>
-        </div>
-      </div>
+    <div id="menuClock">
+      <div id="menuClockTime">--:--:--</div>
+      <div id="menuClockDate"></div>
     </div>
+    <div id="menu-disclaimer">Site non affilié à la SNCF · À destination de Train Simulator Classic</div>
   </div>
-
-  <div id="menuClock">
-    <div id="menuClockTime">--:--:--</div>
-    <div id="menuClockDate"></div>
-  </div>
-  <div id="menu-disclaimer">Site non affilié à la SNCF · À destination de Train Simulator Classic</div>
 </div>
 
 <!-- BOUTONS HAUT -->
@@ -461,7 +544,7 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
 <!-- TABLEAU PRINCIPAL -->
 <div id="main">
   <table>
-    <thead><tr><td>PK</td><td>VRef</td><td>Établissement</td><td>Horaire</td><td>Écart</td></tr></thead>
+    <thead><tr><td class="col-pk">PK</td><td>VRef</td><td>Établissement</td><td>Horaire</td><td>Écart</td></tr></thead>
     <tbody id="tbody"></tbody>
   </table>
 </div>
@@ -479,11 +562,6 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
   <button class="fab fab-reset" onclick="resetNav()" title="Réinitialiser [R]">↺</button>
 </div>
 
-<!--
-  AUDIO — FIX TABLETTE/SAFARI :
-  L'élément audio est chargé normalement.
-  La lecture est déverrouillée au premier touchstart via audioUnlocked.
--->
 <audio id="rappelAudio" preload="auto">
   <source src="[SNCF Simone]Rappe......arrêt.mp3" type="audio/mpeg">
 </audio>
@@ -505,25 +583,16 @@ let aQuaiActive=false,rappelActive=false,rappelFired={};
   document.body.classList.add(isTablet?'is-tablet':'is-pc');
 })();
 
-/* ══ FIX AUDIO TABLETTE / SAFARI ══
-   Safari et iOS bloquent la lecture audio tant qu'il n'y a pas eu
-   un geste utilisateur direct. On "déverrouille" l'AudioContext au
-   premier touchstart, puis on joue un buffer silencieux sur l'élément
-   <audio> pour le sortir de la politique de blocage.
-*/
+/* ══ FIX AUDIO TABLETTE / SAFARI ══ */
 let audioUnlocked=false;
 function unlockAudio(){
   if(audioUnlocked)return;
   audioUnlocked=true;
   const audio=document.getElementById('rappelAudio');
-  /* Tente une lecture silencieuse (volume 0) puis pause immédiate */
   audio.volume=0;
   audio.play().then(()=>{
-    audio.pause();
-    audio.currentTime=0;
-    audio.volume=1;
+    audio.pause();audio.currentTime=0;audio.volume=1;
   }).catch(()=>{audio.volume=1;});
-  /* Déverrouillage AudioContext si dispo (pour Safari) */
   if(window.AudioContext||window.webkitAudioContext){
     const ac=new (window.AudioContext||window.webkitAudioContext)();
     const buf=ac.createBuffer(1,1,22050);
@@ -567,8 +636,17 @@ function closeSplash(){
   clearInterval(progressInterval);clearInterval(splashInterval);
   progressBar.style.width='100%';
   const last=document.getElementById('step4');if(last){last.classList.replace('active','done');last.querySelector('.step-ico').textContent='✔';}
-  const s=document.getElementById('splash');s.classList.add('fade-out');
-  setTimeout(()=>{s.style.display='none';},800);
+  const s=document.getElementById('splash');
+  s.classList.add('fade-out');
+  /* Animation d'entrée du menu après le splash */
+  setTimeout(()=>{
+    s.style.display='none';
+    const menu=document.getElementById('mainMenu');
+    menu.classList.remove('hidden');
+    menu.classList.add('menu-enter');
+    /* Retirer la classe après l'anim pour ne pas la rejouer */
+    setTimeout(()=>menu.classList.remove('menu-enter'),800);
+  },800);
 }
 setTimeout(closeSplash,SPLASH_DURATION);
 
@@ -652,7 +730,12 @@ function enterMission(id){
   render();
 }
 
-function showMenu(){document.getElementById('mainMenu').classList.remove('hidden');}
+function showMenu(){
+  const menu=document.getElementById('mainMenu');
+  menu.classList.remove('hidden');
+  menu.classList.add('menu-enter');
+  setTimeout(()=>menu.classList.remove('menu-enter'),800);
+}
 
 function toggleNight(){
   night=!night;
@@ -885,12 +968,10 @@ function checkRappel(){
 
 function playRappel(stationName){
   const audio=document.getElementById('rappelAudio');
-  /* FIX SAFARI : si l'AudioContext est suspendu, on le reprend avant lecture */
   audio.currentTime=0;
   const playPromise=audio.play();
   if(playPromise!==undefined){
     playPromise.catch(err=>{
-      /* Dernier recours : on retente après un court délai */
       console.warn('Audio play bloqué, nouvelle tentative…',err);
       setTimeout(()=>{audio.currentTime=0;audio.play().catch(()=>{});},200);
     });

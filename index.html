@@ -7,15 +7,8 @@
 <link rel="icon" type="image/png" sizes="32x32" href="sncf.png">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════
-   RESET & BASE
-═══════════════════════════════════════════ */
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Roboto',sans-serif;overflow:hidden;}
-
-/* ═══════════════════════════════════════════
-   CSS VARIABLES — JOUR / NUIT
-═══════════════════════════════════════════ */
 :root{
   --bg:#d9d9d9;--panel-bg:#f2f2f2;--panel-border:#b8b8b8;
   --topbar-bg:#5f5f5f;--menu-bg:#f7f7f7;--menu-hover:#eaeaea;--menu-border:#cfcfcf;
@@ -51,9 +44,7 @@ body.night{
 }
 body{background:var(--bg);transition:background .35s;}
 
-/* ═══════════════════════════════════════════
-   SPLASH SCREEN
-═══════════════════════════════════════════ */
+/* SPLASH */
 #splash{position:fixed;inset:0;z-index:200;background:#060a10;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 #splash.fade-out{animation:splashFade .8s ease forwards;}
 @keyframes splashFade{to{opacity:0;pointer-events:none;}}
@@ -98,9 +89,7 @@ body{background:var(--bg);transition:background .35s;}
 @keyframes stepSweep{to{left:100%;}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
 
-/* ═══════════════════════════════════════════
-   MENU PRINCIPAL
-═══════════════════════════════════════════ */
+/* MENU */
 #mainMenu{position:fixed;inset:0;z-index:100;background:#060a10;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow-y:auto;}
 #mainMenu::before{content:'';position:fixed;inset:0;background:linear-gradient(rgba(77,163,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(77,163,255,.04) 1px,transparent 1px);background-size:40px 40px;animation:gridPulse 4s ease-in-out infinite;pointer-events:none;z-index:0;}
 #mainMenu::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.08) 2px,rgba(0,0,0,.08) 4px);pointer-events:none;z-index:0;}
@@ -124,7 +113,7 @@ body{background:var(--bg);transition:background .35s;}
 .map-group-label{color:#4da3ff;font-size:11px;letter-spacing:4px;text-transform:uppercase;font-family:'Rajdhani',sans-serif;display:flex;align-items:center;gap:10px;width:100%;max-width:680px;}
 .map-group-label::before,.map-group-label::after{content:'';flex:1;height:1px;background:rgba(77,163,255,.2);}
 .map-group-row{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;}
-.lines-wrapper{display:flex;flex-direction:column;gap:0;max-width:1000px;padding:0 20px;width:100%;align-items:center;}
+.lines-wrapper{display:flex;flex-direction:column;gap:0;max-width:1100px;padding:0 20px;width:100%;align-items:center;}
 .line-btn{position:relative;width:320px;height:190px;border:1px solid rgba(77,163,255,.2);border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color .25s,transform .2s,box-shadow .25s;background:#060a10;flex-shrink:0;}
 .line-btn:hover{border-color:#4da3ff;transform:translateY(-6px) scale(1.02);box-shadow:0 16px 48px rgba(0,0,0,.9),0 0 0 1px rgba(77,163,255,.3);}
 .line-btn-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:18px 16px;background:linear-gradient(to top,rgba(6,10,16,.95) 0%,rgba(6,10,16,.5) 50%,transparent 100%);text-align:center;}
@@ -136,9 +125,7 @@ body{background:var(--bg);transition:background .35s;}
 #menuClockDate{font-size:12px;color:#4da3ff;margin-top:4px;letter-spacing:2px;font-family:'Rajdhani',sans-serif;}
 #menu-disclaimer{margin-top:16px;font-size:10px;color:#1a3050;letter-spacing:1px;text-align:center;font-family:'Rajdhani',sans-serif;text-transform:uppercase;}
 
-/* ═══════════════════════════════════════════
-   TOPBAR & BOUTONS
-═══════════════════════════════════════════ */
+/* TOPBAR */
 #topbar{background:var(--topbar-bg);height:54px;padding:8px 12px;color:white;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;transition:background .35s;}
 #trainHeader{display:flex;align-items:center;gap:10px;}
 #sncf-img{height:36px;width:auto;display:block;border-radius:3px;}
@@ -150,9 +137,7 @@ body{background:var(--bg);transition:background .35s;}
 #showPanelBtn{display:none;position:fixed;top:8px;right:8px;z-index:40;background:#e89b2d;color:#fff;border:none;border-radius:16px;padding:4px 11px;font-size:11px;font-weight:500;cursor:pointer;font-family:'Roboto',sans-serif;}
 #showPanelBtn.visible{display:flex;align-items:center;gap:4px;}
 
-/* ═══════════════════════════════════════════
-   PANNEAU DROIT
-═══════════════════════════════════════════ */
+/* PANNEAU DROIT */
 #rightPanel{position:fixed;right:0;top:0;width:var(--panel-w);height:100vh;background:var(--panel-bg);border-left:1px solid var(--panel-border);display:flex;flex-direction:column;z-index:20;transition:transform .3s,background .35s,border-color .35s;overflow:hidden;}
 #rightPanel.hidden{transform:translateX(var(--panel-w));}
 #panelScroll{flex:1;overflow-y:auto;overflow-x:hidden;}
@@ -206,26 +191,19 @@ body.night #next-delta.ontime{background:#0d1e2a;color:#7dd3fc;}
 .time-btn.secondary:hover{background:var(--btn-hv);}
 .time-mode-indicator{font-size:11px;color:var(--text-muted);margin-top:6px;padding:5px;background:var(--menu-bg);border-radius:4px;text-align:center;}
 
-/* ═══════════════════════════════════════════
-   TABLEAU PRINCIPAL
-═══════════════════════════════════════════ */
+/* TABLEAU */
 #main{margin-right:var(--panel-w);height:100vh;overflow-y:auto;overflow-x:hidden;padding-bottom:80px;}
 #main::-webkit-scrollbar{width:6px;}
 #main::-webkit-scrollbar-thumb{background:var(--scr);}
-
 table{width:100%;border-collapse:collapse;transform:skewX(-7deg);transform-origin:top;}
 thead{background:var(--thead-bg);}
 thead td{padding:10px 8px;font-size:12px;color:var(--thead-tx);transform:skewX(7deg);font-weight:600;letter-spacing:.5px;}
-
-/* Colonnes */
 .col-vl{width:46px;text-align:center;}
 .col-pk{width:72px;text-align:center;}
 .col-vref{width:46px;text-align:center;}
 .col-etab{font-size:15px;font-weight:500;}
 .col-arr{width:90px;text-align:right;padding-right:14px!important;font-variant-numeric:tabular-nums;}
 .col-delta{width:76px;text-align:center;}
-
-/* ── Gare PRINCIPALE ── */
 tbody tr.gare-principale{height:78px;}
 tbody tr.gare-principale:nth-child(odd){background:var(--row-odd);}
 tbody tr.gare-principale:nth-child(even){background:var(--row-even);}
@@ -237,14 +215,10 @@ tbody tr.gare-principale .col-arr{font-size:16px;font-weight:600;}
 .station-name{font-size:17px;font-weight:500;}
 .station small{margin-top:3px;color:var(--st-sm);font-size:11px;}
 .term-badge{font-size:10px;color:#e89b2d;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-left:6px;}
-
-/* Icônes sous nom de gare (style marche réelle) */
 .gare-icons{display:flex;gap:6px;align-items:center;margin-top:4px;}
 .gare-icons .gi{font-size:13px;opacity:.55;}
 .gare-icons .gi-vhq{font-size:9px;font-weight:700;letter-spacing:1px;border:1px solid currentColor;padding:1px 3px;border-radius:2px;color:var(--text-muted);opacity:.7;}
 .gare-icons .gi-sq{width:10px;height:10px;background:var(--text-muted);opacity:.4;border-radius:1px;}
-
-/* ── Point INTERMÉDIAIRE ── */
 tbody tr.intermediaire{height:36px;}
 tbody tr.intermediaire:nth-child(odd){background:var(--inter-odd);}
 tbody tr.intermediaire:nth-child(even){background:var(--inter-bg);}
@@ -253,19 +227,13 @@ tbody tr.intermediaire .col-vl{font-size:11px;font-weight:700;color:var(--vl-col
 tbody tr.intermediaire .col-pk{font-size:11px;font-weight:600;color:var(--text-muted);}
 tbody tr.intermediaire .station-name{font-size:12px;font-weight:400;color:var(--text-muted);}
 tbody tr.intermediaire .col-arr{font-size:12px;color:var(--text-muted);}
-
-/* États */
 .passed{opacity:.42;}
 .passed .station-name{text-decoration:line-through;}
 .current{background:var(--row-cur)!important;outline:2px solid var(--row-cur-bd);}
 .current .station-name{font-weight:700;color:var(--row-cur-tx);}
 .next-up{background:var(--row-next)!important;}
 .next-up .station-name{color:var(--row-next-tx);font-weight:600;}
-
-/* Séparateur */
 .sep td{background:var(--sep-bg)!important;height:28px!important;text-align:center;font-size:11px;font-weight:600;color:var(--sep-tx);letter-spacing:2px;text-transform:uppercase;border-top:2px solid var(--sep-bd);border-bottom:2px solid var(--sep-bd);transform:skewX(7deg);}
-
-/* Badges delta */
 .dbadge{display:inline-block;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:700;}
 .dbadge.ahead{background:#d4edda;color:#155724;}
 .dbadge.late{background:#f8d7da;color:#721c24;}
@@ -279,9 +247,7 @@ body.night .dbadge.done{background:#1a2535;color:#4a6080;}
 thead td.col-pk{color:#333;font-weight:700;}
 body.night thead td.col-pk{color:#7dd3fc;}
 
-/* ═══════════════════════════════════════════
-   FABs NAVIGATION
-═══════════════════════════════════════════ */
+/* FABs */
 #navFloat{position:fixed;bottom:22px;left:22px;z-index:40;display:flex;gap:10px;align-items:center;}
 .fab{display:flex;align-items:center;gap:7px;border:none;border-radius:28px;font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;cursor:pointer;user-select:none;letter-spacing:.5px;transition:all .15s ease;box-shadow:0 4px 18px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);}
 .fab:active{transform:scale(.94);}
@@ -308,16 +274,11 @@ body.night .fab-reset{background:#0a1018;border-color:#1a2530;color:#3a5a78;}
 body.night .fab-reset:hover{color:#e89b2d;border-color:#e89b2d;}
 body.night .fab-next{background:linear-gradient(145deg,#1e4d80 0%,#153a62 100%);}
 body.night .fab-rappel{background:linear-gradient(145deg,#4c1d95 0%,#3b0764 100%);}
-
-/* Toast rappel */
 #rappel-toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff;padding:10px 22px;border-radius:28px;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;letter-spacing:1px;box-shadow:0 6px 28px rgba(124,58,237,.5);opacity:0;pointer-events:none;z-index:50;transition:opacity .35s ease,transform .35s ease;white-space:nowrap;}
 #rappel-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-
 #panelToggle{display:none;position:fixed;top:8px;right:8px;background:#e89b2d;color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:700;cursor:pointer;z-index:30;}
 
-/* ═══════════════════════════════════════════
-   TABLETTE
-═══════════════════════════════════════════ */
+/* TABLETTE */
 body.is-tablet{--panel-w:260px;}
 body.is-tablet #rightPanel{width:260px;}
 body.is-tablet #topbar{height:46px;}
@@ -342,9 +303,7 @@ body.is-tablet .col-delta{width:64px;}
 body.is-tablet table{transform:skewX(-5deg);}
 body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX(5deg);}
 
-/* ═══════════════════════════════════════════
-   MOBILE
-═══════════════════════════════════════════ */
+/* MOBILE */
 @media(max-width:768px){
   :root{--panel-w:100%;}
   #rightPanel{width:100%;max-width:360px;transform:translateX(100%);box-shadow:-4px 0 20px rgba(0,0,0,.2);}
@@ -368,7 +327,7 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
 </head>
 <body>
 
-<!-- ══════════════ SPLASH ══════════════ -->
+<!-- SPLASH -->
 <div id="splash">
   <div class="splash-corner tl"></div><div class="splash-corner tr"></div>
   <div class="splash-corner bl"></div><div class="splash-corner br"></div>
@@ -396,7 +355,7 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
   </div>
 </div>
 
-<!-- ══════════════ MENU ══════════════ -->
+<!-- MENU -->
 <div id="mainMenu" class="hidden">
   <div class="menu-corner tl"></div><div class="menu-corner tr"></div>
   <div class="menu-corner bl"></div><div class="menu-corner br"></div>
@@ -406,6 +365,7 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
     <div class="menu-divider"><div class="menu-divider-dot"></div></div>
     <div class="menu-title">Choisissez votre ligne</div>
     <div class="lines-wrapper">
+
       <div class="map-group">
         <div class="map-group-label">Lyon Part-Dieu</div>
         <div class="map-group-row">
@@ -421,6 +381,7 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
           </div>
         </div>
       </div>
+
       <div class="map-group">
         <div class="map-group-label">Saint-Jean-du-Gard</div>
         <div class="map-group-row">
@@ -431,33 +392,35 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
           </div>
         </div>
       </div>
+
       <div class="map-group">
         <div class="map-group-label">Béziers · Narbonne · Port-la-Nouvelle</div>
         <div class="map-group-row">
           <div class="line-btn" onclick="enterMission('beziers_long')">
-            <div style="width:100%;height:100%;background:linear-gradient(135deg,#0d1a2e,#1a3050 50%,#0a2a1a);"></div>
+            <div style="width:100%;height:100%;background:url('Narbone%20long%20jour.png') center/cover no-repeat,linear-gradient(135deg,#0d1a2e,#1a3050 50%,#0a2a1a);"></div>
             <div class="line-tag" style="background:#27ae60;color:#fff;">AGC · Long</div>
             <div class="line-btn-label"><div class="lbl-main">Service AGC Long · Jour</div><div class="lbl-sub">Port-la-Nouvelle → Narbonne C</div></div>
           </div>
           <div class="line-btn" onclick="enterMission('beziers_court')">
-            <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a1a0d,#2a2a10 50%,#1a2a0d);"></div>
+            <div style="width:100%;height:100%;background:url('Narbone%20cour%20jour.png') center/cover no-repeat,linear-gradient(135deg,#1a1a0d,#2a2a10 50%,#1a2a0d);"></div>
             <div class="line-tag" style="background:#e89b2d;color:#000;">AGC · Court</div>
             <div class="line-btn-label"><div class="lbl-main">Service AGC Court · Jour</div><div class="lbl-sub">Port-la-Nouvelle → Béziers A</div></div>
           </div>
           <div class="line-btn" onclick="enterMission('beziers_long_nuit')">
-            <div style="width:100%;height:100%;background:linear-gradient(135deg,#060a10,#0d1a30 50%,#060d18);"></div>
+            <div style="width:100%;height:100%;background:url('Narbone%20nuit.png') center/cover no-repeat,linear-gradient(135deg,#060a10,#0d1a30 50%,#060d18);"></div>
             <div class="line-tag" style="background:#7c3aed;color:#fff;">AGC · Long · Nuit</div>
             <div class="line-btn-label"><div class="lbl-main">Service AGC Long · Nuit</div><div class="lbl-sub">Port-la-Nouvelle → Narbonne C</div></div>
           </div>
         </div>
       </div>
+
     </div>
     <div id="menuClock"><div id="menuClockTime">--:--:--</div><div id="menuClockDate"></div></div>
     <div id="menu-disclaimer">Site non affilié à la SNCF · À destination de Train Simulator Classic</div>
   </div>
 </div>
 
-<!-- ══════════════ UI PRINCIPALE ══════════════ -->
+<!-- UI PRINCIPALE -->
 <div id="topBtns">
   <button class="top-btn" onclick="toggleNight()"><span id="nightIco">🌙</span> <span id="nightLbl">Nuit</span></button>
   <button class="top-btn" onclick="toggleFullscreen()" id="fsBtn">⛶ Plein écran</button>
@@ -566,11 +529,365 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
 <script>
 'use strict';
 
+/* ══ LIVRET DE LIGNE (intégré) ══ */
+const livretData = {
+  stjean: {
+    livret: `═══════════════════════════════════════
+ LIVRET DE LIGNE — X76671
+ Lézan → Saint-Jean-du-Gard
+ Mission Cévenol · AGC 3V
+═══════════════════════════════════════
+
+▶ VITESSES LIMITES & RESTRICTIONS
+───────────────────────────────────────
+PK 0.0 – 2.5   │ VL 60  │ Sortie Lézan, voie unique sinueuse
+PK 2.5 – 2.8   │ VL 40  │ PN 12 (rue des Moulins) — SIFFLER
+PK 3.0 – 5.0   │ VL 80  │ Section dégagée plaine du Gardon
+PK 5.1 – 5.4   │ VL 50  │ Courbe R=280m — attention adhérence par temps humide
+PK 5.4 – 9.5   │ VL 90  │ Voie rectiligne, rampe 8‰
+PK 9.5 – 9.8   │ VL 60  │ Approche La Bambouseraie — entrée courbe
+PK 9.8 – 11.5  │ VL 70  │ Section bambouseraie, profil en S
+PK 11.5 – 11.8 │ VL 40  │ PN 27 (D907) — SIFFLER — zone urbaine
+PK 11.8 – 13.0 │ VL 60  │ Approche Corbes, voie en courbe R=320m
+PK 13.0 – 13.2 │ VL 40  │ PN 31 (chemin agricole) — SIFFLER
+PK 13.2 – 14.5 │ VL 70  │ Entre Corbes et Thoiras, légère descente 5‰
+PK 14.5 – 15.0 │ VL 50  │ Viaduc du Gardon — VL IMPÉRATIVE — vent fort signalé
+PK 15.0 – 18.0 │ VL 80  │ Montée 12‰ vers Saint-Jean, section sinueuse
+PK 18.0 – 19.5 │ VL 60  │ Zone périurbaine Saint-Jean-du-Gard
+PK 19.5 – 20.3 │ VL 30  │ Approche terminus — FREIN AVANT PK 19.8
+
+▶ POINTS REMARQUABLES
+───────────────────────────────────────
+PK 0.0    Lézan v1 — Départ voie 1, quai bas côté droit
+PK 1.4    Pont-rail sur le Gardon de Mialet (tablier métallique)
+          → Ralentir si forte pluie — risque débordement
+PK 2.8    PN 12 — Passage à niveau public — SIFFLET OBLIGATOIRE
+          Visibilité réduite (virage 30m avant PN)
+PK 4.6    Zone marécageuse — voie posée sur remblai
+          Attention affaissements possibles en hiver
+PK 5.2    Courbe serrée R=280m — freinage anticipé côté montagne
+PK 7.0    Bifurcation ancienne voie (désaffectée) — signal fixe
+PK 9.6    La Bambouseraie v1 — Quai court (3 caisses max)
+          Arrêt précis requis — signal d'arrêt au sol
+PK 11.6   PN 27 — Passage à niveau D907 — SIFFLET
+          Axe fréquenté — touristes en été, vigilance renforcée
+PK 12.0   Tunnel de Corbes (L=180m) — Éclairage automatique
+          Vitesse limitée à 60 en toutes circonstances
+PK 13.1   PN 31 — Chemin agricole — SIFFLET
+PK 14.5   Viaduc du Gardon (L=95m, H=22m)
+          VL 50 IMPÉRATIVE — Inspection trimestrielle
+          Vent > 80 km/h : arrêt de la circulation
+PK 16.2   Passage en tranchée rocheuse (L=400m)
+          Risque chutes de pierres — signalement immédiat si débris
+PK 18.5   Entrée agglomération Saint-Jean-du-Gard
+          Klaxon interdit — zone résidentielle
+PK 20.0   Signal carré v2 — Arrêt absolu si fermé
+PK 20.3   Saint-Jean-du-Gard v2 — Terminus
+          Retournement par voie de garage côté nord
+          Temps de retournement : 7 min minimum
+
+▶ NOTES CONDUITE
+───────────────────────────────────────
+• Freinage : commencer 400m avant chaque PN
+• Par temps de pluie : VL réduite de 10 km/h sur viaducs
+• Été (juil-août) : affluence touristique, annonces sonores
+• Traction : surveiller température moteur en rampe 12‰
+• Retour : depuis v2 → v1, manœuvre arrière 200m
+• Attention à tous les passages à niveau : sifflet obligatoire en amont des PN signalés
+• À l'abord des gares et haltes : vitesse limitée à 30 km/h jusqu'à l'arrêt ou reprise de la vitesse autorisée`
+  },
+  lyon: {
+    livret: `═══════════════════════════════════════
+ LIVRET DE LIGNE — 82522
+ Lyon Part-Dieu H → Part-Dieu A
+ Mission Lyon Jour · AGC 5V
+═══════════════════════════════════════
+
+▶ VITESSES LIMITES & RESTRICTIONS
+───────────────────────────────────────
+PK 0.0 – 0.5   │ VL 30  │ Sortie dépôt, voie de service
+PK 0.5 – 1.0   │ VL 40  │ Approche Part-Dieu H, signaux rapprochés
+PK 1.0 – 3.5   │ VL 60  │ Traversée urbaine Lyon-Guillotière
+PK 3.5 – 4.0   │ VL 50  │ PN 3 (rue Carnot) — SIFFLER
+PK 4.0 – 7.0   │ VL 80  │ Section Mermoz-Vénissieux, voie rectiligne
+PK 7.0 – 7.4   │ VL 60  │ Approche Vénissieux — quai en courbe
+PK 7.4 – 9.2   │ VL 90  │ Ligne droite Vénissieux — Saint-Priest
+PK 9.2 – 9.5   │ VL 60  │ Approche Saint-Priest voie 1
+PK 9.5 – 13.0  │ VL 40  │ Zone industrielle, croisements fréquents
+PK 13.0 – 13.4 │ VL 30  │ Entrée boucle retournement
+PK 13.4 – 18.8 │ VL 30  │ Boucle secondaire — voie unique étroite
+PK 18.8        │ VL 15  │ Pointe de boucle — ARRÊT PROGRESSIF
+
+▶ POINTS REMARQUABLES
+───────────────────────────────────────
+PK 0.0    Dépôt — Vérification avant départ obligatoire
+          Checklist 6 points avant mise en mouvement
+PK 0.96   Lyon Part-Dieu H — Voie H (hall nord)
+          Quai haut — attention marche importante côté voie
+          Durée arrêt : 3 min — échange voyageurs important
+PK 1.8    Tunnel Part-Dieu (L=320m) — Réduction ventilation
+          Éclairage intérieur automatique à l'entrée
+PK 3.5    PN 3 — Rue Carnot — SIFFLET OBLIGATOIRE
+          Carrefour avec feux — passage en phase verte uniquement
+PK 4.2    Pont-rail sur le Rhône (tablier béton précontraint)
+          VL 60 — Surveillance vibrations
+PK 6.8    Zone de triage Vénissieux — signaux multiples
+          Respecter strictement les carrés fermés
+PK 7.0    Bifurcation ligne Saint-Fons — signal de bifurcation
+          Itinéraire v1 : aiguille déviée à gauche
+PK 9.35   Gare de Vénissieux — Quai voie 1
+          Court — arrêt précis sur signal au sol jaune
+PK 10.5   Franchissement A43 (pont autoroutier)
+          Zone de turbulence vent latéral — vigilance
+PK 11.2   PN 18 — Chemin d'exploitation — SIFFLET
+PK 12.8   Zone industrielle Renault Trucks
+          Convois exceptionnels possibles sur PN 22
+PK 13.40  Gare de Saint-Priest — Voie 1 (aller)
+          Terminus voyageurs — descente côté quai droit
+PK 14.0   Aiguillage boucle retournement
+          Vitesse d'aiguille : 15 km/h IMPÉRATIF
+PK 18.8   Pointe boucle secondaire
+          Arrêt, vérification dégagement, changement de cabine
+          Attendre signal libre avant reprise
+
+▶ NOTES CONDUITE
+───────────────────────────────────────
+• Traversée Lyon : klaxon uniquement aux PN signalés
+• Boucle retournement : manœuvre lente — agent sol obligatoire
+• Heure de pointe (12h-14h) : quais encombrés à Part-Dieu
+• Retour depuis Saint-Priest 2 : VL 90 possible PK 9.2→7.0
+• Part-Dieu A : voie A (hall sud) — annonces automatiques
+• Après Saint-Priest : passage en mode diesel obligatoire pour la boucle de retournement
+• Après retournement et changement de cabine : retour en mode électrique avant reprise du service voyageurs
+• Vérifier la commutation thermique/électrique avant remise en marche`
+  },
+  lyon_nuit: {
+    livret: `═══════════════════════════════════════
+ LIVRET DE LIGNE — 82522
+ Lyon Part-Dieu H → Part-Dieu A
+ Mission Lyon Nuit · AGC 5V
+═══════════════════════════════════════
+
+▶ VITESSES LIMITES & RESTRICTIONS
+───────────────────────────────────────
+PK 0.0 – 1.0   │ VL 30  │ Sortie dépôt nuit — voie non éclairée
+PK 1.0 – 3.5   │ VL 50  │ Traversée Lyon — vitesse réduite nuit
+PK 3.5 – 4.0   │ VL 40  │ PN 3 — visibilité réduite
+PK 4.0 – 9.0   │ VL 80  │ Section principale
+PK 9.0 – 13.4  │ VL 40  │ Zone industrielle — passages piétons non surveillés
+PK 13.4 – 18.8 │ VL 25  │ Boucle — éclairage défaillant signalé (fiche 2024-11)
+PK 18.8        │ VL 10  │ Pointe boucle — ARRÊT TRÈS PROGRESSIF
+
+▶ POINTS REMARQUABLES
+───────────────────────────────────────
+PK 0.0    Départ dépôt 20h37 — agent d'accompagnement requis
+          Vérifier feux de signalisation avant départ
+PK 0.96   Part-Dieu H — Éclairage quai réduit (mode nuit)
+          Attention aux voyageurs en bord de quai
+PK 1.8    Tunnel Part-Dieu — Vérifier éclairage cabine
+PK 4.2    Pont-rail Rhône — Brouillard fréquent 20h-23h
+          Réduire à VL 40 si visibilité < 200m
+PK 6.5    Zone mal éclairée — phares longue portée autorisés
+PK 9.35   Vénissieux nuit — Quai peu éclairé
+          Durée arrêt prolongée si affluence
+PK 13.40  Saint-Priest nuit — Vérifier dégagement quai
+          Contact radio avec régulateur avant boucle
+PK 14.0   Aiguillage boucle — Lampe torche recommandée
+PK 18.8   Pointe boucle — Changement de cabine
+          Signal lumineux de boucle peut être hors service la nuit
+          Confirmer dégagement par radio
+
+▶ NOTES CONDUITE
+───────────────────────────────────────
+• Service nuit : régulateur Lyon disponible sur canal 5
+• Signaler tout piéton sur voie immédiatement
+• Boucle retournement : agent sol OBLIGATOIRE même la nuit
+• Retour Part-Dieu A : voie A — quai vide à cette heure
+• En cas d'anomalie : arrêt immédiat + contact régulateur
+• Après Saint-Priest : passage en mode diesel obligatoire pour la boucle de retournement
+• Après retournement et changement de cabine : retour en mode électrique avant reprise du service voyageurs
+• Vérifier la commutation thermique/électrique avant remise en marche`
+  },
+  beziers_long: {
+    livret: `═══════════════════════════════════════
+ LIVRET DE LIGNE — AGC Long
+ Port-la-Nouvelle → Narbonne C
+ Service AGC Jour · Long
+═══════════════════════════════════════
+
+▶ VITESSES LIMITES & RESTRICTIONS
+───────────────────────────────────────
+PK 0.0 – 2.0   │ VL 40  │ Zone portuaire Port-la-Nouvelle
+PK 2.0 – 5.5   │ VL 100 │ Ligne côtière dégagée
+PK 5.5 – 6.0   │ VL 60  │ PN 7 (D6009) — axe très fréquenté — SIFFLER
+PK 6.0 – 14.0  │ VL 120 │ Section rapide Sigean — Narbonne
+PK 14.0 – 15.5 │ VL 80  │ Approche agglomération Narbonne
+PK 15.5 – 16.5 │ VL 60  │ Zone triages Narbonne — signaux multiples
+PK 16.5 – 17.2 │ VL 40  │ Entrée gare Narbonne D
+PK 17.2 – 22.0 │ VL 110 │ Section Narbonne — Coursan
+PK 22.0 – 22.8 │ VL 60  │ Approche Coursan
+PK 22.8 – 30.0 │ VL 100 │ Coursan — Colombiers
+PK 30.0 – 31.2 │ VL 70  │ Approche Colombiers — voie en dévers
+PK 31.2 – 40.0 │ VL 120 │ Plaine héraultaise — ligne droite
+PK 40.0 – 42.5 │ VL 80  │ Approche Béziers — faubourgs
+PK 42.5 – 43.5 │ VL 40  │ Entrée gare Béziers
+PK 43.5        │ VL 15  │ Terminus voie B — ARRÊT PRÉCIS
+
+▶ POINTS REMARQUABLES
+───────────────────────────────────────
+PK 0.0    Port-la-Nouvelle Quai B
+          Terminus portuaire — départ côté mer
+          Vent marin fréquent (tramontane) — VL réduite si > 100 km/h
+PK 1.2    Franchissement canal de la Robine
+          Pont tournant — vérifier position avant passage
+PK 3.8    Zone NATURA 2000 — Étang de Bages
+          Ralentissement faune signalé (flamants sur voie possible)
+PK 5.7    PN 7 — Route D6009 (ex RN9) — SIFFLET IMPÉRATIF
+          Trafic poids lourds important — passage prudent
+PK 8.0    Tunnel de Sigean (L=140m)
+          Réduction de vitesse à 80 en cas de travaux
+PK 11.5   Viaduc de l'Aude (L=210m)
+          VL 100 — Vent latéral fréquent en automne
+          Réduction à 80 si vent > 90 km/h
+PK 14.8   Bifurcation Narbonne — Perpignan
+          Itinéraire : aiguille voie Béziers — côté ouest
+PK 16.5   Zone triage Narbonne — 8 voies
+          Respecter impérativement les carrés
+PK 17.2   Narbonne Quai D
+          Quai central — montées/descentes des deux côtés
+          Annonce sonore obligatoire avant fermeture portes
+PK 22.4   Coursan Quai A
+          Quai court — arrêt sur signal jaune au sol
+          Attention : proximité PN 22 côté Narbonne
+PK 26.0   Pont-canal du Libron
+          Ouvrage historique — passage lent 60 km/h
+PK 30.4   Colombiers Quai A
+          Voie unique à cet endroit — attendre signal libre
+PK 37.5   Pont de l'Orb à Béziers (L=155m)
+          Vue panoramique — pas d'arrêt
+PK 42.0   Entrée zone urbaine Béziers — réduction sonore
+PK 43.5   Béziers Quai B — Terminus aller
+          Retournement prévu — agent sol présent
+          Départ retour vers Narbonne C après 6 min
+
+▶ NOTES CONDUITE
+───────────────────────────────────────
+• Tramontane : vent dominant — VL automatiquement réduite si alerte
+• Été : fréquentation maximale Narbonne ↔ Béziers
+• PN 7 : le plus dangereux de la section — vigilance absolue
+• Viaduc Aude : inspection hebdomadaire — consulter fiche travaux
+• Retour Narbonne C : voie C différente de voie D à l'aller
+• Rappel : vitesse maximale du matériel AGC = 160 km/h
+• Respecter en permanence les vitesses limites indiquées au livret
+• Prendre garde aux courbes, particulièrement lors des transitions entre sections rapides et zones d'approche des gares`
+  },
+  beziers_court: {
+    livret: `═══════════════════════════════════════
+ LIVRET DE LIGNE — AGC Court
+ Port-la-Nouvelle → Béziers A
+ Service AGC Jour · Court
+═══════════════════════════════════════
+
+▶ VITESSES LIMITES & RESTRICTIONS
+───────────────────────────────────────
+PK 0.0 – 2.0   │ VL 40  │ Zone portuaire — manœuvres fréquentes
+PK 2.0 – 5.5   │ VL 100 │ Section côtière
+PK 5.5 – 6.0   │ VL 60  │ PN 7 (D6009) — SIFFLER
+PK 6.0 – 14.0  │ VL 120 │ Ligne rapide Sigean — Narbonne
+PK 14.0 – 17.2 │ VL 60  │ Approche et traversée Narbonne
+PK 17.2 – 40.0 │ VL 120 │ Section Narbonne — Béziers
+PK 40.0 – 43.5 │ VL 60  │ Approche et entrée Béziers A
+PK 43.5        │ VL 15  │ Terminus voie A
+
+▶ POINTS REMARQUABLES
+───────────────────────────────────────
+PK 0.0    Port-la-Nouvelle Quai B — Départ
+          Mêmes consignes que service long
+          Contrôle composition train avant départ
+PK 5.7    PN 7 — D6009 — SIFFLET
+PK 8.0    Tunnel de Sigean (L=140m)
+PK 11.5   Viaduc de l'Aude — VL 100
+PK 17.2   Narbonne Quai D — Arrêt 1 min
+          Service court : pas d'arrêt à Coursan ni Colombiers
+          → vérifier que les voyageurs sont au bon train
+PK 37.5   Pont de l'Orb
+PK 43.5   Béziers Quai A — Terminus
+          Voie A (différente du service long en voie B)
+          Fin de service — garage sur voie 5
+
+▶ NOTES CONDUITE
+───────────────────────────────────────
+• Service court : terminus Béziers A (voie A), pas de retour
+• Informer les voyageurs à Narbonne : pas d'arrêt intermédiaire
+• Temps de parcours optimisé — pas de marge à Coursan/Colombiers
+• Consulter livret long pour détails PN et viaducs
+• Rappel : vitesse maximale du matériel AGC = 160 km/h
+• Respecter en permanence les vitesses limites indiquées au livret
+• Prendre garde aux courbes, particulièrement lors des transitions entre sections rapides et zones d'approche des gares`
+  },
+  beziers_long_nuit: {
+    livret: `═══════════════════════════════════════
+ LIVRET DE LIGNE — AGC Long Nuit
+ Port-la-Nouvelle → Narbonne C
+ Service AGC Nuit · Long
+═══════════════════════════════════════
+
+▶ VITESSES LIMITES & RESTRICTIONS
+───────────────────────────────────────
+PK 0.0 – 2.0   │ VL 30  │ Zone portuaire — éclairage réduit
+PK 2.0 – 5.5   │ VL 90  │ Section côtière nuit
+PK 5.5 – 6.0   │ VL 50  │ PN 7 — visibilité réduite nuit — SIFFLER
+PK 6.0 – 14.0  │ VL 110 │ Section Sigean — Narbonne
+PK 14.0 – 17.2 │ VL 50  │ Approche Narbonne — piétons sur voie fréquents
+PK 17.2 – 40.0 │ VL 110 │ Section Narbonne — Béziers
+PK 40.0 – 43.5 │ VL 50  │ Approche Béziers nuit
+PK 43.5        │ VL 10  │ Terminus voie B nuit
+
+▶ POINTS REMARQUABLES
+───────────────────────────────────────
+PK 0.0    Port-la-Nouvelle nuit — quai peu éclairé
+          Agent d'accompagnement obligatoire au départ
+          Vent de mer souvent fort après 20h
+PK 1.2    Pont tournant canal Robine
+          Gardien présent uniquement jusqu'à 22h
+          Après 22h : vérification manuelle position pont
+PK 3.8    Étang de Bages nuit
+          Brouillard fréquent sur zone humide — phares
+PK 5.7    PN 7 — SIFFLET OBLIGATOIRE
+          Trafic réduit mais present — vigilance maintenue
+PK 8.0    Tunnel Sigean — vérifier éclairage tunnel opérationnel
+          Signaler panne éclairage au régulateur
+PK 11.5   Viaduc de l'Aude nuit
+          Vent nocturne parfois supérieur au jour
+          Réduction à 70 si vent > 80 km/h
+PK 17.2   Narbonne Quai D — Arrêt
+          Gare partiellement éclairée — contrôler départ voyageurs
+PK 25.6   Zone à risque intrusion (historique 2023)
+          Réduire vitesse à 80 entre PK 25 et 27
+PK 43.5   Béziers Quai B nuit
+          Terminus — garage immédiat voie 3 après débarquement
+          Contact régulateur Béziers avant manœuvre
+PK 54.1   Narbonne Quai C (retour) — Terminus final
+          Fin de service — dépôt Narbonne
+
+▶ NOTES CONDUITE
+───────────────────────────────────────
+• Service nuit : canal radio 5 Narbonne + canal 7 Béziers
+• Pont tournant Robine : appel obligatoire si > 22h
+• Brouillard étang : réduction automatique à VL-20
+• Tout incident sur voie : arrêt immédiat + balisage
+• Retour Narbonne C : dernier train — vérifier fermeture gare
+• Rappel : vitesse maximale du matériel AGC = 160 km/h
+• Respecter en permanence les vitesses limites indiquées au livret
+• Prendre garde aux courbes, particulièrement lors des transitions entre sections rapides et zones d'approche des gares`
+  }
+};
+
 /* ══ STATE ══ */
 let night=false, curIdx=0, timeMode='real', customTimeBase=null, customTimeSetAt=null;
 const recordedDeltas={};
 let aQuaiActive=false, rappelActive=false, rappelFired={};
-let livretData={}, currentMissionId='stjean';
+let currentMissionId='stjean';
 let stations=[];
 
 /* ══ DEVICE DETECTION ══ */
@@ -610,8 +927,6 @@ function fmtD(d){
 }
 
 /* ══ SPLASH ══ */
-fetch('livret.json').then(r=>r.json()).then(d=>{livretData=d.missions||{};}).catch(()=>{livretData={};});
-
 const SPLASH_DURATION=Math.floor(Math.random()*5001)+5000;
 const splashClkEl=document.getElementById('splash-clock');
 const splashDateEl=document.getElementById('splash-date');
@@ -646,7 +961,6 @@ function closeSplash(){
   },800);
 }
 setTimeout(closeSplash,SPLASH_DURATION);
-
 function updateMenuClock(){document.getElementById('menuClockTime').textContent=fmtTime();document.getElementById('menuClockDate').textContent=fmtDate();}
 updateMenuClock(); setInterval(updateMenuClock,1000);
 
@@ -764,6 +1078,19 @@ function showMenu(){
   setTimeout(()=>menu.classList.remove('menu-enter'),800);
 }
 
+/* ══ DÉTECTION DÉPART & NARBONNE POUR ICÔNES ══ */
+function shouldShowIcons(s, i){
+  // Terminus
+  if(s.terminus===true) return true;
+  // Narbonne
+  if(s.name.toLowerCase().includes('narbonne')) return true;
+  // Première gare principale de la mission (départ)
+  for(let j=0;j<i;j++){
+    if(isMainStation(stations[j])) return false;
+  }
+  return true; // c'est la première gare principale = départ
+}
+
 /* ══ TABLEAU ══ */
 const tbody=document.getElementById('tbody');
 
@@ -785,15 +1112,15 @@ function buildTable(){
 
     if(main){
       tr.classList.add('gare-principale');
-      // Icônes style marche réelle
-      const icones=`<div class="gare-icons">
+      const showIcons=shouldShowIcons(s,i);
+      const icones=showIcons?`<div class="gare-icons">
         <span class="gi" title="Sonorisation">🔊</span>
         <span class="gi" title="Accessibilité PMR">♿</span>
         <span class="gi" title="Montée">⬆</span>
         <span class="gi" title="Descente">⬇</span>
         <span class="gi-vhq">VHQ</span>
         <span class="gi-sq"></span>
-      </div>`;
+      </div>`:'';
       tr.innerHTML=
         '<td class="col-vl">'+vlT+'</td>'+
         '<td class="col-pk">'+pkT+'</td>'+
@@ -845,34 +1172,28 @@ function getCurrentGameTime(){
 
 function render(){
   const currentTime=getCurrentGameTime();
-  // Horloge
   if(currentTime!==null){
     const h=Math.floor(currentTime/3600)%24,m=Math.floor(currentTime/60)%60,s=Math.floor(currentTime)%60;
     document.getElementById('clock').textContent=pad(h)+':'+pad(m)+':'+pad(s);
   } else {
     document.getElementById('clock').textContent=fmtTime();
   }
-  // Lignes tableau
   stations.forEach((s,i)=>{
     const tr=document.getElementById('r'+i); if(!tr)return;
     const main=isMainStation(s);
-    // reset classes sauf la classe de type
     tr.className=main?'gare-principale':'intermediaire';
     if(i<curIdx)tr.classList.add('passed');
     else if(i===curIdx)tr.classList.add('current');
     else if(i===curIdx+1)tr.classList.add('next-up');
-
     const dc=document.getElementById('d'+i); if(!dc)return;
     if(!main){dc.innerHTML='';return;}
     if(i<curIdx){dc.innerHTML=recordedDeltas[i]?'<span class="dbadge '+recordedDeltas[i].cls+'">'+recordedDeltas[i].text+'</span>':'<span class="dbadge done">✓</span>';}
     else if(i===curIdx){dc.innerHTML=recordedDeltas[i]?'<span class="dbadge '+recordedDeltas[i].cls+'">'+recordedDeltas[i].text+'</span>':'<span class="dbadge fut">—</span>';}
     else{dc.innerHTML='<span class="dbadge fut">—</span>';}
   });
-
-  // Panneau bas
   const last=stations[stations.length-1];
-  document.getElementById('term-name').textContent=last.name;
-  document.getElementById('term-detail').textContent=allMissions[currentMissionId].termLabel+' · Arr. '+last.arr;
+  document.getElementById('term-name').textContent=last?last.name:'—';
+  document.getElementById('term-detail').textContent=last?(allMissions[currentMissionId].termLabel+' · Arr. '+last.arr):'—';
   const cur=stations[curIdx];
   if(cur){
     document.getElementById('ns-name').textContent=cur.name;
@@ -881,7 +1202,6 @@ function render(){
     if(currentTime!==null){const ds=toSec(cur.dep);if(ds!==null){const d=fmtD(currentTime-ds);nd.textContent=d.text;nd.className=d.cls;}}
     else{nd.textContent='—';nd.className='ontime';}
   }
-  // Avance/retard
   if(currentTime!==null&&cur){
     const depRef=toSec(cur.dep);
     if(depRef!==null){
@@ -900,7 +1220,6 @@ function render(){
     document.getElementById('avance').textContent='Heure non définie';
     document.getElementById('avance').style.color='#6080a0';
   }
-  // Scroll vers la ligne courante
   const row=document.getElementById('r'+curIdx);
   if(row)row.scrollIntoView({behavior:'smooth',block:'center'});
 }

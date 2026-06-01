@@ -6,7 +6,6 @@
 <title>SIRIUS TSC</title>
 <link rel="icon" type="image/png" sizes="32x32" href="sncf.png">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-<!-- Livrets de ligne (fichier séparé) -->
 <script src="livrets.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -45,8 +44,6 @@ body.night{
   --vl-color:#5080a0;
 }
 body{background:var(--bg);transition:background .35s;}
-
-/* SPLASH */
 #splash{position:fixed;inset:0;z-index:200;background:#060a10;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 #splash.fade-out{animation:splashFade .8s ease forwards;}
 @keyframes splashFade{to{opacity:0;pointer-events:none;}}
@@ -90,8 +87,6 @@ body{background:var(--bg);transition:background .35s;}
 .splash-step.done .step-bar::after{animation:stepSweep .5s ease forwards;}
 @keyframes stepSweep{to{left:100%;}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-
-/* MENU */
 #mainMenu{position:fixed;inset:0;z-index:100;background:#060a10;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow-y:auto;}
 #mainMenu::before{content:'';position:fixed;inset:0;background:linear-gradient(rgba(77,163,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(77,163,255,.04) 1px,transparent 1px);background-size:40px 40px;animation:gridPulse 4s ease-in-out infinite;pointer-events:none;z-index:0;}
 #mainMenu::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.08) 2px,rgba(0,0,0,.08) 4px);pointer-events:none;z-index:0;}
@@ -126,8 +121,6 @@ body{background:var(--bg);transition:background .35s;}
 #menuClockTime{font-size:52px;font-weight:300;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:6px;font-family:'Rajdhani',sans-serif;text-shadow:0 0 40px rgba(255,255,255,.15);}
 #menuClockDate{font-size:12px;color:#4da3ff;margin-top:4px;letter-spacing:2px;font-family:'Rajdhani',sans-serif;}
 #menu-disclaimer{margin-top:16px;font-size:10px;color:#1a3050;letter-spacing:1px;text-align:center;font-family:'Rajdhani',sans-serif;text-transform:uppercase;}
-
-/* TOPBAR */
 #topbar{background:var(--topbar-bg);height:54px;padding:8px 12px;color:white;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;transition:background .35s;}
 #trainHeader{display:flex;align-items:center;gap:10px;}
 #sncf-img{height:36px;width:auto;display:block;border-radius:3px;}
@@ -138,8 +131,6 @@ body{background:var(--bg);transition:background .35s;}
 .top-btn:hover{background:var(--btn-hv);}
 #showPanelBtn{display:none;position:fixed;top:8px;right:8px;z-index:40;background:#e89b2d;color:#fff;border:none;border-radius:16px;padding:4px 11px;font-size:11px;font-weight:500;cursor:pointer;font-family:'Roboto',sans-serif;}
 #showPanelBtn.visible{display:flex;align-items:center;gap:4px;}
-
-/* PANNEAU DROIT */
 #rightPanel{position:fixed;right:0;top:0;width:var(--panel-w);height:100vh;background:var(--panel-bg);border-left:1px solid var(--panel-border);display:flex;flex-direction:column;z-index:20;transition:transform .3s,background .35s,border-color .35s;overflow:hidden;}
 #rightPanel.hidden{transform:translateX(var(--panel-w));}
 #panelScroll{flex:1;overflow-y:auto;overflow-x:hidden;}
@@ -192,8 +183,6 @@ body.night #next-delta.ontime{background:#0d1e2a;color:#7dd3fc;}
 .time-btn.secondary{background:var(--btn-bg);color:var(--btn-tx);border:1px solid var(--btn-bd);}
 .time-btn.secondary:hover{background:var(--btn-hv);}
 .time-mode-indicator{font-size:11px;color:var(--text-muted);margin-top:6px;padding:5px;background:var(--menu-bg);border-radius:4px;text-align:center;}
-
-/* TABLEAU */
 #main{margin-right:var(--panel-w);height:100vh;overflow-y:auto;overflow-x:hidden;padding-bottom:80px;}
 #main::-webkit-scrollbar{width:6px;}
 #main::-webkit-scrollbar-thumb{background:var(--scr);}
@@ -248,8 +237,6 @@ body.night .dbadge.ontime{background:#0d1e2a;color:#7dd3fc;}
 body.night .dbadge.done{background:#1a2535;color:#4a6080;}
 thead td.col-pk{color:#333;font-weight:700;}
 body.night thead td.col-pk{color:#7dd3fc;}
-
-/* FABs */
 #navFloat{position:fixed;bottom:22px;left:22px;z-index:40;display:flex;gap:10px;align-items:center;}
 .fab{display:flex;align-items:center;gap:7px;border:none;border-radius:28px;font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;cursor:pointer;user-select:none;letter-spacing:.5px;transition:all .15s ease;box-shadow:0 4px 18px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);}
 .fab:active{transform:scale(.94);}
@@ -279,8 +266,6 @@ body.night .fab-rappel{background:linear-gradient(145deg,#4c1d95 0%,#3b0764 100%
 #rappel-toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff;padding:10px 22px;border-radius:28px;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;letter-spacing:1px;box-shadow:0 6px 28px rgba(124,58,237,.5);opacity:0;pointer-events:none;z-index:50;transition:opacity .35s ease,transform .35s ease;white-space:nowrap;}
 #rappel-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 #panelToggle{display:none;position:fixed;top:8px;right:8px;background:#e89b2d;color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:700;cursor:pointer;z-index:30;}
-
-/* TABLETTE */
 body.is-tablet{--panel-w:260px;}
 body.is-tablet #rightPanel{width:260px;}
 body.is-tablet #topbar{height:46px;}
@@ -304,8 +289,6 @@ body.is-tablet .col-arr{width:76px;}
 body.is-tablet .col-delta{width:64px;}
 body.is-tablet table{transform:skewX(-5deg);}
 body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX(5deg);}
-
-/* MOBILE */
 @media(max-width:768px){
   :root{--panel-w:100%;}
   #rightPanel{width:100%;max-width:360px;transform:translateX(100%);box-shadow:-4px 0 20px rgba(0,0,0,.2);}
@@ -412,6 +395,12 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
             <div style="width:100%;height:100%;background:url('Narbone%20nuit.png') center/cover no-repeat,linear-gradient(135deg,#060a10,#0d1a30 50%,#060d18);"></div>
             <div class="line-tag" style="background:#7c3aed;color:#fff;">AGC · Long · Nuit</div>
             <div class="line-btn-label"><div class="lbl-main">Service AGC Long · Nuit</div><div class="lbl-sub">Port-la-Nouvelle → Narbonne C</div></div>
+          </div>
+          <!-- NOUVEAU : Service AGC Court Soirée -->
+          <div class="line-btn" onclick="enterMission('beziers_court_soir')">
+            <div style="width:100%;height:100%;background:url('Narbone%20soiree.png') center/cover no-repeat,linear-gradient(135deg,#0a0a1a,#1a1040 50%,#0a0a18);"></div>
+            <div class="line-tag" style="background:#c0392b;color:#fff;">877118 · UM2 3V</div>
+            <div class="line-btn-label"><div class="lbl-main">Service AGC Court · Soirée</div><div class="lbl-sub">Narbonne B → Béziers A</div></div>
           </div>
         </div>
       </div>
@@ -531,21 +520,18 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
 <script>
 'use strict';
 
-/* ══ STATE ══ */
 let night=false, curIdx=0, timeMode='real', customTimeBase=null, customTimeSetAt=null;
 const recordedDeltas={};
 let aQuaiActive=false, rappelActive=false, rappelFired={};
 let currentMissionId='stjean';
 let stations=[];
 
-/* ══ DEVICE DETECTION ══ */
 (function(){
   const ua=navigator.userAgent;
   const isTablet=/(iPad|tablet|Tablet)/i.test(ua)||(/Macintosh/i.test(ua)&&navigator.maxTouchPoints>1)||(window.innerWidth>=600&&window.innerWidth<=1366&&'ontouchstart' in window);
   document.body.classList.add(isTablet?'is-tablet':'is-pc');
 })();
 
-/* ══ AUDIO UNLOCK ══ */
 let audioUnlocked=false;
 function unlockAudio(){
   if(audioUnlocked)return; audioUnlocked=true;
@@ -557,7 +543,6 @@ function unlockAudio(){
 document.addEventListener('touchstart',unlockAudio,{passive:true});
 document.addEventListener('click',unlockAudio);
 
-/* ══ UTILS ══ */
 function fmtTime(){const n=new Date();return pad(n.getHours())+':'+pad(n.getMinutes())+':'+pad(n.getSeconds());}
 function fmtDate(){const n=new Date();const D=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];const M=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];return D[n.getDay()]+' '+n.getDate()+' '+M[n.getMonth()]+' '+n.getFullYear();}
 function pad(n){return String(n).padStart(2,'0');}
@@ -574,7 +559,6 @@ function fmtD(d){
   return{text:'−'+t,cls:'late'};
 }
 
-/* ══ SPLASH ══ */
 const SPLASH_DURATION=Math.floor(Math.random()*5001)+5000;
 const splashClkEl=document.getElementById('splash-clock');
 const splashDateEl=document.getElementById('splash-date');
@@ -612,12 +596,10 @@ setTimeout(closeSplash,SPLASH_DURATION);
 function updateMenuClock(){document.getElementById('menuClockTime').textContent=fmtTime();document.getElementById('menuClockDate').textContent=fmtDate();}
 updateMenuClock(); setInterval(updateMenuClock,1000);
 
-/* ══ MEMO ══ */
 function saveNotes(){localStorage.setItem('memoNotes',document.getElementById('memoNotes').value);}
 function loadNotes(){const m=localStorage.getItem('memoNotes');if(m)document.getElementById('memoNotes').value=m;}
 document.addEventListener('DOMContentLoaded',()=>{loadNotes();document.getElementById('memoNotes').addEventListener('input',saveNotes);});
 
-/* ══ DONNÉES MISSIONS ══ */
 const allMissions={
   lyon:{
     trainId:'Service 1',trainSub:'AGC 5V · 82522',materiel:'AGC 5V',termLabel:'Mission Lyon Part-Dieu',
@@ -691,17 +673,25 @@ const allMissions={
       {pk:null,name:'Béziers Quai B',vref:'B',arr:'21:25:38',dep:'21:31:38',vl:'',retour:false,terminus:true},
       {pk:null,name:'Narbonne Quai C',vref:'C',arr:'21:45:15',dep:'21:46:15',vl:'',retour:true,terminus:true},
     ]
+  },
+  beziers_court_soir:{
+    trainId:'877118 UM2 3V',trainSub:'AGC · Court · Soirée',materiel:'UM2 3V',termLabel:'Narbonne — Port-la-Nouvelle — Béziers · Soirée',
+    stations:[
+      {pk:null,name:'Narbonne Quai B',vref:'B',arr:'19:35:00',dep:'19:40:00',vl:'',retour:false},
+      {pk:null,name:'Port-la-Nouvelle Quai B',vref:'B',arr:'19:53:48',dep:'19:58:48',vl:'',retour:false},
+      {pk:null,name:'Narbonne Quai D',vref:'D',arr:'20:11:11',dep:'20:12:11',vl:'',retour:true},
+      {pk:null,name:'Colombiers Quai A',vref:'A',arr:'20:22:07',dep:'20:23:07',vl:'',retour:true},
+      {pk:null,name:'Béziers Quai A',vref:'A',arr:'20:27:15',dep:'20:28:45',vl:'',retour:true,terminus:true},
+    ]
   }
 };
 
-/* ══ Détection gare principale vs intermédiaire ══ */
 function isMainStation(s){
   if(s.inter)return false;
   const n=s.name.toLowerCase();
   return !(n.includes('poste')||n.includes('bif.')||n.includes('boucle')||n.includes('dépôt'));
 }
 
-/* ══ MISSION ══ */
 function enterMission(id){
   currentMissionId=id||'stjean';
   const m=allMissions[currentMissionId];
@@ -712,7 +702,6 @@ function enterMission(id){
   document.getElementById('trainId').textContent=m.trainId;
   document.getElementById('trainSub').textContent=m.trainSub;
   document.getElementById('materielBadge').textContent=m.materiel;
-  /* Livrets chargés depuis livrets.js (window.livretData) */
   const ld=(window.livretData||{})[currentMissionId];
   document.getElementById('livretContent').textContent=ld?ld.livret:'Aucun livret disponible pour cette mission.';
   buildTable();
@@ -727,7 +716,6 @@ function showMenu(){
   setTimeout(()=>menu.classList.remove('menu-enter'),800);
 }
 
-/* ══ DÉTECTION DÉPART & NARBONNE POUR ICÔNES ══ */
 function shouldShowIcons(s, i){
   if(s.terminus===true) return true;
   if(s.name.toLowerCase().includes('narbonne')) return true;
@@ -735,25 +723,21 @@ function shouldShowIcons(s, i){
   return true;
 }
 
-/* ══ TABLEAU ══ */
 const tbody=document.getElementById('tbody');
 
 function buildTable(){
   tbody.innerHTML='';
   let sepDone=false;
-
   stations.forEach((s,i)=>{
     if(s.retour&&!sepDone){
       const sep=document.createElement('tr');sep.className='sep';
       sep.innerHTML='<td colspan="6">⇄ Changement de cabine</td>';
       tbody.appendChild(sep); sepDone=true;
     }
-
     const tr=document.createElement('tr'); tr.id='r'+i;
     const pkT=s.pk!==null&&s.pk!==undefined?s.pk.toFixed(2):'';
     const vlT=s.vl||'';
     const main=isMainStation(s);
-
     if(main){
       tr.classList.add('gare-principale');
       const showIcons=shouldShowIcons(s,i);
@@ -792,7 +776,6 @@ function buildTable(){
 }
 buildTable();
 
-/* ══ CHECKLIST ══ */
 const checkItems=['Batterie','Clef','Démarrage moteur','Test BP','Test KVB','Test Radio'];
 const checked=new Set();
 const cl=document.getElementById('checklist');
@@ -808,7 +791,6 @@ checkItems.forEach((label,i)=>{
   cl.appendChild(div);
 });
 
-/* ══ RENDU ══ */
 function getCurrentGameTime(){
   if(timeMode==='custom'&&customTimeBase!==null)return customTimeBase+(Date.now()-customTimeSetAt)/1000;
   return null;
@@ -868,7 +850,6 @@ function render(){
   if(row)row.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
-/* ══ NAVIGATION ══ */
 function navigate(dir){
   const currentTime=getCurrentGameTime();
   if(dir===1&&curIdx<stations.length-1){
@@ -889,7 +870,6 @@ function resetNav(){
   render();
 }
 
-/* ══ À QUAI ══ */
 function toggleAQuai(){if(!document.getElementById('aQuaiBtn').disabled){aQuaiActive=!aQuaiActive;updateAQuaiBtn();}}
 function updateAQuaiBtn(){
   const btn=document.getElementById('aQuaiBtn'),lbl=document.getElementById('aQuaiLbl');
@@ -907,7 +887,6 @@ function checkAQuai(){
   if(dep!==null&&ct>=dep)navigate(1);
 }
 
-/* ══ RAPPEL ══ */
 function toggleRappel(){if(!document.getElementById('rappelBtn').disabled){rappelActive=!rappelActive;updateRappelBtn();}}
 function updateRappelBtn(){
   const btn=document.getElementById('rappelBtn'),lbl=document.getElementById('rappelLbl');
@@ -941,7 +920,6 @@ function showRappelToast(name){
   toastTimeout=setTimeout(()=>t.classList.remove('show'),5000);
 }
 
-/* ══ HEURE ══ */
 function setCustomTime(){
   const input=document.getElementById('timeInput').value.trim();
   const match=input.match(/^(\d{1,2}):(\d{2}):(\d{2})$/);
@@ -960,7 +938,6 @@ function updateTimeModeIndicator(){
   document.getElementById('timeModeIndicator').textContent=timeMode==='real'?'Mode: Heure réelle':'Mode: Heure définie';
 }
 
-/* ══ NUIT / PLEIN ÉCRAN ══ */
 function toggleNight(){
   night=!night; document.body.classList.toggle('night',night);
   document.getElementById('nightIco').textContent=night?'☀️':'🌙';
@@ -972,7 +949,6 @@ function toggleFullscreen(){
 }
 document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement)document.getElementById('fsBtn').textContent='⛶ Plein écran';});
 
-/* ══ PANNEAU ══ */
 function getPanelW(){return window.innerWidth>768?parseInt(getComputedStyle(document.documentElement).getPropertyValue('--panel-w'))||320:0;}
 function hidePanel(){
   if(window.innerWidth<=768){togglePanel();return;}
@@ -997,7 +973,6 @@ function toggleMemo(){const p=document.getElementById('memoPanel'),a=document.ge
 function toggleLivret(){const p=document.getElementById('livretPanel'),a=document.getElementById('livret-arrow');p.classList.toggle('open');a.textContent=p.classList.contains('open')?'∨':'›';}
 function toggleTime(){const p=document.getElementById('timePanel'),a=document.getElementById('time-arrow');p.classList.toggle('open');a.textContent=p.classList.contains('open')?'∨':'›';}
 
-/* ══ CLAVIER ══ */
 document.addEventListener('keydown',e=>{
   if(!document.getElementById('mainMenu').classList.contains('hidden'))return;
   if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
@@ -1012,7 +987,6 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-/* ══ BOUCLE PRINCIPALE ══ */
 render();
 setInterval(()=>{checkAQuai();checkRappel();render();},1000);
 </script>

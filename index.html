@@ -182,7 +182,18 @@ body.night #next-delta.ontime{background:#0d1e2a;color:#7dd3fc;}
 .time-btn:hover{background:#3a8fe0;}
 .time-btn.secondary{background:var(--btn-bg);color:var(--btn-tx);border:1px solid var(--btn-bd);}
 .time-btn.secondary:hover{background:var(--btn-hv);}
+.time-btn.active-mode{background:#4da3ff;color:#fff;border-color:#4da3ff;}
 .time-mode-indicator{font-size:11px;color:var(--text-muted);margin-top:6px;padding:5px;background:var(--menu-bg);border-radius:4px;text-align:center;}
+/* Vitesse du temps */
+.speed-row{display:flex;gap:4px;margin-top:8px;}
+.speed-btn{flex:1;padding:5px 4px;background:var(--btn-bg);color:var(--btn-tx);border:1px solid var(--btn-bd);border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;font-family:'Rajdhani',sans-serif;letter-spacing:.5px;text-align:center;transition:all .2s;}
+.speed-btn:hover{background:var(--btn-hv);}
+.speed-btn.active{background:#e89b2d;color:#fff;border-color:#e89b2d;}
+/* Horloge flottante tablette — toujours visible en plein écran */
+#floatClock{display:none;position:fixed;bottom:70px;right:10px;z-index:45;background:var(--clock-bg);border:1px solid var(--clock-border);border-radius:8px;padding:6px 12px;text-align:center;pointer-events:none;}
+#floatClock .fc-time{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--clock-color);font-variant-numeric:tabular-nums;letter-spacing:2px;}
+#floatClock .fc-avance{font-size:11px;color:#4da3ff;margin-top:2px;}
+#floatClock .fc-speed{font-size:10px;color:var(--text-muted);margin-top:1px;}
 #main{margin-right:var(--panel-w);height:100vh;overflow-y:auto;overflow-x:hidden;padding-bottom:80px;}
 #main::-webkit-scrollbar{width:6px;}
 #main::-webkit-scrollbar-thumb{background:var(--scr);}
@@ -289,6 +300,9 @@ body.is-tablet .col-arr{width:76px;}
 body.is-tablet .col-delta{width:64px;}
 body.is-tablet table{transform:skewX(-5deg);}
 body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX(5deg);}
+/* Tablette plein écran : afficher horloge flottante quand panneau masqué */
+body.is-tablet.panel-hidden #floatClock,
+body.is-tablet #floatClock.force-show{display:block;}
 @media(max-width:768px){
   :root{--panel-w:100%;}
   #rightPanel{width:100%;max-width:360px;transform:translateX(100%);box-shadow:-4px 0 20px rgba(0,0,0,.2);}
@@ -297,6 +311,7 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
   #panelToggle{display:block;}
   #topBtns{right:12px;top:56px;}
   #showPanelBtn{display:none!important;}
+  #floatClock{display:block;}
   table{transform:skewX(-4deg);}
   thead td,td,.sep td{transform:skewX(4deg);}
   .col-pk{width:54px;}.col-vl{width:36px;}.col-vref{width:36px;}.col-arr{width:80px;}.col-delta{width:62px;}
@@ -396,7 +411,6 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
             <div class="line-tag" style="background:#7c3aed;color:#fff;">AGC · Long · Nuit</div>
             <div class="line-btn-label"><div class="lbl-main">Service AGC Long · Nuit</div><div class="lbl-sub">Port-la-Nouvelle → Narbonne C</div></div>
           </div>
-          <!-- NOUVEAU : Service AGC Court Soirée -->
           <div class="line-btn" onclick="enterMission('beziers_court_soir')">
             <div style="width:100%;height:100%;background:url('Narbone%20soiree.png') center/cover no-repeat,linear-gradient(135deg,#0a0a1a,#1a1040 50%,#0a0a18);"></div>
             <div class="line-tag" style="background:#c0392b;color:#fff;">877118 · UM2 3V</div>
@@ -418,6 +432,13 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
 </div>
 <button id="showPanelBtn" onclick="openPanel()">☰ Infos</button>
 <button id="panelToggle" onclick="togglePanel()">☰ Infos</button>
+
+<!-- Horloge flottante pour tablette / mobile quand panneau fermé -->
+<div id="floatClock">
+  <div class="fc-time" id="fcTime">--:--:--</div>
+  <div class="fc-avance" id="fcAvance">—</div>
+  <div class="fc-speed" id="fcSpeed">×1</div>
+</div>
 
 <div id="rightPanel">
   <div id="topbar">
@@ -459,8 +480,17 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
         <button class="time-btn" onclick="setCustomTime()">Définir</button>
       </div>
       <div style="display:flex;gap:6px;margin-top:6px;">
-        <button class="time-btn secondary" style="flex:1;" onclick="switchTimeMode('real')">Heure réelle</button>
-        <button class="time-btn secondary" style="flex:1;" onclick="switchTimeMode('custom')">Heure définie</button>
+        <button class="time-btn secondary" id="btnModeReal" style="flex:1;" onclick="switchTimeMode('real')">Heure réelle</button>
+        <button class="time-btn secondary" id="btnModeCustom" style="flex:1;" onclick="switchTimeMode('custom')">Heure définie</button>
+      </div>
+      <!-- Vitesse du temps -->
+      <div style="font-size:10px;color:var(--text-muted);margin-top:10px;letter-spacing:1px;text-transform:uppercase;">Vitesse du temps</div>
+      <div class="speed-row">
+        <button class="speed-btn" id="spd-half" onclick="setSpeed(0.5)">½×</button>
+        <button class="speed-btn active" id="spd-1" onclick="setSpeed(1)">1×</button>
+        <button class="speed-btn" id="spd-2" onclick="setSpeed(2)">2×</button>
+        <button class="speed-btn" id="spd-4" onclick="setSpeed(4)">4×</button>
+        <button class="speed-btn" id="spd-8" onclick="setSpeed(8)">8×</button>
       </div>
       <div class="time-mode-indicator" id="timeModeIndicator">Mode: Heure réelle</div>
     </div>
@@ -478,7 +508,7 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
       <div id="next-delta" class="ontime">—</div>
     </div>
     <div id="clockPanel">
-      <div class="small">Heure jeu</div>
+      <div class="small">Heure jeu <span id="speedLabel" style="color:#e89b2d;font-weight:700;margin-left:4px;"></span></div>
       <div id="clock">--:--:--</div>
       <div id="avance">—</div>
       <div id="reg"></div>
@@ -521,6 +551,7 @@ body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX
 'use strict';
 
 let night=false, curIdx=0, timeMode='real', customTimeBase=null, customTimeSetAt=null;
+let timeSpeed=1; // Facteur de vitesse : 1 = temps réel, 2 = double vitesse, etc.
 const recordedDeltas={};
 let aQuaiActive=false, rappelActive=false, rappelFired={};
 let currentMissionId='stjean';
@@ -557,6 +588,23 @@ function fmtD(d){
   if(d>5)return{text:'+'+t,cls:'late'};
   if(a<60)return{text:'−'+t,cls:'ahead'};
   return{text:'−'+t,cls:'late'};
+}
+
+// Vitesse du temps
+function setSpeed(s){
+  // Avant de changer la vitesse, recalculer la base pour éviter le saut
+  if(timeMode==='custom'&&customTimeBase!==null){
+    customTimeBase=getCurrentGameTime();
+    customTimeSetAt=Date.now();
+  }
+  timeSpeed=s;
+  document.querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));
+  const map={0.5:'spd-half',1:'spd-1',2:'spd-2',4:'spd-4',8:'spd-8'};
+  const id=map[s]; if(id)document.getElementById(id).classList.add('active');
+  const lbl=s===1?'':(s===0.5?'½×':s+'×');
+  document.getElementById('speedLabel').textContent=lbl;
+  document.getElementById('fcSpeed').textContent=s===1?'×1':'×'+s;
+  updateTimeModeIndicator();
 }
 
 const SPLASH_DURATION=Math.floor(Math.random()*5001)+5000;
@@ -656,13 +704,16 @@ const allMissions={
       {pk:null,name:'Narbonne Quai C',vref:'C',arr:'14:54:41',dep:'14:55:41',vl:'',retour:true,terminus:true},
     ]
   },
+  // ── SERVICE COURT JOUR ── Horaires mis à jour d'après capture écran (15h55)
   beziers_court:{
-    trainId:'Service AGC Court',trainSub:'AGC · Jour',materiel:'AGC',termLabel:'Port-la-Nouvelle — Béziers',
+    trainId:'Service AGC Court',trainSub:'AGC · Jour',materiel:'AGC',termLabel:'Port-la-Nouvelle → Béziers',
     stations:[
-      {pk:null,name:'Port-la-Nouvelle Quai B',vref:'B',arr:'13:50:09',dep:'13:55:09',vl:'',retour:false},
-      {pk:null,name:'Narbonne Quai D',vref:'D',arr:'14:06:39',dep:'14:07:39',vl:'',retour:false},
-      {pk:null,name:'Coursan Quai A',vref:'A',arr:'14:13:37',dep:'14:14:37',vl:'',retour:false},
-      {pk:null,name:'Béziers Quai A',vref:'A',arr:'14:34:05',dep:'14:40:05',vl:'',retour:false,terminus:true},
+      {pk:null,name:'Port-la-Nouvelle Quai B',vref:'B',arr:'15:55:00',dep:'16:00:00',vl:'',retour:false},
+      {pk:null,name:'Narbonne Quai D',vref:'D',arr:'16:12:16',dep:'16:13:16',vl:'',retour:false},
+      {pk:null,name:'Colombiers Quai A',vref:'A',arr:'16:23:30',dep:'16:24:30',vl:'',retour:false},
+      {pk:null,name:'Béziers Quai B',vref:'B',arr:'16:29:06',dep:'16:31:06',vl:'',retour:false,terminus:true},
+      {pk:null,name:'Béziers Dépôt V2E',vref:'V2E',arr:'16:33:55',dep:'16:35:55',vl:'',retour:false,inter:true},
+      {pk:null,name:'Béziers Dépôt V2E',vref:'V2E',arr:'16:35:55',dep:'16:35:55',vl:'',retour:true,inter:true},
     ]
   },
   beziers_long_nuit:{
@@ -674,14 +725,15 @@ const allMissions={
       {pk:null,name:'Narbonne Quai C',vref:'C',arr:'21:45:15',dep:'21:46:15',vl:'',retour:true,terminus:true},
     ]
   },
+  // ── SERVICE COURT SOIRÉE ── Horaires mis à jour d'après capture écran (19h35)
   beziers_court_soir:{
-    trainId:'877118 UM2 3V',trainSub:'AGC · Court · Soirée',materiel:'UM2 3V',termLabel:'Narbonne — Port-la-Nouvelle — Béziers · Soirée',
+    trainId:'877118 UM2 3V',trainSub:'AGC · Court · Soirée',materiel:'UM2 3V',termLabel:'Port-la-Nouvelle → Béziers · Soirée',
     stations:[
-      {pk:null,name:'Narbonne Quai B',vref:'B',arr:'19:35:00',dep:'19:40:00',vl:'',retour:false},
-      {pk:null,name:'Port-la-Nouvelle Quai B',vref:'B',arr:'19:52:31',dep:'19:57:31',vl:'',retour:false},
-      {pk:null,name:'Narbonne Quai D',vref:'D',arr:'20:09:50',dep:'20:10:50',vl:'',retour:true},
-      {pk:null,name:'Colombiers Quai A',vref:'A',arr:'20:20:23',dep:'20:21:23',vl:'',retour:true},
-      {pk:null,name:'Béziers Quai B',vref:'B',arr:'20:26:02',dep:'20:27:32',vl:'',retour:true,terminus:true},
+      {pk:null,name:'Port-la-Nouvelle Quai B',vref:'B',arr:'19:35:00',dep:'19:40:00',vl:'',retour:false},
+      {pk:null,name:'Narbonne Quai D',vref:'D',arr:'19:54:34',dep:'19:55:34',vl:'',retour:false},
+      {pk:null,name:'Colombiers Quai A',vref:'A',arr:'20:05:49',dep:'20:06:49',vl:'',retour:false},
+      {pk:null,name:'Béziers Quai B',vref:'B',arr:'20:11:24',dep:'20:13:24',vl:'',retour:false,terminus:true},
+      {pk:null,name:'Béziers Dépôt V2E',vref:'V2E',arr:'20:16:01',dep:'20:16:01',vl:'',retour:false,inter:true},
     ]
   }
 };
@@ -716,10 +768,10 @@ function showMenu(){
   setTimeout(()=>menu.classList.remove('menu-enter'),800);
 }
 
-function shouldShowIcons(s, i){
-  if(s.terminus===true) return true;
-  if(s.name.toLowerCase().includes('narbonne')) return true;
-  for(let j=0;j<i;j++){if(isMainStation(stations[j])) return false;}
+function shouldShowIcons(s,i){
+  if(s.terminus===true)return true;
+  if(s.name.toLowerCase().includes('narbonne'))return true;
+  for(let j=0;j<i;j++){if(isMainStation(stations[j]))return false;}
   return true;
 }
 
@@ -792,18 +844,25 @@ checkItems.forEach((label,i)=>{
 });
 
 function getCurrentGameTime(){
-  if(timeMode==='custom'&&customTimeBase!==null)return customTimeBase+(Date.now()-customTimeSetAt)/1000;
+  if(timeMode==='custom'&&customTimeBase!==null){
+    // Application du facteur de vitesse : elapsed * timeSpeed
+    return customTimeBase+(Date.now()-customTimeSetAt)/1000*timeSpeed;
+  }
   return null;
 }
 
 function render(){
   const currentTime=getCurrentGameTime();
+  let clockStr;
   if(currentTime!==null){
     const h=Math.floor(currentTime/3600)%24,m=Math.floor(currentTime/60)%60,s=Math.floor(currentTime)%60;
-    document.getElementById('clock').textContent=pad(h)+':'+pad(m)+':'+pad(s);
+    clockStr=pad(h)+':'+pad(m)+':'+pad(s);
   } else {
-    document.getElementById('clock').textContent=fmtTime();
+    clockStr=fmtTime();
   }
+  document.getElementById('clock').textContent=clockStr;
+  document.getElementById('fcTime').textContent=clockStr;
+
   stations.forEach((s,i)=>{
     const tr=document.getElementById('r'+i); if(!tr)return;
     const main=isMainStation(s);
@@ -828,6 +887,7 @@ function render(){
     if(currentTime!==null){const ds=toSec(cur.dep);if(ds!==null){const d=fmtD(currentTime-ds);nd.textContent=d.text;nd.className=d.cls;}}
     else{nd.textContent='—';nd.className='ontime';}
   }
+  let avanceTxt='', avanceColor='#6080a0';
   if(currentTime!==null&&cur){
     const depRef=toSec(cur.dep);
     if(depRef!==null){
@@ -836,16 +896,18 @@ function render(){
       if(a<60)t=Math.round(a)+'s';
       else if(a<3600){const mins=Math.floor(a/60),secs=Math.round(a%60);t=mins+'min'+pad(secs)+'s';}
       else t=Math.floor(a/3600)+'h'+pad(Math.floor((a%3600)/60));
-      const av=document.getElementById('avance');
-      if(a<5){av.textContent="À l'heure";av.style.color='#27ae60';}
-      else if(diff>0){av.textContent='Retard +'+t;av.style.color='#e05555';}
-      else if(a<60){av.textContent='Avance −'+t;av.style.color='#27ae60';}
-      else{av.textContent='Avance −'+t;av.style.color='#e05555';}
+      if(a<5){avanceTxt="À l'heure";avanceColor='#27ae60';}
+      else if(diff>0){avanceTxt='Retard +'+t;avanceColor='#e05555';}
+      else if(a<60){avanceTxt='Avance −'+t;avanceColor='#27ae60';}
+      else{avanceTxt='Avance −'+t;avanceColor='#e05555';}
     }
   } else {
-    document.getElementById('avance').textContent='Heure non définie';
-    document.getElementById('avance').style.color='#6080a0';
+    avanceTxt='Heure non définie';
   }
+  document.getElementById('avance').textContent=avanceTxt;
+  document.getElementById('avance').style.color=avanceColor;
+  document.getElementById('fcAvance').textContent=avanceTxt||'—';
+
   const row=document.getElementById('r'+curIdx);
   if(row)row.scrollIntoView({behavior:'smooth',block:'center'});
 }
@@ -902,8 +964,10 @@ function checkRappel(){
   for(let i=curIdx;i<stations.length;i++){
     if(rappelFired[i])continue;
     const arr=toSec(stations[i].arr); if(arr===null)continue;
+    // Le seuil de rappel s'adapte à la vitesse (60s réelles = 60/speed secondes de jeu)
+    const seuil=60*timeSpeed;
     const diff=arr-ct;
-    if(diff<=60&&diff>0){rappelFired[i]=true;playRappel(stations[i].name);break;}
+    if(diff<=seuil&&diff>0){rappelFired[i]=true;playRappel(stations[i].name);break;}
   }
 }
 function playRappel(name){
@@ -928,14 +992,20 @@ function setCustomTime(){
   if(h>23||m>59||s>59){alert('Heure invalide.');return;}
   customTimeBase=h*3600+m*60+s; customTimeSetAt=Date.now();
   timeMode='custom'; updateTimeModeIndicator(); updateAQuaiBtn(); updateRappelBtn();
-  alert('Heure définie : '+input);
+  updateModeButtons();
 }
 function switchTimeMode(mode){
   if(mode==='custom'&&customTimeBase===null){alert('Veuillez d\'abord définir une heure.');return;}
   timeMode=mode; updateTimeModeIndicator(); updateAQuaiBtn(); updateRappelBtn();
+  updateModeButtons();
+}
+function updateModeButtons(){
+  document.getElementById('btnModeReal').classList.toggle('active-mode',timeMode==='real');
+  document.getElementById('btnModeCustom').classList.toggle('active-mode',timeMode==='custom');
 }
 function updateTimeModeIndicator(){
-  document.getElementById('timeModeIndicator').textContent=timeMode==='real'?'Mode: Heure réelle':'Mode: Heure définie';
+  const spd=timeSpeed===1?'':(' · ×'+timeSpeed);
+  document.getElementById('timeModeIndicator').textContent=(timeMode==='real'?'Mode: Heure réelle':'Mode: Heure définie')+spd;
 }
 
 function toggleNight(){
@@ -956,6 +1026,9 @@ function hidePanel(){
   document.getElementById('main').style.marginRight='0';
   document.getElementById('topBtns').style.right='8px';
   document.getElementById('showPanelBtn').classList.add('visible');
+  document.body.classList.add('panel-hidden');
+  // Afficher l'horloge flottante sur tablette
+  document.getElementById('floatClock').classList.add('force-show');
 }
 function openPanel(){
   document.getElementById('rightPanel').classList.remove('hidden');
@@ -963,10 +1036,21 @@ function openPanel(){
   document.getElementById('main').style.marginRight=w;
   document.getElementById('topBtns').style.right='calc('+w+' + 8px)';
   document.getElementById('showPanelBtn').classList.remove('visible');
+  document.body.classList.remove('panel-hidden');
+  document.getElementById('floatClock').classList.remove('force-show');
 }
 function togglePanel(){
   const rp=document.getElementById('rightPanel'),btn=document.getElementById('panelToggle');
-  if(window.innerWidth<=768){rp.classList.toggle('open');btn.textContent=rp.classList.contains('open')?'✕ Fermer':'☰ Infos';}
+  if(window.innerWidth<=768){
+    rp.classList.toggle('open');
+    btn.textContent=rp.classList.contains('open')?'✕ Fermer':'☰ Infos';
+    // Sur mobile, horloge flottante quand panneau fermé
+    if(rp.classList.contains('open')){
+      document.getElementById('floatClock').classList.remove('force-show');
+    } else {
+      document.getElementById('floatClock').classList.add('force-show');
+    }
+  }
 }
 function toggleDetail(){const p=document.getElementById('detailPanel'),a=document.getElementById('detail-arrow');p.classList.toggle('open');a.textContent=p.classList.contains('open')?'∨':'›';}
 function toggleMemo(){const p=document.getElementById('memoPanel'),a=document.getElementById('memo-arrow');p.classList.toggle('open');a.textContent=p.classList.contains('open')?'∨':'›';}

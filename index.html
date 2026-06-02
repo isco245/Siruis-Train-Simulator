@@ -218,31 +218,88 @@ body.is-tablet.panel-hidden #floatClock,
 body.is-tablet #floatClock.force-show{display:block!important;}
 
 /* ═══════════════════════════════════════════════════════════
-   STYLES TABLETTE
+   STYLES TABLETTE / iPAD PAYSAGE
+   Objectif : tout tenir dans 100vh sans rien couper
    ═══════════════════════════════════════════════════════════ */
-body.is-tablet{--panel-w:260px;}
-body.is-tablet #rightPanel{width:260px;}
-body.is-tablet #topbar{height:46px;}
-body.is-tablet #trainInfo{font-size:13px;}
-body.is-tablet .menuItem{height:38px;font-size:13px;padding:0 12px;}
-body.is-tablet #clock{font-size:28px;}
-body.is-tablet #clockPanel{padding:6px 12px;}
-body.is-tablet #destination{padding:8px 12px;}
-body.is-tablet #destination h2{font-size:17px;}
-body.is-tablet #destination p{font-size:11px;}
-body.is-tablet #terminus{padding:6px 12px;}
-body.is-tablet #terminus .t-name{font-size:12px;}
-body.is-tablet tbody tr.gare-principale{height:66px;}
-body.is-tablet .station-name{font-size:14px;}
-body.is-tablet td{font-size:13px;padding:6px;}
-body.is-tablet thead td{font-size:11px;padding:8px 6px;}
-body.is-tablet .col-pk{width:58px;}
-body.is-tablet .col-vl{width:38px;}
-body.is-tablet .col-vref{width:38px;}
-body.is-tablet .col-arr{width:76px;}
-body.is-tablet .col-delta{width:64px;}
+body.is-tablet{--panel-w:240px;}
+
+/* Panneau droit : flex-column strict, hauteur fixe 100vh */
+body.is-tablet #rightPanel{
+  width:240px;
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+  overflow:hidden;
+}
+
+/* Topbar compressée */
+body.is-tablet #topbar{
+  height:40px;
+  padding:4px 10px;
+  flex-shrink:0;
+}
+body.is-tablet #sncf-img{height:28px;}
+body.is-tablet #trainInfo{font-size:12px;line-height:1.2;}
+body.is-tablet #trainInfo #trainSub{font-size:10px;}
+
+/* Zone scrollable du menu : flex:1 pour prendre l'espace restant */
+body.is-tablet #panelScroll{
+  flex:1;
+  overflow-y:auto;
+  overflow-x:hidden;
+  min-height:0; /* important pour que flex:1 fonctionne */
+}
+body.is-tablet .menuItem{height:34px;font-size:12px;padding:0 10px;}
+body.is-tablet .menuItem span{font-size:11px;}
+
+/* Panneau bas : flex-shrink:0, tout toujours visible */
+body.is-tablet #panelBottom{
+  flex-shrink:0;
+}
+
+/* Terminus : ultra compact */
+body.is-tablet #terminus{
+  padding:4px 10px;
+}
+body.is-tablet #terminus .t-label{font-size:8px;}
+body.is-tablet #terminus .t-name{font-size:11px;margin-top:0;}
+body.is-tablet #terminus .t-detail{font-size:9px;margin-top:1px;}
+
+/* Prochain arrêt : compact mais lisible */
+body.is-tablet #destination{
+  padding:5px 10px;
+}
+body.is-tablet #destination .d-label{font-size:8px;}
+body.is-tablet #destination h2{font-size:15px;margin-top:1px;}
+body.is-tablet #destination p{font-size:10px;margin-top:2px;}
+body.is-tablet #next-delta{font-size:11px;padding:1px 5px;margin-top:2px;}
+
+/* Horloge panneau : compact */
+body.is-tablet #clockPanel{padding:4px 10px;border-top:1px solid var(--clock-border);}
+body.is-tablet #clockPanel .small{font-size:9px;margin-bottom:1px;}
+body.is-tablet #clock{font-size:26px;letter-spacing:1px;}
+body.is-tablet #avance{font-size:10px;margin-top:1px;}
+body.is-tablet #reg{font-size:9px;}
+
+/* Tableau principal */
+body.is-tablet tbody tr.gare-principale{height:58px;}
+body.is-tablet .station-name{font-size:13px;}
+body.is-tablet .gare-icons{margin-top:2px;gap:4px;}
+body.is-tablet .gare-icons .gi{font-size:11px;}
+body.is-tablet td{font-size:12px;padding:5px 6px;}
+body.is-tablet thead td{font-size:10px;padding:6px 5px;}
+body.is-tablet .col-pk{width:54px;}
+body.is-tablet .col-vl{width:34px;}
+body.is-tablet .col-vref{width:34px;}
+body.is-tablet .col-arr{width:70px;padding-right:8px!important;}
+body.is-tablet .col-delta{width:58px;}
 body.is-tablet table{transform:skewX(-5deg);}
 body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX(5deg);}
+
+/* Boutons FAB légèrement réduits sur tablette */
+body.is-tablet .fab{font-size:13px;padding:7px 14px!important;}
+body.is-tablet .fab-next{padding:7px 18px!important;}
+body.is-tablet #navFloat{bottom:16px;left:16px;gap:7px;}
 
 #main{margin-right:var(--panel-w);height:100vh;overflow-y:auto;overflow-x:hidden;padding-bottom:80px;}
 #main::-webkit-scrollbar{width:6px;}

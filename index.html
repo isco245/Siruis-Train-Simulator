@@ -184,16 +184,66 @@ body.night #next-delta.ontime{background:#0d1e2a;color:#7dd3fc;}
 .time-btn.secondary:hover{background:var(--btn-hv);}
 .time-btn.active-mode{background:#4da3ff;color:#fff;border-color:#4da3ff;}
 .time-mode-indicator{font-size:11px;color:var(--text-muted);margin-top:6px;padding:5px;background:var(--menu-bg);border-radius:4px;text-align:center;}
-/* Vitesse du temps */
 .speed-row{display:flex;gap:4px;margin-top:8px;}
 .speed-btn{flex:1;padding:5px 4px;background:var(--btn-bg);color:var(--btn-tx);border:1px solid var(--btn-bd);border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;font-family:'Rajdhani',sans-serif;letter-spacing:.5px;text-align:center;transition:all .2s;}
 .speed-btn:hover{background:var(--btn-hv);}
 .speed-btn.active{background:#e89b2d;color:#fff;border-color:#e89b2d;}
-/* Horloge flottante tablette — toujours visible en plein écran */
-#floatClock{display:none;position:fixed;bottom:70px;right:10px;z-index:45;background:var(--clock-bg);border:1px solid var(--clock-border);border-radius:8px;padding:6px 12px;text-align:center;pointer-events:none;}
-#floatClock .fc-time{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--clock-color);font-variant-numeric:tabular-nums;letter-spacing:2px;}
-#floatClock .fc-avance{font-size:11px;color:#4da3ff;margin-top:2px;}
+
+/* ═══════════════════════════════════════════════════════════
+   HORLOGE FLOTTANTE — visible sur tablette/iPad TOUJOURS
+   ═══════════════════════════════════════════════════════════ */
+#floatClock{
+  display:none;
+  position:fixed;
+  bottom:76px;
+  left:16px;       /* ← bas gauche, au-dessus des FABs */
+  z-index:45;
+  background:var(--clock-bg);
+  border:1px solid var(--clock-border);
+  border-radius:10px;
+  padding:8px 16px;
+  text-align:center;
+  pointer-events:none;
+  box-shadow:0 4px 16px rgba(0,0,0,.18);
+  min-width:140px;
+}
+#floatClock .fc-time{font-family:'Rajdhani',sans-serif;font-size:34px;font-weight:700;color:var(--clock-color);font-variant-numeric:tabular-nums;letter-spacing:3px;}
+#floatClock .fc-avance{font-size:12px;color:#4da3ff;margin-top:2px;}
 #floatClock .fc-speed{font-size:10px;color:var(--text-muted);margin-top:1px;}
+
+/* Sur tablette (is-tablet) : toujours afficher, panneau ouvert ou fermé */
+body.is-tablet #floatClock{display:block!important;}
+/* Sur tablette panneau masqué ou force-show */
+body.is-tablet.panel-hidden #floatClock,
+body.is-tablet #floatClock.force-show{display:block!important;}
+
+/* ═══════════════════════════════════════════════════════════
+   STYLES TABLETTE
+   ═══════════════════════════════════════════════════════════ */
+body.is-tablet{--panel-w:260px;}
+body.is-tablet #rightPanel{width:260px;}
+body.is-tablet #topbar{height:46px;}
+body.is-tablet #trainInfo{font-size:13px;}
+body.is-tablet .menuItem{height:38px;font-size:13px;padding:0 12px;}
+body.is-tablet #clock{font-size:28px;}
+body.is-tablet #clockPanel{padding:6px 12px;}
+body.is-tablet #destination{padding:8px 12px;}
+body.is-tablet #destination h2{font-size:17px;}
+body.is-tablet #destination p{font-size:11px;}
+body.is-tablet #terminus{padding:6px 12px;}
+body.is-tablet #terminus .t-name{font-size:12px;}
+body.is-tablet tbody tr.gare-principale{height:66px;}
+body.is-tablet .station-name{font-size:14px;}
+body.is-tablet td{font-size:13px;padding:6px;}
+body.is-tablet thead td{font-size:11px;padding:8px 6px;}
+body.is-tablet .col-pk{width:58px;}
+body.is-tablet .col-vl{width:38px;}
+body.is-tablet .col-vref{width:38px;}
+body.is-tablet .col-arr{width:76px;}
+body.is-tablet .col-delta{width:64px;}
+body.is-tablet table{transform:skewX(-5deg);}
+body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX(5deg);}
+
 #main{margin-right:var(--panel-w);height:100vh;overflow-y:auto;overflow-x:hidden;padding-bottom:80px;}
 #main::-webkit-scrollbar{width:6px;}
 #main::-webkit-scrollbar-thumb{background:var(--scr);}
@@ -277,32 +327,6 @@ body.night .fab-rappel{background:linear-gradient(145deg,#4c1d95 0%,#3b0764 100%
 #rappel-toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff;padding:10px 22px;border-radius:28px;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;letter-spacing:1px;box-shadow:0 6px 28px rgba(124,58,237,.5);opacity:0;pointer-events:none;z-index:50;transition:opacity .35s ease,transform .35s ease;white-space:nowrap;}
 #rappel-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 #panelToggle{display:none;position:fixed;top:8px;right:8px;background:#e89b2d;color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:700;cursor:pointer;z-index:30;}
-body.is-tablet{--panel-w:260px;}
-body.is-tablet #rightPanel{width:260px;}
-body.is-tablet #topbar{height:46px;}
-body.is-tablet #trainInfo{font-size:13px;}
-body.is-tablet .menuItem{height:38px;font-size:13px;padding:0 12px;}
-body.is-tablet #clock{font-size:28px;}
-body.is-tablet #clockPanel{padding:6px 12px;}
-body.is-tablet #destination{padding:8px 12px;}
-body.is-tablet #destination h2{font-size:17px;}
-body.is-tablet #destination p{font-size:11px;}
-body.is-tablet #terminus{padding:6px 12px;}
-body.is-tablet #terminus .t-name{font-size:12px;}
-body.is-tablet tbody tr.gare-principale{height:66px;}
-body.is-tablet .station-name{font-size:14px;}
-body.is-tablet td{font-size:13px;padding:6px;}
-body.is-tablet thead td{font-size:11px;padding:8px 6px;}
-body.is-tablet .col-pk{width:58px;}
-body.is-tablet .col-vl{width:38px;}
-body.is-tablet .col-vref{width:38px;}
-body.is-tablet .col-arr{width:76px;}
-body.is-tablet .col-delta{width:64px;}
-body.is-tablet table{transform:skewX(-5deg);}
-body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX(5deg);}
-/* Tablette plein écran : afficher horloge flottante quand panneau masqué */
-body.is-tablet.panel-hidden #floatClock,
-body.is-tablet #floatClock.force-show{display:block;}
 @media(max-width:768px){
   :root{--panel-w:100%;}
   #rightPanel{width:100%;max-width:360px;transform:translateX(100%);box-shadow:-4px 0 20px rgba(0,0,0,.2);}
@@ -433,7 +457,7 @@ body.is-tablet #floatClock.force-show{display:block;}
 <button id="showPanelBtn" onclick="openPanel()">☰ Infos</button>
 <button id="panelToggle" onclick="togglePanel()">☰ Infos</button>
 
-<!-- Horloge flottante pour tablette / mobile quand panneau fermé -->
+<!-- Horloge flottante — bas gauche, toujours visible sur iPad -->
 <div id="floatClock">
   <div class="fc-time" id="fcTime">--:--:--</div>
   <div class="fc-avance" id="fcAvance">—</div>
@@ -483,7 +507,6 @@ body.is-tablet #floatClock.force-show{display:block;}
         <button class="time-btn secondary" id="btnModeReal" style="flex:1;" onclick="switchTimeMode('real')">Heure réelle</button>
         <button class="time-btn secondary" id="btnModeCustom" style="flex:1;" onclick="switchTimeMode('custom')">Heure définie</button>
       </div>
-      <!-- Vitesse du temps -->
       <div style="font-size:10px;color:var(--text-muted);margin-top:10px;letter-spacing:1px;text-transform:uppercase;">Vitesse du temps</div>
       <div class="speed-row">
         <button class="speed-btn" id="spd-half" onclick="setSpeed(0.5)">½×</button>
@@ -551,7 +574,7 @@ body.is-tablet #floatClock.force-show{display:block;}
 'use strict';
 
 let night=false, curIdx=0, timeMode='real', customTimeBase=null, customTimeSetAt=null;
-let timeSpeed=1; // Facteur de vitesse : 1 = temps réel, 2 = double vitesse, etc.
+let timeSpeed=1;
 const recordedDeltas={};
 let aQuaiActive=false, rappelActive=false, rappelFired={};
 let currentMissionId='stjean';
@@ -590,9 +613,7 @@ function fmtD(d){
   return{text:'−'+t,cls:'late'};
 }
 
-// Vitesse du temps
 function setSpeed(s){
-  // Avant de changer la vitesse, recalculer la base pour éviter le saut
   if(timeMode==='custom'&&customTimeBase!==null){
     customTimeBase=getCurrentGameTime();
     customTimeSetAt=Date.now();
@@ -693,18 +714,18 @@ const allMissions={
       {pk:0.00,name:'Lézan v1',vref:'1',arr:'15:18:41',dep:'15:19:41',vl:'',retour:true,terminus:true},
     ]
   },
+  // ── SERVICE LONG JOUR ── Horaires mis à jour (capture 02/06/2026)
   beziers_long:{
     trainId:'Service AGC Long',trainSub:'AGC · Jour',materiel:'AGC',termLabel:'Béziers — Narbonne — Port-la-Nouvelle',
     stations:[
       {pk:null,name:'Port-la-Nouvelle Quai B',vref:'B',arr:'13:55:00',dep:'14:00:00',vl:'',retour:false},
-      {pk:null,name:'Narbonne Quai D',vref:'D',arr:'14:12:15',dep:'14:13:15',vl:'',retour:false},
-      {pk:null,name:'Coursan Quai A',vref:'A',arr:'14:17:02',dep:'14:18:02',vl:'',retour:false},
-      {pk:null,name:'Colombiers Quai A',vref:'A',arr:'14:25:11',dep:'14:26:11',vl:'',retour:false},
-      {pk:null,name:'Béziers Quai B',vref:'B',arr:'14:34:06',dep:'14:40:06',vl:'',retour:false,terminus:true},
-      {pk:null,name:'Narbonne Quai C',vref:'C',arr:'14:54:41',dep:'14:55:41',vl:'',retour:true,terminus:true},
+      {pk:null,name:'Narbonne Quai D',vref:'D',arr:'14:11:29',dep:'14:12:29',vl:'',retour:false},
+      {pk:null,name:'Colombiers Quai A',vref:'A',arr:'14:22:43',dep:'14:23:43',vl:'',retour:false},
+      {pk:null,name:'Béziers Quai B',vref:'B',arr:'14:27:47',dep:'14:33:47',vl:'',retour:false,terminus:true},
+      {pk:null,name:'Narbonne Quai C',vref:'C',arr:'14:48:22',dep:'14:49:22',vl:'',retour:true,terminus:true},
     ]
   },
-  // ── SERVICE COURT JOUR ── Horaires mis à jour d'après capture écran (15h55)
+  // ── SERVICE COURT JOUR ──
   beziers_court:{
     trainId:'Service AGC Court',trainSub:'AGC · Jour',materiel:'AGC',termLabel:'Port-la-Nouvelle → Béziers',
     stations:[
@@ -725,7 +746,7 @@ const allMissions={
       {pk:null,name:'Narbonne Quai C',vref:'C',arr:'21:45:15',dep:'21:46:15',vl:'',retour:true,terminus:true},
     ]
   },
-  // ── SERVICE COURT SOIRÉE ── Horaires mis à jour d'après capture écran (19h35)
+  // ── SERVICE COURT SOIRÉE ──
   beziers_court_soir:{
     trainId:'877118 UM2 3V',trainSub:'AGC · Court · Soirée',materiel:'UM2 3V',termLabel:'Port-la-Nouvelle → Béziers · Soirée',
     stations:[
@@ -845,7 +866,6 @@ checkItems.forEach((label,i)=>{
 
 function getCurrentGameTime(){
   if(timeMode==='custom'&&customTimeBase!==null){
-    // Application du facteur de vitesse : elapsed * timeSpeed
     return customTimeBase+(Date.now()-customTimeSetAt)/1000*timeSpeed;
   }
   return null;
@@ -964,7 +984,6 @@ function checkRappel(){
   for(let i=curIdx;i<stations.length;i++){
     if(rappelFired[i])continue;
     const arr=toSec(stations[i].arr); if(arr===null)continue;
-    // Le seuil de rappel s'adapte à la vitesse (60s réelles = 60/speed secondes de jeu)
     const seuil=60*timeSpeed;
     const diff=arr-ct;
     if(diff<=seuil&&diff>0){rappelFired[i]=true;playRappel(stations[i].name);break;}
@@ -1027,8 +1046,6 @@ function hidePanel(){
   document.getElementById('topBtns').style.right='8px';
   document.getElementById('showPanelBtn').classList.add('visible');
   document.body.classList.add('panel-hidden');
-  // Afficher l'horloge flottante sur tablette
-  document.getElementById('floatClock').classList.add('force-show');
 }
 function openPanel(){
   document.getElementById('rightPanel').classList.remove('hidden');
@@ -1037,19 +1054,12 @@ function openPanel(){
   document.getElementById('topBtns').style.right='calc('+w+' + 8px)';
   document.getElementById('showPanelBtn').classList.remove('visible');
   document.body.classList.remove('panel-hidden');
-  document.getElementById('floatClock').classList.remove('force-show');
 }
 function togglePanel(){
   const rp=document.getElementById('rightPanel'),btn=document.getElementById('panelToggle');
   if(window.innerWidth<=768){
     rp.classList.toggle('open');
     btn.textContent=rp.classList.contains('open')?'✕ Fermer':'☰ Infos';
-    // Sur mobile, horloge flottante quand panneau fermé
-    if(rp.classList.contains('open')){
-      document.getElementById('floatClock').classList.remove('force-show');
-    } else {
-      document.getElementById('floatClock').classList.add('force-show');
-    }
   }
 }
 function toggleDetail(){const p=document.getElementById('detailPanel'),a=document.getElementById('detail-arrow');p.classList.toggle('open');a.textContent=p.classList.contains('open')?'∨':'›';}

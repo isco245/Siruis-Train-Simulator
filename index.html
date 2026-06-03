@@ -44,8 +44,6 @@ body.night{
   --vl-color:#5080a0;
 }
 body{background:var(--bg);transition:background .35s;}
-
-/* ═══ SPLASH ═══ */
 #splash{position:fixed;inset:0;z-index:200;background:#060a10;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 #splash.fade-out{animation:splashFade .8s ease forwards;}
 @keyframes splashFade{to{opacity:0;pointer-events:none;}}
@@ -89,8 +87,6 @@ body{background:var(--bg);transition:background .35s;}
 .splash-step.done .step-bar::after{animation:stepSweep .5s ease forwards;}
 @keyframes stepSweep{to{left:100%;}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-
-/* ═══ MENU ═══ */
 #mainMenu{position:fixed;inset:0;z-index:100;background:#060a10;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow-y:auto;}
 #mainMenu::before{content:'';position:fixed;inset:0;background:linear-gradient(rgba(77,163,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(77,163,255,.04) 1px,transparent 1px);background-size:40px 40px;animation:gridPulse 4s ease-in-out infinite;pointer-events:none;z-index:0;}
 #mainMenu::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.08) 2px,rgba(0,0,0,.08) 4px);pointer-events:none;z-index:0;}
@@ -125,8 +121,6 @@ body{background:var(--bg);transition:background .35s;}
 #menuClockTime{font-size:52px;font-weight:300;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:6px;font-family:'Rajdhani',sans-serif;text-shadow:0 0 40px rgba(255,255,255,.15);}
 #menuClockDate{font-size:12px;color:#4da3ff;margin-top:4px;letter-spacing:2px;font-family:'Rajdhani',sans-serif;}
 #menu-disclaimer{margin-top:16px;font-size:10px;color:#1a3050;letter-spacing:1px;text-align:center;font-family:'Rajdhani',sans-serif;text-transform:uppercase;}
-
-/* ═══ TOPBAR ═══ */
 #topbar{background:var(--topbar-bg);height:54px;padding:8px 12px;color:white;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;transition:background .35s;}
 #trainHeader{display:flex;align-items:center;gap:10px;}
 #sncf-img{height:36px;width:auto;display:block;border-radius:3px;}
@@ -137,11 +131,9 @@ body{background:var(--bg);transition:background .35s;}
 .top-btn:hover{background:var(--btn-hv);}
 #showPanelBtn{display:none;position:fixed;top:8px;right:8px;z-index:40;background:#e89b2d;color:#fff;border:none;border-radius:16px;padding:4px 11px;font-size:11px;font-weight:500;cursor:pointer;font-family:'Roboto',sans-serif;}
 #showPanelBtn.visible{display:flex;align-items:center;gap:4px;}
-
-/* ═══ PANNEAU DROIT ═══ */
 #rightPanel{position:fixed;right:0;top:0;width:var(--panel-w);height:100vh;background:var(--panel-bg);border-left:1px solid var(--panel-border);display:flex;flex-direction:column;z-index:20;transition:transform .3s,background .35s,border-color .35s;overflow:hidden;}
 #rightPanel.hidden{transform:translateX(var(--panel-w));}
-#panelScroll{flex:1;overflow-y:auto;overflow-x:hidden;min-height:0;}
+#panelScroll{flex:1;overflow-y:auto;overflow-x:hidden;}
 #panelScroll::-webkit-scrollbar{width:4px;}
 #panelScroll::-webkit-scrollbar-thumb{background:var(--scr);}
 .menuItem{height:44px;border-bottom:1px solid var(--menu-border);display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:14px;color:var(--text);background:var(--menu-bg);cursor:pointer;user-select:none;transition:background .15s;flex-shrink:0;}
@@ -191,34 +183,70 @@ body.night #next-delta.ontime{background:#0d1e2a;color:#7dd3fc;}
 .time-btn.secondary{background:var(--btn-bg);color:var(--btn-tx);border:1px solid var(--btn-bd);}
 .time-btn.secondary:hover{background:var(--btn-hv);}
 .time-btn.active-mode{background:#4da3ff;color:#fff;border-color:#4da3ff;}
+.time-mode-indicator{font-size:11px;color:var(--text-muted);margin-top:6px;padding:5px;background:var(--menu-bg);border-radius:4px;text-align:center;}
 .speed-row{display:flex;gap:4px;margin-top:8px;}
 .speed-btn{flex:1;padding:5px 4px;background:var(--btn-bg);color:var(--btn-tx);border:1px solid var(--btn-bd);border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;font-family:'Rajdhani',sans-serif;letter-spacing:.5px;text-align:center;transition:all .2s;}
 .speed-btn:hover{background:var(--btn-hv);}
 .speed-btn.active{background:#e89b2d;color:#fff;border-color:#e89b2d;}
 
 /* ═══════════════════════════════════════════════════════════
-   TABLETTE iPAD — optimisé pour tenir en plein écran
-   Panneau droit : flex-column strict, dvh, aucun scroll externe
+   HORLOGE FLOTTANTE — visible sur tablette/iPad TOUJOURS
    ═══════════════════════════════════════════════════════════ */
-body.is-tablet{--panel-w:256px;}
+#floatClock{
+  display:none;
+  position:fixed;
+  bottom:76px;
+  left:16px;       /* ← bas gauche, au-dessus des FABs */
+  z-index:45;
+  background:var(--clock-bg);
+  border:1px solid var(--clock-border);
+  border-radius:10px;
+  padding:8px 16px;
+  text-align:center;
+  pointer-events:none;
+  box-shadow:0 4px 16px rgba(0,0,0,.18);
+  min-width:140px;
+}
+#floatClock .fc-time{font-family:'Rajdhani',sans-serif;font-size:34px;font-weight:700;color:var(--clock-color);font-variant-numeric:tabular-nums;letter-spacing:3px;}
+#floatClock .fc-avance{font-size:12px;color:#4da3ff;margin-top:2px;}
+#floatClock .fc-speed{font-size:10px;color:var(--text-muted);margin-top:1px;}
 
+/* Sur tablette (is-tablet) : toujours afficher, panneau ouvert ou fermé */
+body.is-tablet #floatClock{display:block!important;}
+/* Sur tablette panneau masqué ou force-show */
+body.is-tablet.panel-hidden #floatClock,
+body.is-tablet #floatClock.force-show{display:block!important;}
+
+/* ═══════════════════════════════════════════════════════════
+   STYLES TABLETTE / iPAD PAYSAGE
+   Objectif : tout tenir dans l'écran visible (Safari barre incluse)
+   ═══════════════════════════════════════════════════════════ */
+body.is-tablet{--panel-w:240px;}
+
+/* Panneau droit : flex-column strict
+   dvh = dynamic viewport height (tient compte de la barre Safari iOS) */
 body.is-tablet #rightPanel{
-  width:256px;
+  width:240px;
   display:flex;
   flex-direction:column;
   height:100vh;
-  height:100dvh;
+  height:100dvh;           /* iOS Safari : exclut la barre du navigateur */
   height:-webkit-fill-available;
   overflow:hidden;
 }
 
 /* Topbar compressée */
-body.is-tablet #topbar{height:40px;padding:4px 10px;flex-shrink:0;}
-body.is-tablet #sncf-img{height:26px;}
+body.is-tablet #topbar{
+  height:40px;
+  padding:4px 10px;
+  flex-shrink:0;
+}
+body.is-tablet #sncf-img{height:28px;}
 body.is-tablet #trainInfo{font-size:12px;line-height:1.2;}
-body.is-tablet #trainSub{font-size:10px !important;}
+body.is-tablet #trainInfo #trainSub{font-size:10px;}
 
-/* Zone scrollable du menu : prend tout l'espace disponible */
+/* Zone scrollable du menu :
+   max-height calculé = écran - topbar(40) - terminus(~46) - destination(~62) - clock(~52) */
 body.is-tablet #panelScroll{
   flex:1;
   overflow-y:auto;
@@ -226,15 +254,18 @@ body.is-tablet #panelScroll{
   min-height:0;
   -webkit-overflow-scrolling:touch;
 }
-body.is-tablet .menuItem{height:36px;font-size:12px;padding:0 10px;}
+body.is-tablet .menuItem{height:34px;font-size:12px;padding:0 10px;}
 body.is-tablet .menuItem span{font-size:11px;}
 
-/* Panneau bas : toujours ancré en bas, taille fixe */
-body.is-tablet #panelBottom{flex-shrink:0;overflow:hidden;}
+/* Panneau bas : toujours ancré en bas, ne se compresse jamais */
+body.is-tablet #panelBottom{
+  flex-shrink:0;
+  overflow:hidden;
+}
 
-/* Terminus ultra compact */
+/* Terminus : ultra compact */
 body.is-tablet #terminus{padding:4px 10px;}
-body.is-tablet #terminus .t-label{font-size:8px;}
+body.is-tablet #terminus .t-label{font-size:8px;opacity:.7;}
 body.is-tablet #terminus .t-name{font-size:11px;margin-top:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 body.is-tablet #terminus .t-detail{font-size:9px;margin-top:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
@@ -245,23 +276,14 @@ body.is-tablet #destination h2{font-size:14px;margin-top:0;white-space:nowrap;ov
 body.is-tablet #destination p{font-size:10px;margin-top:1px;}
 body.is-tablet #next-delta{font-size:11px;padding:1px 5px;margin-top:2px;display:inline-block;}
 
-/* Horloge panneau — taille augmentée sur tablette pour compenser l'absence de l'horloge flottante */
-body.is-tablet #clockPanel{padding:6px 10px;border-top:1px solid var(--clock-border);}
-body.is-tablet #clockPanel .small{font-size:9px;margin-bottom:1px;}
-body.is-tablet #clock{font-size:30px;letter-spacing:2px;line-height:1.1;}
-body.is-tablet #avance{font-size:11px;margin-top:1px;}
+/* Horloge panneau */
+body.is-tablet #clockPanel{padding:4px 10px;border-top:1px solid var(--clock-border);}
+body.is-tablet #clockPanel .small{font-size:9px;margin-bottom:0;}
+body.is-tablet #clock{font-size:24px;letter-spacing:1px;line-height:1.1;}
+body.is-tablet #avance{font-size:10px;margin-top:0;}
 body.is-tablet #reg{font-size:9px;margin-top:0;}
 
 /* Tableau principal */
-body.is-tablet #main{
-  margin-right:256px;
-  height:100vh;
-  height:100dvh;
-  height:-webkit-fill-available;
-}
-body.is-tablet #topBtns{top:6px;right:calc(256px + 6px);}
-body.is-tablet .top-btn{font-size:10px;padding:3px 8px;}
-
 body.is-tablet tbody tr.gare-principale{height:58px;}
 body.is-tablet .station-name{font-size:13px;}
 body.is-tablet .gare-icons{margin-top:2px;gap:4px;}
@@ -276,12 +298,19 @@ body.is-tablet .col-delta{width:58px;}
 body.is-tablet table{transform:skewX(-5deg);}
 body.is-tablet thead td,body.is-tablet td,body.is-tablet .sep td{transform:skewX(5deg);}
 
-/* FABs réduits */
+/* Boutons FAB réduits */
 body.is-tablet .fab{font-size:13px;padding:7px 14px!important;}
 body.is-tablet .fab-next{padding:7px 18px!important;}
 body.is-tablet #navFloat{bottom:16px;left:16px;gap:7px;}
+body.is-tablet #main{
+  margin-right:240px;
+  height:100vh;
+  height:100dvh;
+  height:-webkit-fill-available;
+}
+body.is-tablet #topBtns{top:6px;right:calc(240px + 6px);}
+body.is-tablet .top-btn{font-size:10px;padding:3px 8px;}
 
-/* ═══ LAYOUT PRINCIPAL ═══ */
 #main{margin-right:var(--panel-w);height:100vh;overflow-y:auto;overflow-x:hidden;padding-bottom:80px;}
 #main::-webkit-scrollbar{width:6px;}
 #main::-webkit-scrollbar-thumb{background:var(--scr);}
@@ -336,8 +365,6 @@ body.night .dbadge.ontime{background:#0d1e2a;color:#7dd3fc;}
 body.night .dbadge.done{background:#1a2535;color:#4a6080;}
 thead td.col-pk{color:#333;font-weight:700;}
 body.night thead td.col-pk{color:#7dd3fc;}
-
-/* ═══ FABs ═══ */
 #navFloat{position:fixed;bottom:22px;left:22px;z-index:40;display:flex;gap:10px;align-items:center;}
 .fab{display:flex;align-items:center;gap:7px;border:none;border-radius:28px;font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;cursor:pointer;user-select:none;letter-spacing:.5px;transition:all .15s ease;box-shadow:0 4px 18px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);}
 .fab:active{transform:scale(.94);}
@@ -366,8 +393,6 @@ body.night .fab-next{background:linear-gradient(145deg,#1e4d80 0%,#153a62 100%);
 body.night .fab-rappel{background:linear-gradient(145deg,#4c1d95 0%,#3b0764 100%);}
 #rappel-toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff;padding:10px 22px;border-radius:28px;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;letter-spacing:1px;box-shadow:0 6px 28px rgba(124,58,237,.5);opacity:0;pointer-events:none;z-index:50;transition:opacity .35s ease,transform .35s ease;white-space:nowrap;}
 #rappel-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-
-/* ═══ MOBILE ═══ */
 #panelToggle{display:none;position:fixed;top:8px;right:8px;background:#e89b2d;color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:700;cursor:pointer;z-index:30;}
 @media(max-width:768px){
   :root{--panel-w:100%;}
@@ -377,6 +402,7 @@ body.night .fab-rappel{background:linear-gradient(145deg,#4c1d95 0%,#3b0764 100%
   #panelToggle{display:block;}
   #topBtns{right:12px;top:56px;}
   #showPanelBtn{display:none!important;}
+  #floatClock{display:block;}
   table{transform:skewX(-4deg);}
   thead td,td,.sep td{transform:skewX(4deg);}
   .col-pk{width:54px;}.col-vl{width:36px;}.col-vref{width:36px;}.col-arr{width:80px;}.col-delta{width:62px;}
@@ -484,6 +510,17 @@ body.night .fab-rappel{background:linear-gradient(145deg,#4c1d95 0%,#3b0764 100%
         </div>
       </div>
 
+      <div class="map-group">
+        <div class="map-group-label">Colombiers · Cazouls-lès-Béziers</div>
+        <div class="map-group-row">
+          <div class="line-btn" onclick="enterMission('colombiers_cazouls')">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#0d1a10,#1a3520 50%,#0a1a08);"></div>
+            <div class="line-tag" style="background:#16a34a;color:#fff;">73505 · X73500</div>
+            <div class="line-btn-label"><div class="lbl-main">Colombiers → Cazouls · Jour</div><div class="lbl-sub">Colombiers E → Colombiers A</div></div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <div id="menuClock"><div id="menuClockTime">--:--:--</div><div id="menuClockDate"></div></div>
     <div id="menu-disclaimer">Site non affilié à la SNCF · À destination de Train Simulator Classic</div>
@@ -497,6 +534,13 @@ body.night .fab-rappel{background:linear-gradient(145deg,#4c1d95 0%,#3b0764 100%
 </div>
 <button id="showPanelBtn" onclick="openPanel()">☰ Infos</button>
 <button id="panelToggle" onclick="togglePanel()">☰ Infos</button>
+
+<!-- Horloge flottante — bas gauche, toujours visible sur iPad -->
+<div id="floatClock">
+  <div class="fc-time" id="fcTime">--:--:--</div>
+  <div class="fc-avance" id="fcAvance">—</div>
+  <div class="fc-speed" id="fcSpeed">×1</div>
+</div>
 
 <div id="rightPanel">
   <div id="topbar">
@@ -658,6 +702,7 @@ function setSpeed(s){
   const id=map[s]; if(id)document.getElementById(id).classList.add('active');
   const lbl=s===1?'':(s===0.5?'½×':s+'×');
   document.getElementById('speedLabel').textContent=lbl;
+  document.getElementById('fcSpeed').textContent=s===1?'×1':'×'+s;
   updateTimeModeIndicator();
 }
 
@@ -747,6 +792,7 @@ const allMissions={
       {pk:0.00,name:'Lézan v1',vref:'1',arr:'15:18:41',dep:'15:19:41',vl:'',retour:true,terminus:true},
     ]
   },
+  // ── SERVICE LONG JOUR ── Horaires mis à jour (capture 02/06/2026)
   beziers_long:{
     trainId:'Service AGC Long',trainSub:'AGC · Jour',materiel:'AGC',termLabel:'Béziers — Narbonne — Port-la-Nouvelle',
     stations:[
@@ -757,6 +803,7 @@ const allMissions={
       {pk:null,name:'Narbonne Quai C',vref:'C',arr:'14:48:22',dep:'14:49:22',vl:'',retour:true,terminus:true},
     ]
   },
+  // ── SERVICE COURT JOUR ──
   beziers_court:{
     trainId:'Service AGC Court',trainSub:'AGC · Jour',materiel:'AGC',termLabel:'Port-la-Nouvelle → Béziers',
     stations:[
@@ -777,14 +824,20 @@ const allMissions={
       {pk:null,name:'Narbonne Quai C',vref:'C',arr:'21:45:15',dep:'21:46:15',vl:'',retour:true,terminus:true},
     ]
   },
-  beziers_court_soir:{
-    trainId:'877118 UM2 3V',trainSub:'AGC · Court · Soirée',materiel:'UM2 3V',termLabel:'Port-la-Nouvelle → Béziers · Soirée',
+  // ── COLOMBIERS → CAZOULS-LÈS-BÉZIERS (73505 · X73500) ──
+  colombiers_cazouls:{
+    trainId:'73505 · X73500',trainSub:'X73500 · Jour',materiel:'X73500',termLabel:'Colombiers → Cazouls-lès-Béziers',
     stations:[
-      {pk:null,name:'Port-la-Nouvelle Quai B',vref:'B',arr:'19:35:00',dep:'19:40:00',vl:'',retour:false},
-      {pk:null,name:'Narbonne Quai D',vref:'D',arr:'19:54:34',dep:'19:55:34',vl:'',retour:false},
-      {pk:null,name:'Colombiers Quai A',vref:'A',arr:'20:05:49',dep:'20:06:49',vl:'',retour:false},
-      {pk:null,name:'Béziers Quai B',vref:'B',arr:'20:11:24',dep:'20:13:24',vl:'',retour:false,terminus:true},
-      {pk:null,name:'Béziers Dépôt V2E',vref:'V2E',arr:'20:16:01',dep:'20:16:01',vl:'',retour:false,inter:true},
+      {pk:null,name:'Service 1',vref:'—',arr:'16:00:00',dep:'16:00:00',vl:'',retour:false,inter:true},
+      {pk:null,name:'Colombiers Quai E',vref:'E',arr:'16:04:00',dep:'16:05:00',vl:'',retour:false},
+      {pk:null,name:'Montady',vref:'—',arr:'16:09:19',dep:'16:10:19',vl:'',retour:false},
+      {pk:null,name:'Maureilhan',vref:'—',arr:'16:13:41',dep:'16:14:41',vl:'',retour:false},
+      {pk:null,name:'Maureilhan Chantier',vref:'—',arr:'16:16:28',dep:'16:17:28',vl:'',retour:false,inter:true},
+      {pk:null,name:'Cazouls-lès-Béziers Quai V',vref:'V',arr:'16:22:27',dep:'16:26:27',vl:'',retour:false,terminus:true},
+      {pk:null,name:'Maureilhan Chantier',vref:'—',arr:'16:34:00',dep:'16:34:00',vl:'',retour:true,inter:true},
+      {pk:null,name:'Maureilhan',vref:'—',arr:'16:36:36',dep:'16:37:36',vl:'',retour:true},
+      {pk:null,name:'Montady',vref:'—',arr:'16:40:57',dep:'16:41:57',vl:'',retour:true},
+      {pk:null,name:'Colombiers Quai A',vref:'A',arr:'16:47:48',dep:'16:48:48',vl:'',retour:true,terminus:true},
     ]
   }
 };
@@ -911,6 +964,7 @@ function render(){
     clockStr=fmtTime();
   }
   document.getElementById('clock').textContent=clockStr;
+  document.getElementById('fcTime').textContent=clockStr;
 
   stations.forEach((s,i)=>{
     const tr=document.getElementById('r'+i); if(!tr)return;
@@ -955,6 +1009,7 @@ function render(){
   }
   document.getElementById('avance').textContent=avanceTxt;
   document.getElementById('avance').style.color=avanceColor;
+  document.getElementById('fcAvance').textContent=avanceTxt||'—';
 
   const row=document.getElementById('r'+curIdx);
   if(row)row.scrollIntoView({behavior:'smooth',block:'center'});

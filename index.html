@@ -189,28 +189,7 @@ body.night #next-delta.ontime{background:#0d1e2a;color:#7dd3fc;}
 .speed-btn:hover{background:var(--btn-hv);}
 .speed-btn.active{background:#e89b2d;color:#fff;border-color:#e89b2d;}
 
-#floatClock{
-  display:none;
-  position:fixed;
-  bottom:76px;
-  left:16px;
-  z-index:45;
-  background:var(--clock-bg);
-  border:1px solid var(--clock-border);
-  border-radius:10px;
-  padding:8px 16px;
-  text-align:center;
-  pointer-events:none;
-  box-shadow:0 4px 16px rgba(0,0,0,.18);
-  min-width:140px;
-}
-#floatClock .fc-time{font-family:'Rajdhani',sans-serif;font-size:34px;font-weight:700;color:var(--clock-color);font-variant-numeric:tabular-nums;letter-spacing:3px;}
-#floatClock .fc-avance{font-size:12px;color:#4da3ff;margin-top:2px;}
-#floatClock .fc-speed{font-size:10px;color:var(--text-muted);margin-top:1px;}
-
-body.is-tablet #floatClock{display:block!important;}
-body.is-tablet.panel-hidden #floatClock,
-body.is-tablet #floatClock.force-show{display:block!important;}
+#floatClock{display:none!important;}
 
 body.is-tablet{--panel-w:240px;}
 body.is-tablet #rightPanel{width:240px;display:flex;flex-direction:column;height:100vh;height:100dvh;height:-webkit-fill-available;overflow:hidden;}
@@ -480,11 +459,6 @@ body.night .fab-rappel{background:linear-gradient(145deg,#4c1d95 0%,#3b0764 100%
 <button id="showPanelBtn" onclick="openPanel()">☰ Infos</button>
 <button id="panelToggle" onclick="togglePanel()">☰ Infos</button>
 
-<div id="floatClock">
-  <div class="fc-time" id="fcTime">--:--:--</div>
-  <div class="fc-avance" id="fcAvance">—</div>
-  <div class="fc-speed" id="fcSpeed">×1</div>
-</div>
 
 <div id="rightPanel">
   <div id="topbar">
@@ -646,7 +620,6 @@ function setSpeed(s){
   const id=map[s]; if(id)document.getElementById(id).classList.add('active');
   const lbl=s===1?'':(s===0.5?'½×':s+'×');
   document.getElementById('speedLabel').textContent=lbl;
-  document.getElementById('fcSpeed').textContent=s===1?'×1':'×'+s;
   updateTimeModeIndicator();
 }
 
@@ -907,7 +880,9 @@ checkItems.forEach((label,i)=>{
 
 function getCurrentGameTime(){
   if(timeMode==='custom'&&customTimeBase!==null){
-    return customTimeBase+(Date.now()-customTimeSetAt)/1000*timeSpeed;
+    // elapsed en secondes réelles × vitesse = secondes jeu écoulées
+    const elapsedReal=(Date.now()-customTimeSetAt)/1000;
+    return customTimeBase+elapsedReal*timeSpeed;
   }
   return null;
 }
@@ -922,7 +897,6 @@ function render(){
     clockStr=fmtTime();
   }
   document.getElementById('clock').textContent=clockStr;
-  document.getElementById('fcTime').textContent=clockStr;
 
   stations.forEach((s,i)=>{
     const tr=document.getElementById('r'+i); if(!tr)return;
@@ -967,7 +941,6 @@ function render(){
   }
   document.getElementById('avance').textContent=avanceTxt;
   document.getElementById('avance').style.color=avanceColor;
-  document.getElementById('fcAvance').textContent=avanceTxt||'—';
 
   const row=document.getElementById('r'+curIdx);
   if(row)row.scrollIntoView({behavior:'smooth',block:'center'});

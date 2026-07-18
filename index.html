@@ -27,22 +27,30 @@ body{font-family:'Roboto',sans-serif;overflow:hidden;}
   --vl-color:#333;
 }
 body.night{
-  --bg:#111827;--panel-bg:#1e2a3a;--panel-border:#243550;--topbar-bg:#0f2030;
-  --menu-bg:#1a2535;--menu-hover:#1e2f44;--menu-border:#243550;
-  --text:#d0dde8;--text-muted:#6080a0;
-  --clock-bg:#111827;--clock-border:#243550;--clock-color:#7dd3fc;
-  --row-odd:#182030;--row-even:#141c28;
-  --row-cur:#1a3a5e;--row-cur-bd:#3b82f6;--row-cur-tx:#93c5fd;
-  --row-next:#162816;--row-next-tx:#86efac;
-  --sep-bg:#0d1520;--sep-bd:#1a3050;--sep-tx:#3b82f6;
-  --thead-bg:#0d1520;--thead-tx:#5080a0;
-  --pk:#7dd3fc;--st-sm:#6080a0;
-  --bar-bg:rgba(13,21,32,.95);--bar-bd:#1a3050;
-  --btn-bg:#1a2535;--btn-bd:#2a3f58;--btn-tx:#90aac0;--btn-hv:#1e2f44;
-  --det-bg:#111827;--scr:#243550;
-  --inter-bg:#10192a;--inter-odd:#121d2e;
-  --vl-color:#5080a0;
+  --bg:#0a0f1a;--panel-bg:#141d2c;--panel-border:#22324a;--topbar-bg:#0a1826;
+  --menu-bg:#152030;--menu-hover:#1c2b40;--menu-border:#22324a;
+  --text:#dbe6f2;--text-muted:#7391b0;
+  --clock-bg:#0d1420;--clock-border:#22324a;--clock-color:#7dd3fc;
+  --row-odd:#141d2c;--row-even:#101724;
+  --row-cur:#173259;--row-cur-bd:#4da3ff;--row-cur-tx:#a8d4ff;
+  --row-next:#14261a;--row-next-tx:#8fe8a8;
+  --sep-bg:#0a121e;--sep-bd:#22406a;--sep-tx:#4da3ff;
+  --thead-bg:#0a121e;--thead-tx:#5c8ab8;
+  --pk:#7dd3fc;--st-sm:#6a8bab;
+  --bar-bg:rgba(10,15,26,.96);--bar-bd:#22324a;
+  --btn-bg:#152030;--btn-bd:#2c4160;--btn-tx:#9ab6d4;--btn-hv:#1c2b40;
+  --det-bg:#0d1420;--scr:#2c4160;
+  --inter-bg:#0d1420;--inter-odd:#101a28;
+  --vl-color:#5c8ab8;
 }
+body.night{background:radial-gradient(ellipse at top,#0f1a2c 0%,#0a0f1a 60%);}
+body.night #main{background:radial-gradient(ellipse at 30% 0%,rgba(77,163,255,.03) 0%,transparent 55%);}
+body.night table{box-shadow:0 0 0 1px rgba(77,163,255,.06);}
+body.night .current{box-shadow:0 0 0 2px rgba(77,163,255,.15),0 0 22px rgba(61,140,255,.25),inset 0 0 18px rgba(77,163,255,.06);}
+body.night #clock{text-shadow:0 0 18px rgba(125,211,252,.45);}
+body.night #rightPanel{box-shadow:-6px 0 30px rgba(0,0,0,.5);}
+body.night .menuItem:hover{box-shadow:inset 2px 0 0 #4da3ff;}
+body.night thead td{border-bottom:1px solid rgba(77,163,255,.15);}
 body{background:var(--bg);transition:background .35s;}
 #splash{position:fixed;inset:0;z-index:200;background:#060a10;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 #splash.fade-out{animation:splashFade .8s ease forwards;}
@@ -121,7 +129,8 @@ body{background:var(--bg);transition:background .35s;}
 #menuClockTime{font-size:52px;font-weight:300;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:6px;font-family:'Rajdhani',sans-serif;text-shadow:0 0 40px rgba(255,255,255,.15);}
 #menuClockDate{font-size:12px;color:#4da3ff;margin-top:4px;letter-spacing:2px;font-family:'Rajdhani',sans-serif;}
 #menu-disclaimer{margin-top:16px;font-size:10px;color:#1a3050;letter-spacing:1px;text-align:center;font-family:'Rajdhani',sans-serif;text-transform:uppercase;}
-#topbar{background:var(--topbar-bg);height:54px;padding:8px 12px;color:white;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;transition:background .35s;}
+#topbar{background:var(--topbar-bg);height:54px;padding:8px 12px;color:white;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;transition:background .35s,box-shadow .35s;}
+body.night #topbar{box-shadow:0 1px 0 rgba(77,163,255,.15),0 4px 20px rgba(0,0,0,.4);}
 #trainHeader{display:flex;align-items:center;gap:10px;}
 #sncf-img{height:36px;width:auto;display:block;border-radius:3px;}
 #trainInfo{font-size:15px;font-weight:500;line-height:1.2;}
@@ -184,10 +193,6 @@ body.night #next-delta.ontime{background:#0d1e2a;color:#7dd3fc;}
 .time-btn.secondary:hover{background:var(--btn-hv);}
 .time-btn.active-mode{background:#4da3ff;color:#fff;border-color:#4da3ff;}
 .time-mode-indicator{font-size:11px;color:var(--text-muted);margin-top:6px;padding:5px;background:var(--menu-bg);border-radius:4px;text-align:center;}
-.speed-row{display:flex;gap:4px;margin-top:8px;}
-.speed-btn{flex:1;padding:5px 4px;background:var(--btn-bg);color:var(--btn-tx);border:1px solid var(--btn-bd);border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;font-family:'Rajdhani',sans-serif;letter-spacing:.5px;text-align:center;transition:all .2s;}
-.speed-btn:hover{background:var(--btn-hv);}
-.speed-btn.active{background:#e89b2d;color:#fff;border-color:#e89b2d;}
 
 #floatClock{display:none!important;}
 
@@ -254,8 +259,8 @@ tbody tr.gare-principale td{padding:8px;transform:skewX(7deg);}
 tbody tr.gare-principale .col-vl{font-size:14px;font-weight:800;color:var(--vl-color);}
 tbody tr.gare-principale .col-pk{font-size:16px;font-weight:800;color:var(--pk);background:rgba(77,163,255,.10);border-right:2px solid rgba(77,163,255,.25);}
 body.night tbody tr.gare-principale .col-pk{background:rgba(77,163,255,.18);}
-tbody tr.gare-principale .col-arr{font-size:16px;font-weight:600;}
-.station-name{font-size:17px;font-weight:500;}
+tbody tr.gare-principale .col-arr{font-size:16px;font-weight:600;color:var(--text);}
+.station-name{font-size:17px;font-weight:500;color:var(--text);}
 .station small{margin-top:3px;color:var(--st-sm);font-size:11px;}
 .term-badge{font-size:10px;color:#e89b2d;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-left:6px;}
 .gare-icons{display:flex;gap:6px;align-items:center;margin-top:4px;}
@@ -503,14 +508,6 @@ body.night .fab-rappel{background:linear-gradient(145deg,#4c1d95 0%,#3b0764 100%
         <button class="time-btn secondary" id="btnModeReal" style="flex:1;" onclick="switchTimeMode('real')">Heure réelle</button>
         <button class="time-btn secondary" id="btnModeCustom" style="flex:1;" onclick="switchTimeMode('custom')">Heure définie</button>
       </div>
-      <div style="font-size:10px;color:var(--text-muted);margin-top:10px;letter-spacing:1px;text-transform:uppercase;">Vitesse du temps</div>
-      <div class="speed-row">
-        <button class="speed-btn" id="spd-half" onclick="setSpeed(0.5)">½×</button>
-        <button class="speed-btn active" id="spd-1" onclick="setSpeed(1)">1×</button>
-        <button class="speed-btn" id="spd-2" onclick="setSpeed(2)">2×</button>
-        <button class="speed-btn" id="spd-4" onclick="setSpeed(4)">4×</button>
-        <button class="speed-btn" id="spd-8" onclick="setSpeed(8)">8×</button>
-      </div>
       <div class="time-mode-indicator" id="timeModeIndicator">Mode: Heure réelle</div>
     </div>
   </div>
@@ -527,7 +524,7 @@ body.night .fab-rappel{background:linear-gradient(145deg,#4c1d95 0%,#3b0764 100%
       <div id="next-delta" class="ontime">—</div>
     </div>
     <div id="clockPanel">
-      <div class="small">Heure jeu <span id="speedLabel" style="color:#e89b2d;font-weight:700;margin-left:4px;"></span></div>
+      <div class="small">Heure jeu</div>
       <div id="clock">--:--:--</div>
       <div id="avance">—</div>
       <div id="reg"></div>
@@ -570,7 +567,7 @@ body.night .fab-rappel{background:linear-gradient(145deg,#4c1d95 0%,#3b0764 100%
 'use strict';
 
 let night=false, curIdx=0, timeMode='real', customTimeBase=null, customTimeSetAt=null;
-let timeSpeed=1;
+let rowEls=[], deltaEls=[];
 const recordedDeltas={};
 let aQuaiActive=false, rappelActive=false, rappelFired={};
 let currentMissionId='stjean';
@@ -607,20 +604,6 @@ function fmtD(d){
   if(d>5)return{text:'+'+t,cls:'late'};
   if(a<60)return{text:'−'+t,cls:'ahead'};
   return{text:'−'+t,cls:'late'};
-}
-
-function setSpeed(s){
-  if(timeMode==='custom'&&customTimeBase!==null){
-    customTimeBase=getCurrentGameTime();
-    customTimeSetAt=Date.now();
-  }
-  timeSpeed=s;
-  document.querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));
-  const map={0.5:'spd-half',1:'spd-1',2:'spd-2',4:'spd-4',8:'spd-8'};
-  const id=map[s]; if(id)document.getElementById(id).classList.add('active');
-  const lbl=s===1?'':(s===0.5?'½×':s+'×');
-  document.getElementById('speedLabel').textContent=lbl;
-  updateTimeModeIndicator();
 }
 
 const SPLASH_DURATION=Math.floor(Math.random()*5001)+5000;
@@ -794,6 +777,7 @@ function enterMission(id){
   buildTable();
   document.getElementById('mainMenu').classList.add('hidden');
   if(aQuaiActive){aQuaiActive=false;updateAQuaiBtn();}
+  updateRowStates();
   render();
 }
 
@@ -814,6 +798,7 @@ const tbody=document.getElementById('tbody');
 
 function buildTable(){
   tbody.innerHTML='';
+  rowEls=[]; deltaEls=[];
   let sepDone=false;
   stations.forEach((s,i)=>{
     if(s.retour&&!sepDone){
@@ -859,6 +844,7 @@ function buildTable(){
         '<td class="col-delta" id="d'+i+'"></td>';
     }
     tbody.appendChild(tr);
+    rowEls[i]=tr; deltaEls[i]=tr.querySelector('.col-delta');
   });
 }
 buildTable();
@@ -880,12 +866,41 @@ checkItems.forEach((label,i)=>{
 
 function getCurrentGameTime(){
   if(timeMode==='custom'&&customTimeBase!==null){
-    // elapsed en secondes réelles × vitesse = secondes jeu écoulées
+    // le temps jeu avance à la même vitesse que le temps réel (1:1)
     const elapsedReal=(Date.now()-customTimeSetAt)/1000;
-    return customTimeBase+elapsedReal*timeSpeed;
+    return customTimeBase+elapsedReal;
   }
   return null;
 }
+
+function updateRowStates(){
+  stations.forEach((s,i)=>{
+    const tr=rowEls[i]; if(!tr)return;
+    const main=isMainStation(s);
+    let cls=main?'gare-principale':'intermediaire';
+    if(i<curIdx)cls+=' passed';
+    else if(i===curIdx)cls+=' current';
+    else if(i===curIdx+1)cls+=' next-up';
+    tr.className=cls;
+    const dc=deltaEls[i]; if(!dc||!main)return;
+    if(i<curIdx){dc.innerHTML=recordedDeltas[i]?'<span class="dbadge '+recordedDeltas[i].cls+'">'+recordedDeltas[i].text+'</span>':'<span class="dbadge done">✓</span>';}
+    else if(i===curIdx){dc.innerHTML=recordedDeltas[i]?'<span class="dbadge '+recordedDeltas[i].cls+'">'+recordedDeltas[i].text+'</span>':'<span class="dbadge fut">—</span>';}
+    else{dc.innerHTML='<span class="dbadge fut">—</span>';}
+  });
+  const last=stations[stations.length-1];
+  elTermName.textContent=last?last.name:'—';
+  elTermDetail.textContent=last?(allMissions[currentMissionId].termLabel+' · Arr. '+last.arr):'—';
+  const row=rowEls[curIdx];
+  if(row)row.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+const elClock=document.getElementById('clock');
+const elTermName=document.getElementById('term-name');
+const elTermDetail=document.getElementById('term-detail');
+const elNsName=document.getElementById('ns-name');
+const elNsTime=document.getElementById('ns-time');
+const elNextDelta=document.getElementById('next-delta');
+const elAvance=document.getElementById('avance');
 
 function render(){
   const currentTime=getCurrentGameTime();
@@ -896,35 +911,18 @@ function render(){
   } else {
     clockStr=fmtTime();
   }
-  document.getElementById('clock').textContent=clockStr;
+  elClock.textContent=clockStr;
 
-  stations.forEach((s,i)=>{
-    const tr=document.getElementById('r'+i); if(!tr)return;
-    const main=isMainStation(s);
-    tr.className=main?'gare-principale':'intermediaire';
-    if(i<curIdx)tr.classList.add('passed');
-    else if(i===curIdx)tr.classList.add('current');
-    else if(i===curIdx+1)tr.classList.add('next-up');
-    const dc=document.getElementById('d'+i); if(!dc)return;
-    if(!main){dc.innerHTML='';return;}
-    if(i<curIdx){dc.innerHTML=recordedDeltas[i]?'<span class="dbadge '+recordedDeltas[i].cls+'">'+recordedDeltas[i].text+'</span>':'<span class="dbadge done">✓</span>';}
-    else if(i===curIdx){dc.innerHTML=recordedDeltas[i]?'<span class="dbadge '+recordedDeltas[i].cls+'">'+recordedDeltas[i].text+'</span>':'<span class="dbadge fut">—</span>';}
-    else{dc.innerHTML='<span class="dbadge fut">—</span>';}
-  });
-  const last=stations[stations.length-1];
-  document.getElementById('term-name').textContent=last?last.name:'—';
-  document.getElementById('term-detail').textContent=last?(allMissions[currentMissionId].termLabel+' · Arr. '+last.arr):'—';
   const cur=stations[curIdx];
   if(cur){
-    document.getElementById('ns-name').textContent=cur.name;
-    document.getElementById('ns-time').textContent='Arr. '+cur.arr.slice(0,5)+' · Dép. '+cur.dep.slice(0,5);
-    const nd=document.getElementById('next-delta');
-    if(currentTime!==null){const ds=toSec(cur.dep);if(ds!==null){const d=fmtD(currentTime-ds);nd.textContent=d.text;nd.className=d.cls;}}
-    else{nd.textContent='—';nd.className='ontime';}
+    elNsName.textContent=cur.name;
+    elNsTime.textContent='Arr. '+cur.arr.slice(0,5)+' · Dép. '+cur.dep.slice(0,5);
+    if(currentTime!==null){const ds=toSec(aQuaiActive?cur.dep:cur.arr);if(ds!==null){const d=fmtD(currentTime-ds);elNextDelta.textContent=d.text;elNextDelta.className=d.cls;}}
+    else{elNextDelta.textContent='—';elNextDelta.className='ontime';}
   }
   let avanceTxt='', avanceColor='#6080a0';
   if(currentTime!==null&&cur){
-    const depRef=toSec(cur.dep);
+    const depRef=toSec(aQuaiActive?cur.dep:cur.arr);
     if(depRef!==null){
       const diff=currentTime-depRef,a=Math.abs(diff);
       let t;
@@ -939,11 +937,8 @@ function render(){
   } else {
     avanceTxt='Heure non définie';
   }
-  document.getElementById('avance').textContent=avanceTxt;
-  document.getElementById('avance').style.color=avanceColor;
-
-  const row=document.getElementById('r'+curIdx);
-  if(row)row.scrollIntoView({behavior:'smooth',block:'center'});
+  elAvance.textContent=avanceTxt;
+  elAvance.style.color=avanceColor;
 }
 
 function navigate(dir){
@@ -956,6 +951,7 @@ function navigate(dir){
     delete recordedDeltas[curIdx]; curIdx--; delete recordedDeltas[curIdx];
     if(aQuaiActive){aQuaiActive=false;updateAQuaiBtn();}
   }
+  updateRowStates();
   render();
 }
 
@@ -963,6 +959,7 @@ function resetNav(){
   curIdx=0; Object.keys(recordedDeltas).forEach(k=>delete recordedDeltas[k]); rappelFired={};
   if(aQuaiActive){aQuaiActive=false;updateAQuaiBtn();}
   if(rappelActive){rappelActive=false;updateRappelBtn();}
+  updateRowStates();
   render();
 }
 
@@ -998,7 +995,7 @@ function checkRappel(){
   for(let i=curIdx;i<stations.length;i++){
     if(rappelFired[i])continue;
     const arr=toSec(stations[i].arr); if(arr===null)continue;
-    const seuil=60*timeSpeed;
+    const seuil=60;
     const diff=arr-ct;
     if(diff<=seuil&&diff>0){rappelFired[i]=true;playRappel(stations[i].name);break;}
   }
@@ -1037,8 +1034,7 @@ function updateModeButtons(){
   document.getElementById('btnModeCustom').classList.toggle('active-mode',timeMode==='custom');
 }
 function updateTimeModeIndicator(){
-  const spd=timeSpeed===1?'':(' · ×'+timeSpeed);
-  document.getElementById('timeModeIndicator').textContent=(timeMode==='real'?'Mode: Heure réelle':'Mode: Heure définie')+spd;
+  document.getElementById('timeModeIndicator').textContent=timeMode==='real'?'Mode: Heure réelle':'Mode: Heure définie';
 }
 
 function toggleNight(){
@@ -1095,6 +1091,7 @@ document.addEventListener('keydown',e=>{
   }
 });
 
+updateRowStates();
 render();
 setInterval(()=>{checkAQuai();checkRappel();render();},1000);
 </script>

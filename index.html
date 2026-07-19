@@ -455,8 +455,13 @@ body.night .fab-rappel{background:linear-gradient(145deg,#4c1d95 0%,#3b0764 100%
         <div class="map-group-row">
           <div class="line-btn" onclick="enterMission('cerbere_perpignan')">
             <div style="width:100%;height:100%;background:linear-gradient(135deg,#0a1f2e,#124a5c 50%,#0d2a2a);"></div>
-            <div class="line-tag" style="background:#0ea5b8;color:#fff;">Service Vermeille</div>
+            <div class="line-tag" style="background:#0ea5b8;color:#fff;">N°86985 · UM2 4</div>
             <div class="line-btn-label"><div class="lbl-main">Cerbère → Perpignan · Jour</div><div class="lbl-sub">Cerbère Quai 5 → Perpignan Quai 4</div></div>
+          </div>
+          <div class="line-btn" onclick="enterMission('perpignan_cerbere_nuit')">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#060a14,#0d1f2e 50%,#060a10);"></div>
+            <div class="line-tag" style="background:#7c3aed;color:#fff;">N°87985 · UM1 3</div>
+            <div class="line-btn-label"><div class="lbl-main">Perpignan → Cerbère · Nuit</div><div class="lbl-sub">Perpignan Quai 2 → Cerbère Quai 2</div></div>
           </div>
         </div>
       </div>
@@ -769,17 +774,34 @@ const allMissions={
   // Horaires extraits de la capture fournie
   // ══════════════════════════════════════════════════
   cerbere_perpignan:{
-    trainId:'Service Vermeille',trainSub:'AGC · Jour',materiel:'AGC',termLabel:'Cerbère → Perpignan',
+    trainId:'N°86985 UM2 4',trainSub:'UM2 4V · Jour',materiel:'UM2 4V',termLabel:'Cerbère → Perpignan',
     stations:[
-      {pk:null,name:'Service joueur',vref:'—',arr:null,dep:'15:00:00',vl:'',retour:false,inter:true},
+      {pk:null,name:'Service joueur',vref:'—',arr:'15:00:00',dep:'15:00:00',vl:'',retour:false,inter:true},
       {pk:null,name:'Cerbère Quai 5',vref:'5',arr:'15:00:00',dep:'15:10:00',vl:'',retour:false},
-      {pk:null,name:'Banyuls Quai 2',vref:'2',arr:'15:14:48',dep:'15:16:18',vl:'',retour:false},
-      {pk:null,name:'Port-Vendres Quai 1',vref:'1',arr:'15:19:39',dep:'15:21:39',vl:'',retour:false},
-      {pk:null,name:'Collioure Quai 2',vref:'2',arr:'15:23:40',dep:'15:24:40',vl:'',retour:false},
-      {pk:null,name:'Argelès-sur-Mer Quai 2',vref:'2',arr:'15:27:54',dep:'15:29:54',vl:'',retour:false},
-      {pk:null,name:'Elne Quai 2',vref:'2',arr:'15:35:02',dep:'15:36:02',vl:'',retour:false},
-      {pk:null,name:'Perpignan Quai 4',vref:'4',arr:'15:43:15',dep:'15:44:45',vl:'',retour:false,terminus:true},
-      {pk:null,name:'Voie de garage 14 Perpignan',vref:'14',arr:'15:46:38',dep:'15:46:38',vl:'',retour:false,inter:true},
+      {pk:null,name:'Banyuls Quai 2',vref:'2',arr:'15:15:19',dep:'15:16:49',vl:'',retour:false},
+      {pk:null,name:'Port-Vendres Quai 2',vref:'2',arr:'15:20:18',dep:'15:22:18',vl:'',retour:false},
+      {pk:null,name:'Collioure Quai 2',vref:'2',arr:'15:24:19',dep:'15:25:19',vl:'',retour:false},
+      {pk:null,name:'Argelès-sur-Mer Quai 2',vref:'2',arr:'15:28:28',dep:'15:30:28',vl:'',retour:false},
+      {pk:null,name:'Elne Quai 2',vref:'2',arr:'15:36:05',dep:'15:37:05',vl:'',retour:false},
+      {pk:null,name:'Perpignan Quai 4',vref:'4',arr:'15:45:24',dep:'15:46:54',vl:'',retour:false,terminus:true},
+      {pk:null,name:'Voie de garage 14 Perpignan',vref:'14',arr:'15:48:51',dep:'15:48:51',vl:'',retour:false,inter:true},
+    ]
+  },
+  // ══════════════════════════════════════════════════
+  // CÔTE VERMEILLE — Perpignan → Cerbère · Nuit
+  // Horaires extraits de la capture fournie
+  // ══════════════════════════════════════════════════
+  perpignan_cerbere_nuit:{
+    trainId:'N°87985 UM1 3',trainSub:'UM1 3V · Nuit',materiel:'UM1 3V',termLabel:'Perpignan → Cerbère · Nuit',
+    stations:[
+      {pk:null,name:'Service joueur',vref:'—',arr:'20:00:00',dep:'20:00:00',vl:'',retour:false,inter:true},
+      {pk:null,name:'Perpignan Quai 2',vref:'2',arr:'20:00:16',dep:'20:10:16',vl:'',retour:false},
+      {pk:null,name:'Elne Quai 1',vref:'1',arr:'20:18:13',dep:'20:19:13',vl:'',retour:false},
+      {pk:null,name:'Argelès-sur-Mer Quai 1',vref:'1',arr:'20:24:03',dep:'20:25:03',vl:'',retour:false},
+      {pk:null,name:'Port-Vendres Quai 1',vref:'1',arr:'20:29:36',dep:'20:30:36',vl:'',retour:false},
+      {pk:null,name:'Port-Vendres Quai 2',vref:'2',arr:'20:31:46',dep:'20:32:21',vl:'',retour:false},
+      {pk:null,name:'Cerbère Quai 2',vref:'2',arr:'20:40:31',dep:'20:41:31',vl:'',retour:false,terminus:true},
+      {pk:null,name:'Cerbère Quai 2',vref:'2',arr:'20:41:31',dep:'20:41:31',vl:'',retour:false,inter:true},
     ]
   }
 };

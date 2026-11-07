@@ -1046,7 +1046,7 @@ function checkAQuai(){
 function toggleRappel(){if(!document.getElementById('rappelBtn').disabled){rappelActive=!rappelActive;updateRappelBtn();}}
 function updateRappelBtn(){
   const btn=document.getElementById('rappelBtn'),lbl=document.getElementById('rappelLbl');
-  const ok=(timeMode==='custom'&&customTimeBase!==null);
+  const ok=(timeMode==='tsc'&&tscConnected)||(timeMode==='custom'&&customTimeBase!==null);
   btn.disabled=!ok;
   if(!ok){rappelActive=false;btn.classList.remove('active');lbl.textContent='🔔 Rappel';return;}
   btn.classList.toggle('active',rappelActive);
@@ -1091,6 +1091,7 @@ function switchTimeMode(mode){
   if(mode==='custom'&&customTimeBase===null){alert('Veuillez d\'abord définir une heure.');return;}
   timeMode=mode; updateTimeModeIndicator(); updateAQuaiBtn(); updateRappelBtn();
   updateModeButtons();
+  if(mode==='tsc')pollTscTime();
 }
 function updateModeButtons(){
   document.getElementById('btnModeReal').classList.toggle('active-mode',timeMode==='real');

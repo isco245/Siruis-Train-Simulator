@@ -523,8 +523,10 @@ body.night .fab-rappel{background:linear-gradient(145deg,#4c1d95 0%,#3b0764 100%
       <div style="display:flex;gap:6px;margin-top:6px;">
         <button class="time-btn secondary" id="btnModeReal" style="flex:1;" onclick="switchTimeMode('real')">Heure réelle</button>
         <button class="time-btn secondary" id="btnModeCustom" style="flex:1;" onclick="switchTimeMode('custom')">Heure définie</button>
+        <button class="time-btn secondary" id="btnModeTsc" style="flex:1;" onclick="switchTimeMode('tsc')">Heure TSC</button>
       </div>
       <div class="time-mode-indicator" id="timeModeIndicator">Mode: Heure réelle</div>
+      <div class="time-mode-indicator" id="tscConnectionStatus">Connexion TSC : non testée</div>
     </div>
   </div>
   <div id="panelBottom">
@@ -583,6 +585,8 @@ body.night .fab-rappel{background:linear-gradient(145deg,#4c1d95 0%,#3b0764 100%
 'use strict';
 
 let night=false, curIdx=0, timeMode='real', customTimeBase=null, customTimeSetAt=null;
+let tscGameTime=null, tscConnected=false;
+const TSC_API='http://localhost:8888/api/railworks/virtual/';
 let rowEls=[], deltaEls=[];
 const recordedDeltas={};
 let aQuaiActive=false, rappelActive=false, rappelFired={};
@@ -905,11 +909,31 @@ checkItems.forEach((label,i)=>{
 });
 
 function getCurrentGameTime(){
+  if(timeMode==='tsc')return tscConnected?tscGameTime:null;
   if(timeMode==='custom'&&customTimeBase!==null){
     const elapsedReal=(Date.now()-customTimeSetAt)/1000;
     return customTimeBase+elapsedReal;
   }
   return null;
+}
+async function pollTscTime(){
+  const status=document.getElementById('tscConnectionStatus');
+  try{
+    const values=await Promise.all(['Hours','Minutes','Seconds'].map(async name=>{
+      const response=await fetch(TSC_API+name,{cache:'no-store'});
+      if(!response.ok)throw new Error('HTTP '+response.status);
+      const raw=(await response.text()).trim();
+      const value=Number(raw.replace(/^["']|["']$/g,''));
+      if(!Number.isFinite(value))throw new Error('Réponse invalide pour '+name);
+      return value;
+    }));
+    tscGameTime=values[0]*3600+values[1]*60+values[2];
+    tscConnected=true;
+    if(status)status.textContent='Connexion TSC : connectée';
+  }catch(error){
+    tscConnected=false;
+    if(status)status.textContent='Connexion TSC : indisponible ('+error.message+')';
+  }
 }
 
 function updateRowStates(){
@@ -1005,7 +1029,7 @@ function resetNav(){
 function toggleAQuai(){if(!document.getElementById('aQuaiBtn').disabled){aQuaiActive=!aQuaiActive;updateAQuaiBtn();}}
 function updateAQuaiBtn(){
   const btn=document.getElementById('aQuaiBtn'),lbl=document.getElementById('aQuaiLbl');
-  const ok=(timeMode==='custom'&&customTimeBase!==null);
+  const ok=(timeMode==='tsc'&&tscConnected)||(timeMode==='custom'&&customTimeBase!==null);
   btn.disabled=!ok;
   if(!ok){aQuaiActive=false;btn.classList.remove('active');lbl.textContent='À Quai';return;}
   btn.classList.toggle('active',aQuaiActive);
@@ -1071,9 +1095,11 @@ function switchTimeMode(mode){
 function updateModeButtons(){
   document.getElementById('btnModeReal').classList.toggle('active-mode',timeMode==='real');
   document.getElementById('btnModeCustom').classList.toggle('active-mode',timeMode==='custom');
+  document.getElementById('btnModeTsc').classList.toggle('active-mode',timeMode==='tsc');
 }
 function updateTimeModeIndicator(){
-  document.getElementById('timeModeIndicator').textContent=timeMode==='real'?'Mode: Heure réelle':'Mode: Heure définie';
+  const labels={real:'Mode: Heure réelle',custom:'Mode: Heure définie',tsc:'Mode: Heure Train Simulator'};
+  document.getElementById('timeModeIndicator').textContent=labels[timeMode]||labels.real;
 }
 
 function toggleNight(){
@@ -1132,7 +1158,8 @@ document.addEventListener('keydown',e=>{
 
 updateRowStates();
 render();
-setInterval(()=>{checkAQuai();checkRappel();render();},1000);
+setInterval(()=>{pollTscTime();checkAQuai();checkRappel();render();},1000);
+pollTscTime();
 </script>
 </body>
 </html>
